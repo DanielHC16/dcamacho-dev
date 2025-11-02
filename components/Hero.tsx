@@ -126,10 +126,17 @@ export default function Hero() {
           }}
         />
         <div
-          className="absolute top-1/2 right-1/4 w-1 h-1 bg-foreground"
+          className="absolute top-1/2 right-1/6 w-1 h-1 bg-foreground"
           style={{
             transform: `translate(${mousePosition.x * 25}px, ${mousePosition.y * 25}px)`,
             transition: 'transform 0.5s ease-out',
+          }}
+        />
+        <div
+          className="absolute top-1/3 right-1/2 w-2 h-2 border border-muted"
+          style={{
+            transform: `translate(${mousePosition.x * -20}px, ${mousePosition.y * -20}px) rotate(${mousePosition.x * 45}deg)`,
+            transition: 'transform 0.6s ease-out',
           }}
         />
       </div>
@@ -147,18 +154,17 @@ export default function Hero() {
 
           {/* Main Heading */}
           <div className="space-y-4">
-            <h1 className="text-6xl md:text-8xl lg:text-9xl font-extralight tracking-tighter text-foreground leading-none">
+            <h1 className="text-6xl md:text-8xl lg:text-9xl font-extralight tracking-tight text-foreground leading-none">
               {personalInfo.name}
             </h1>
-            <p className="text-xl md:text-2xl text-muted font-light tracking-wide">
+            <p className="text-xl md:text-2xl text-muted font-light tracking-tight">
               {personalInfo.role}
             </p>
           </div>
 
           {/* Description */}
           <p className="text-sm md:text-base text-muted font-light max-w-xl leading-relaxed">
-            Building elegant solutions through clean code and thoughtful design.
-            Passionate about creating exceptional digital experiences.
+            {personalInfo.tagline}
           </p>
         </div>
       </div>

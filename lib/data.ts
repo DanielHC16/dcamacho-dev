@@ -2,7 +2,7 @@
 export const personalInfo = {
   name: "Daniel Camacho",
   role: "Software Engineer",
-  tagline: "Building elegant solutions through clean code and thoughtful design",
+  tagline: "Structured, thoughtful, and a little obsessive about detail.",
   bio: `I'm a software engineer passionate about creating minimalist, functional applications. 
   My work focuses on clean architecture, user-centric design, and writing code that's as elegant as it is efficient.`,
   email: "danielcamacho0416@gmail.com",

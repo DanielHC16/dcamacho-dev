@@ -1,4 +1,4 @@
-import { aboutPoints } from '@/lib/data';
+import { aboutPoints, personalInfo } from '@/lib/data';
 
 export default function About() {
   return (
@@ -21,10 +21,7 @@ export default function About() {
           {/* Left Column - Description */}
           <div>
             <p className="text-sm md:text-base text-muted font-light leading-relaxed">
-              I&apos;m a software engineer who believes in the power of clean,
-              efficient code. My approach combines technical expertise with a
-              keen eye for design, creating solutions that are both functional
-              and elegant.
+              {personalInfo.bio}
             </p>
           </div>
 

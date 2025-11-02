@@ -19,7 +19,7 @@ export default function Skills() {
         </div>
 
         {/* Skills Columns - Clean 4 Column Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-4" style={{ gap: '3.5rem' }}>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4" style={{ gap: '3.5rem' }}>
           {Object.entries(skills).map(([category, items], index) => (
             <div key={index} className="group">
               {/* Category Header with Line */}

@@ -9,34 +9,48 @@ export default function Hero() {
   const [activeSection, setActiveSection] = useState('hero');
 
   useEffect(() => {
+    let rafId: number;
+    
     const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({
-        x: (e.clientX / window.innerWidth) * 2 - 1,
-        y: (e.clientY / window.innerHeight) * 2 - 1,
-      });
-    };
-
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 100);
+      if (rafId) {
+        cancelAnimationFrame(rafId);
+      }
       
-      // Determine active section
-      const sections = ['hero', 'about', 'projects', 'skills', 'contact'];
-      const current = sections.find(section => {
-        const element = document.getElementById(section);
-        if (element) {
-          const rect = element.getBoundingClientRect();
-          return rect.top <= 100 && rect.bottom >= 100;
-        }
-        return false;
+      rafId = requestAnimationFrame(() => {
+        setMousePosition({
+          x: (e.clientX / window.innerWidth) * 2 - 1,
+          y: (e.clientY / window.innerHeight) * 2 - 1,
+        });
       });
-      if (current) setActiveSection(current);
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('scroll', handleScroll);
+    let scrollTimeout: NodeJS.Timeout;
+    const handleScroll = () => {
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => {
+        setScrolled(window.scrollY > 100);
+        
+        // Determine active section
+        const sections = ['hero', 'about', 'projects', 'skills', 'contact'];
+        const current = sections.find(section => {
+          const element = document.getElementById(section);
+          if (element) {
+            const rect = element.getBoundingClientRect();
+            return rect.top <= 100 && rect.bottom >= 100;
+          }
+          return false;
+        });
+        if (current) setActiveSection(current);
+      }, 50);
+    };
+
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('scroll', handleScroll);
+      if (rafId) cancelAnimationFrame(rafId);
+      clearTimeout(scrollTimeout);
     };
   }, []);
 
@@ -49,15 +63,16 @@ export default function Hero() {
   ];
 
   return (
-    <section id="hero" className="min-h-screen flex items-center justify-center relative overflow-hidden px-6">
+    <section id="hero" className="min-h-screen flex items-center justify-center relative overflow-hidden px-6" aria-label="Hero section">
       {/* Side Navigation */}
-      <nav className="fixed right-8 top-1/2 -translate-y-1/2 z-50 hidden lg:block">
+      <nav className="fixed right-8 top-1/2 -translate-y-1/2 z-50 hidden lg:block" aria-label="Main navigation">
         <div className="flex flex-col items-end gap-8">
           {navItems.map((item) => (
             <a
               key={item.id}
               href={`#${item.id}`}
               className="group flex items-center gap-4 transition-all duration-300"
+              aria-label={`Navigate to ${item.name} section`}
             >
               <span className={`text-xs font-mono uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${
                 activeSection === item.id ? 'opacity-100 text-accent' : 'text-muted'

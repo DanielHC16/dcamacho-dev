@@ -35,7 +35,7 @@ export default function Projects() {
         <div className="flex items-start justify-between" style={{ marginBottom: '2.5rem' }}>
           <div>
             <span className="text-xs font-mono uppercase tracking-widest font-semibold text-foreground">
-              Selected_Work
+              projects
             </span>
           </div>
           
@@ -79,9 +79,9 @@ export default function Projects() {
               </div>
 
               {/* Project Content */}
-              <div className="p-10 space-y-7">
+              <div className="p-10">
                 {/* Project Number & Divider */}
-                <div className="flex items-center gap-4" style={{ paddingLeft: '1.5rem', paddingRight: '1.5rem' }}>
+                <div className="flex items-center gap-4" style={{ paddingLeft: '1.5rem', paddingRight: '1.5rem', marginBottom: '1.25rem' }}>
                   <span className="text-xs text-muted font-mono">
                     {String(currentSlide * projectsPerPage + index + 1).padStart(2, '0')}
                   </span>
@@ -89,17 +89,17 @@ export default function Projects() {
                 </div>
 
                 {/* Project Title */}
-                <h3 className="text-2xl font-light text-foreground group-hover:text-accent transition-colors duration-300" style={{ paddingLeft: '1.5rem', paddingRight: '1.5rem' }}>
+                <h3 className="text-2xl font-light text-foreground group-hover:text-accent transition-colors duration-300" style={{ paddingLeft: '1.5rem', paddingRight: '1.5rem', marginBottom: '1.25rem' }}>
                   {project.title}
                 </h3>
 
                 {/* Project Description */}
-                <p className="text-sm text-muted font-light leading-relaxed min-h-12" style={{ paddingLeft: '1.5rem', paddingRight: '1.5rem' }}>
+                <p className="text-sm text-muted font-light leading-relaxed min-h-12" style={{ paddingLeft: '1.5rem', paddingRight: '1.5rem', marginBottom: '1.5rem' }}>
                   {project.description}
                 </p>
 
                 {/* Tags */}
-                <div className="flex flex-wrap gap-2 pt-4" style={{ paddingLeft: '1.5rem', paddingRight: '1.5rem' }}>
+                <div className="flex flex-wrap gap-2" style={{ paddingLeft: '1.5rem', paddingRight: '1.5rem', marginBottom: '1.5rem' }}>
                   {project.tags.map((tag, tagIndex) => (
                     <span
                       key={tagIndex}
@@ -115,7 +115,7 @@ export default function Projects() {
                   href={project.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-xs uppercase tracking-widest font-light text-muted hover:text-accent transition-colors duration-300 pt-6"
+                  className="inline-flex items-center gap-2 text-xs uppercase tracking-widest font-light text-muted hover:text-accent transition-colors duration-300"
                   style={{ paddingLeft: '1.5rem', paddingRight: '1.5rem' }}
                 >
                   View Project

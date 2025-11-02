@@ -89,10 +89,10 @@ export const projects: Project[] = [
 
 // Skills/Tools
 export const skills = {
-  languages: ["TypeScript", "JavaScript", "Python", "Go", "Java"],
-  frontend: ["React", "Next.js", "Tailwind CSS", "HTML5", "CSS3"],
-  backend: ["Node.js", "Express", "FastAPI", "PostgreSQL", "MongoDB"],
-  tools: ["Git", "Docker", "VS Code", "Figma", "Vercel"]
+  languages: ["Python", "JavaScript", "TypeScript", "Java", "C"],
+  frontend: ["React", "Next.js", "Tailwind CSS", "", ""],
+  backend: ["Node.js", "Express", "FastAPI", "PostgreSQL", "MongoDB",],
+  tools: ["Git", /*"Docker"*/, "Figma", "Vercel", "AWS", "GCP"]
 };
 
 // Social Links

@@ -82,7 +82,7 @@ export default function Hero() {
           <div className="flex items-center gap-4">
             <div className="w-16 h-px bg-accent"></div>
             <span className="text-xs text-muted font-mono uppercase tracking-widest">
-              Portfolio_v1.0
+              Portfolio_v2.01
             </span>
           </div>
 

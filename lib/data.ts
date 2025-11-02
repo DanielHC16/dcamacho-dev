@@ -3,8 +3,8 @@ export const personalInfo = {
   name: "Daniel Camacho",
   role: "Software Engineer",
   tagline: "Structured, thoughtful, and a little obsessive about detail.",
-  bio: `I'm a software engineer passionate about creating minimalist, functional applications. 
-  My work focuses on clean architecture, user-centric design, and writing code that's as elegant as it is efficient.`,
+  bio: `I build software that balances logic and design.
+Each project reflects my belief that clarity and efficiency create the most meaningful results.`,
   email: "danielcamacho0416@gmail.com",
   github: "https://github.com/DanielHC16",
   linkedin: "https://linkedin.com/in/danielcamacho777",
@@ -18,12 +18,12 @@ export const aboutPoints = [
     description: "Analytical approach to complex challenges with elegant solutions"
   },
   {
-    title: "Clean Code Advocate",
-    description: "Writing maintainable, scalable, and well-documented code"
+    title: "Precision Architect",
+    description: "Focused on building structured, reliable systems through clarity, logic, and intent."
   },
   {
-    title: "Continuous Learner",
-    description: "Always exploring new technologies and best practices"
+    title: "Human-Centered Developer",
+    description: "Creating meaningful impact through clean, intentional design."
   }
 ];
 
@@ -39,52 +39,57 @@ export interface Project {
 }
 
 export const projects: Project[] = [
-  {
-    id: 1,
-    title: "Project One",
-    description: "A full-stack application with modern architecture and clean design principles",
-    tags: ["React", "Node.js", "TypeScript"],
-    github: "https://github.com/dcamacho/project-one",
-    demo: "https://project-one.demo",
-    featured: true
-  },
-  {
-    id: 2,
-    title: "Project Two",
-    description: "Minimalist portfolio generator with customizable themes and layouts",
-    tags: ["Next.js", "Tailwind", "Vercel"],
-    github: "https://github.com/dcamacho/project-two",
-    featured: true
-  },
-  {
-    id: 3,
-    title: "Project Three",
-    description: "API service with comprehensive documentation and testing suite",
-    tags: ["Python", "FastAPI", "PostgreSQL"],
-    github: "https://github.com/dcamacho/project-three",
-    featured: true
-  },
-  {
-    id: 4,
-    title: "Project Four",
-    description: "Mobile-first web application with responsive design and accessibility",
-    tags: ["React Native", "Firebase", "Redux"],
-    github: "https://github.com/dcamacho/project-four"
-  },
-  {
-    id: 5,
-    title: "Project Five",
-    description: "CLI tool for automating development workflows and deployment",
-    tags: ["Go", "Docker", "CI/CD"],
-    github: "https://github.com/dcamacho/project-five"
-  },
-  {
-    id: 6,
-    title: "Project Six",
-    description: "Data visualization dashboard with real-time analytics",
-    tags: ["D3.js", "WebSocket", "Express"],
-    github: "https://github.com/dcamacho/project-six"
-  }
+    {
+        id: 1,
+        title: "TBA",
+        description: "Currently focusing on academic commitments; project details will be provided once available.",
+        tags: ["TBA"],
+        github: personalInfo.github,
+        demo: personalInfo.github,
+        featured: true
+    },
+    {
+        id: 2,
+        title: "TBA",
+        description: "Currently focusing on academic commitments; project details will be provided once available.",
+        tags: ["TBA"],
+        github: personalInfo.github,
+        demo: personalInfo.github,
+        featured: true
+    },
+    {
+        id: 3,
+        title: "TBA",
+        description: "Currently focusing on academic commitments; project details will be provided once available.",
+        tags: ["TBA"],
+        github: personalInfo.github,
+        demo: personalInfo.github,
+        featured: true
+    },
+    {
+        id: 4,
+        title: "TBA",
+        description: "Currently focusing on academic commitments; project details will be provided once available.",
+        tags: ["TBA"],
+        github: personalInfo.github,
+        demo: personalInfo.github
+    },
+    {
+        id: 5,
+        title: "TBA",
+        description: "Currently focusing on academic commitments; project details will be provided once available.",
+        tags: ["TBA"],
+        github: personalInfo.github,
+        demo: personalInfo.github
+    },
+    {
+        id: 6,
+        title: "Easter Egg",
+        description: "Wow. Still here? You must be really curious",
+        tags: ["Hello World"],
+        github: personalInfo.instagram,
+        demo: personalInfo.instagram
+    }
 ];
 
 // Skills/Tools

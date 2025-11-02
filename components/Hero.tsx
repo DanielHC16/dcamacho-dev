@@ -5,6 +5,8 @@ import { personalInfo } from '@/lib/data';
 
 export default function Hero() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState('hero');
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -14,12 +16,69 @@ export default function Hero() {
       });
     };
 
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 100);
+      
+      // Determine active section
+      const sections = ['hero', 'about', 'projects', 'skills', 'contact'];
+      const current = sections.find(section => {
+        const element = document.getElementById(section);
+        if (element) {
+          const rect = element.getBoundingClientRect();
+          return rect.top <= 100 && rect.bottom >= 100;
+        }
+        return false;
+      });
+      if (current) setActiveSection(current);
+    };
+
     window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
+  const navItems = [
+    { id: 'hero', label: '00', name: 'Home' },
+    { id: 'about', label: '01', name: 'About' },
+    { id: 'projects', label: '02', name: 'Work' },
+    { id: 'skills', label: '03', name: 'Skills' },
+    { id: 'contact', label: '05', name: 'Contact' },
+  ];
+
   return (
-    <section className="min-h-screen flex items-center justify-center relative overflow-hidden px-6">
+    <section id="hero" className="min-h-screen flex items-center justify-center relative overflow-hidden px-6">
+      {/* Side Navigation */}
+      <nav className="fixed right-8 top-1/2 -translate-y-1/2 z-50 hidden lg:block">
+        <div className="flex flex-col items-end gap-8">
+          {navItems.map((item) => (
+            <a
+              key={item.id}
+              href={`#${item.id}`}
+              className="group flex items-center gap-4 transition-all duration-300"
+            >
+              <span className={`text-xs font-mono uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${
+                activeSection === item.id ? 'opacity-100 text-accent' : 'text-muted'
+              }`}>
+                {item.name}
+              </span>
+              <div className="flex items-center gap-2">
+                <div className={`h-px transition-all duration-300 ${
+                  activeSection === item.id ? 'w-8 bg-accent' : 'w-6 bg-border group-hover:w-8 group-hover:bg-accent'
+                }`}></div>
+                <span className={`text-xs font-mono transition-colors duration-300 ${
+                  activeSection === item.id ? 'text-accent' : 'text-muted group-hover:text-accent'
+                }`}>
+                  {item.label}
+                </span>
+              </div>
+            </a>
+          ))}
+        </div>
+      </nav>
+
       {/* Animated Background Grid */}
       <div className="absolute inset-0 opacity-30">
         <div className="absolute inset-0">
@@ -101,35 +160,19 @@ export default function Hero() {
             Building elegant solutions through clean code and thoughtful design.
             Passionate about creating exceptional digital experiences.
           </p>
-
-          {/* CTA */}
-          <div className="flex items-center gap-6 pt-8">
-            <a
-              href="#contact"
-              className="group relative px-8 py-4 border border-accent hover:bg-accent transition-all duration-300"
-            >
-              <span className="relative z-10 text-sm uppercase tracking-widest font-light text-foreground group-hover:text-background transition-colors duration-300">
-                Get in touch
-              </span>
-              <div className="absolute inset-0 bg-accent opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
-            </a>
-
-            <a
-              href="#projects"
-              className="text-sm uppercase tracking-widest font-light text-muted hover:text-foreground transition-colors duration-300"
-            >
-              View Work →
-            </a>
-          </div>
         </div>
       </div>
 
-      {/* Scroll Indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 animate-fadeIn">
+      {/* Scroll Indicator with Animation */}
+      <div className={`absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 transition-all duration-500 ${
+        scrolled ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'
+      }`}>
         <span className="text-xs text-muted font-mono uppercase tracking-widest rotate-90">
           Scroll
         </span>
-        <div className="w-px h-16 bg-border"></div>
+        <div className="w-px h-16 bg-border relative overflow-hidden">
+          <div className="absolute top-0 left-0 w-full h-full bg-accent animate-scroll-line"></div>
+        </div>
       </div>
     </section>
   );

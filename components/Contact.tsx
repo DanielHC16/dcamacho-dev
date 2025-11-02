@@ -3,76 +3,98 @@ import { personalInfo } from '@/lib/data';
 
 export default function Contact() {
   return (
-    <section className="min-h-screen flex items-center justify-center px-6 py-24">
-      <div className="max-w-4xl w-full mx-auto">
-        {/* Section header - perfectly centered */}
-        <div className="flex items-center justify-center gap-4 mb-24">
+    <section id="contact" className="min-h-screen flex items-center justify-center px-6 py-24">
+      <div className="max-w-6xl w-full mx-auto">
+        {/* Section header */}
+        <div className="flex items-center gap-4 mb-8">
           <div className="w-20 h-px bg-border"></div>
           <span className="text-xs text-muted font-mono">05</span>
           <div className="w-20 h-px bg-border"></div>
         </div>
 
-        {/* Content container with consistent spacing */}
-        <div className="flex flex-col items-center space-y-48">
-          {/* Heading and description */}
-          <div className="text-center space-y-6">
-            <h2 className="text-5xl md:text-7xl font-extralight tracking-tight text-foreground">
-              Let&apos;s Connect
-            </h2>
-            
-            <p className="text-sm md:text-base text-muted font-light max-w-md mx-auto leading-relaxed">
-              Open to new opportunities and collaborations. Reach out through any of these channels.
-            </p>
-          </div>
+        {/* Section Title */}
+        <div className="mb-20">
+          <span className="text-xs font-mono uppercase tracking-widest font-semibold text-foreground">
+            Let&apos;s_Connect
+          </span>
+        </div>
 
-          {/* Social Links Grid - perfectly centered */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 w-full max-w-2xl">
-            <a
-              href={personalInfo.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group flex flex-col items-center justify-center gap-4 p-8 border border-border hover:border-accent bg-surface transition-all duration-500 aspect-square"
-            >
-              <FaGithub className="w-12 h-12 text-foreground group-hover:text-accent transition-colors duration-500" />
-              <span className="text-xs uppercase tracking-wider text-muted font-light group-hover:text-foreground transition-colors duration-300 text-center">
+        {/* Description */}
+        <p className="text-sm text-muted font-light leading-relaxed max-w-2xl" style={{ marginBottom: '3.5rem' }}>
+          Open to new opportunities and collaborations. Reach out through any of these channels.
+        </p>
+
+        {/* Social Links - Clean List */}
+        <div className="max-w-xl" style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+          <a
+            href={personalInfo.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group flex items-center gap-6 border-b border-border hover:border-accent transition-all duration-300"
+            style={{ paddingBottom: '1.5rem' }}
+          >
+            <FaGithub className="w-5 h-5 text-muted group-hover:text-accent transition-colors duration-300" />
+            <div className="flex flex-col gap-1">
+              <span className="text-xs font-mono uppercase tracking-widest text-muted group-hover:text-foreground transition-colors duration-300">
                 GitHub
               </span>
-            </a>
+              <span className="text-sm text-foreground font-light group-hover:text-accent transition-colors duration-300">
+                @DanielHC16
+              </span>
+            </div>
+          </a>
 
-            <a
-              href={personalInfo.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group flex flex-col items-center justify-center gap-4 p-8 border border-border hover:border-accent bg-surface transition-all duration-500 aspect-square"
-            >
-              <FaLinkedin className="w-12 h-12 text-foreground group-hover:text-accent transition-colors duration-500" />
-              <span className="text-xs uppercase tracking-wider text-muted font-light group-hover:text-foreground transition-colors duration-300 text-center">
+          <a
+            href={personalInfo.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group flex items-center gap-6 border-b border-border hover:border-accent transition-all duration-300"
+            style={{ paddingBottom: '1.5rem' }}
+          >
+            <FaLinkedin className="w-5 h-5 text-muted group-hover:text-accent transition-colors duration-300" />
+            <div className="flex flex-col gap-1">
+              <span className="text-xs font-mono uppercase tracking-widest text-muted group-hover:text-foreground transition-colors duration-300">
                 LinkedIn
               </span>
-            </a>
+              <span className="text-sm text-foreground font-light group-hover:text-accent transition-colors duration-300">
+                Daniel Camacho
+              </span>
+            </div>
+          </a>
 
-            <a
-              href={personalInfo.instagram}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group flex flex-col items-center justify-center gap-4 p-8 border border-border hover:border-accent bg-surface transition-all duration-500 aspect-square"
-            >
-              <FaInstagram className="w-12 h-12 text-foreground group-hover:text-accent transition-colors duration-500" />
-              <span className="text-xs uppercase tracking-wider text-muted font-light group-hover:text-foreground transition-colors duration-300 text-center">
+          <a
+            href={personalInfo.instagram}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group flex items-center gap-6 border-b border-border hover:border-accent transition-all duration-300"
+            style={{ paddingBottom: '1.5rem' }}
+          >
+            <FaInstagram className="w-5 h-5 text-muted group-hover:text-accent transition-colors duration-300" />
+            <div className="flex flex-col gap-1">
+              <span className="text-xs font-mono uppercase tracking-widest text-muted group-hover:text-foreground transition-colors duration-300">
                 Instagram
               </span>
-            </a>
+              <span className="text-sm text-foreground font-light group-hover:text-accent transition-colors duration-300">
+                @https.hajin
+              </span>
+            </div>
+          </a>
 
-            <a
-              href={`mailto:${personalInfo.email}`}
-              className="group flex flex-col items-center justify-center gap-4 p-8 border border-border hover:border-accent bg-surface transition-all duration-500 aspect-square"
-            >
-              <FaEnvelope className="w-12 h-12 text-foreground group-hover:text-accent transition-colors duration-500" />
-              <span className="text-xs uppercase tracking-wider text-muted font-light group-hover:text-foreground transition-colors duration-300 text-center">
+          <a
+            href={`mailto:${personalInfo.email}`}
+            className="group flex items-center gap-6 border-b border-border hover:border-accent transition-all duration-300"
+            style={{ paddingBottom: '1.5rem' }}
+          >
+            <FaEnvelope className="w-5 h-5 text-muted group-hover:text-accent transition-colors duration-300" />
+            <div className="flex flex-col gap-1">
+              <span className="text-xs font-mono uppercase tracking-widest text-muted group-hover:text-foreground transition-colors duration-300">
                 Email
               </span>
-            </a>
-          </div>
+              <span className="text-sm text-foreground font-light group-hover:text-accent transition-colors duration-300">
+                {personalInfo.email}
+              </span>
+            </div>
+          </a>
         </div>
       </div>
     </section>

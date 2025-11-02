@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://danielcamacho.dev'),
+  metadataBase: new URL('https://danielcamacho.vercel.app'),
   title: "Daniel Camacho | Software Engineer",
   description: "Software engineer portfolio - Building elegant solutions through clean code and thoughtful design. NieR: Automata inspired minimalist design.",
   keywords: ["Daniel Camacho", "Software Engineer", "Web Developer", "Portfolio", "React", "Next.js", "TypeScript", "Full Stack Developer"],
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://danielcamacho.dev",
+    url: "https://danielcamacho.vercel.app",
     title: "Daniel Camacho | Software Engineer",
     description: "Software engineer portfolio - Building elegant solutions through clean code and thoughtful design.",
     siteName: "Daniel Camacho Portfolio",

@@ -1,5 +1,5 @@
 export default function sitemap() {
-  const baseUrl = 'https://danielcamacho.dev';
+  const baseUrl = 'https://danielcamacho.vercel.app';
   
   return [
     {

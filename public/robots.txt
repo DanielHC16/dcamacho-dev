@@ -3,4 +3,4 @@ User-agent: *
 Allow: /
 
 # Sitemaps
-Sitemap: https://danielcamacho.dev/sitemap.xml
+Sitemap: https://danielcamacho.vercel.app/sitemap.xml

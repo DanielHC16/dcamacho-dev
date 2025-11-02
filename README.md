@@ -1,36 +1,76 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Daniel Camacho - Portfolio
 
-## Getting Started
+A minimalist developer portfolio inspired by NieR: Automata, featuring geometric design and clean aesthetics.
 
-First, run the development server:
+## 🎨 Design Philosophy
+
+- **Geometric Minimalism**: Clean lines, balanced spacing, and subtle animations
+- **NieR: Automata Inspired**: Calm, mechanical elegance with gold accents
+- **No Images Required**: Pure typography and layout-driven design
+- **Fully Responsive**: Works beautifully on all screen sizes
+
+## 🚀 Getting Started
 
 ```bash
+# Install dependencies
+npm install
+
+# Run development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+# Build for production
+npm run build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to view your portfolio.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📝 How to Customize
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+All content can be easily updated by editing **`lib/data.ts`**:
 
-## Learn More
+### Personal Information
+Update your name, role, tagline, bio, and contact links.
 
-To learn more about Next.js, take a look at the following resources:
+### About Points (Section 02)
+Customize the 3 key strengths/characteristics displayed.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Projects (Section 03)
+Add or modify projects with:
+- Title and description
+- Technology tags
+- GitHub and demo links
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Skills (Section 04)
+Update your tech stack across 4 categories:
+- Languages
+- Frontend
+- Backend  
+- Tools
 
-## Deploy on Vercel
+### Social Links (Section 05)
+Customize your GitHub, LinkedIn, Twitter, and Email.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🎯 Sections
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. **Hero (01)** - Your name and role with geometric accents
+2. **About (02)** - Bio and key strengths
+3. **Projects (03)** - Portfolio of work with clickable links
+4. **Skills (04)** - Technical skills organized by category
+5. **Contact (05)** - Social links and contact methods
+
+## 📦 Tech Stack
+
+- Next.js 16.0.1
+- Tailwind CSS v4
+- TypeScript
+- Geist Fonts
+
+## 🌐 Deploy on Vercel
+
+1. Push code to GitHub
+2. Import to Vercel
+3. Deploy automatically
+
+---
+
+Built with ♥ and inspired by NieR: Automata

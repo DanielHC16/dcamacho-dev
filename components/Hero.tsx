@@ -63,9 +63,9 @@ export default function Hero() {
   ];
 
   return (
-    <section id="hero" className="min-h-screen flex items-center justify-center relative overflow-hidden px-6" aria-label="Hero section">
+    <section id="hero" className="min-h-screen flex items-center justify-center relative overflow-hidden px-8 sm:px-16 md:px-24 lg:px-32" aria-label="Hero section">
       {/* Side Navigation */}
-      <nav className="fixed right-8 top-1/2 -translate-y-1/2 z-50 hidden lg:block" aria-label="Main navigation">
+      <nav className="fixed right-4 sm:right-16 md:right-24 lg:right-32 top-1/2 -translate-y-1/2 z-50 hidden lg:block" aria-label="Main navigation">
         <div className="flex flex-col items-end gap-8">
           {navItems.map((item) => (
             <a
@@ -157,41 +157,41 @@ export default function Hero() {
       </div>
 
       {/* Hero Content */}
-      <div className="relative z-10 max-w-5xl mx-auto">
-        <div className="space-y-8 animate-fadeIn">
+      <div className="relative z-10 w-full max-w-md sm:max-w-xl md:max-w-3xl lg:max-w-5xl mx-auto">
+        <div className="space-y-6 sm:space-y-7 md:space-y-8 animate-fadeIn">
           {/* Label */}
-          <div className="flex items-center gap-4">
-            <div className="w-16 h-px bg-accent"></div>
+          <div className="flex items-center gap-3 sm:gap-4">
+            <div className="w-10 sm:w-12 md:w-16 h-px bg-accent"></div>
             <span className="text-xs text-muted font-mono uppercase tracking-widest">
               Portfolio_v2.01
             </span>
           </div>
 
           {/* Main Heading */}
-          <div className="space-y-4">
-            <h1 className="text-6xl md:text-8xl lg:text-9xl font-extralight tracking-tight text-foreground leading-none">
+          <div className="space-y-3 sm:space-y-4">
+            <h1 className="text-3xl sm:text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-extralight tracking-tight text-foreground leading-none">
               {personalInfo.name}
             </h1>
-            <p className="text-xl md:text-2xl text-muted font-light tracking-tight">
+            <p className="text-base sm:text-xl md:text-2xl text-muted font-light tracking-tight">
               {personalInfo.role}
             </p>
           </div>
 
           {/* Description */}
-          <p className="text-sm md:text-base text-muted font-light max-w-xl leading-relaxed">
+          <p className="text-sm sm:text-base md:text-base text-muted font-light max-w-sm sm:max-w-md md:max-w-xl leading-relaxed">
             {personalInfo.tagline}
           </p>
         </div>
       </div>
 
       {/* Scroll Indicator with Animation */}
-      <div className={`absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 transition-all duration-500 ${
+      <div className={`absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 sm:gap-4 transition-all duration-500 ${
         scrolled ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'
       }`}>
         <span className="text-xs text-muted font-mono uppercase tracking-widest rotate-90">
           Scroll
         </span>
-        <div className="w-px h-16 bg-border relative overflow-hidden">
+        <div className="w-px h-12 sm:h-16 bg-border relative overflow-hidden">
           <div className="absolute top-0 left-0 w-full h-full bg-accent animate-scroll-line"></div>
         </div>
       </div>

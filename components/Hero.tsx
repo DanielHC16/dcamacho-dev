@@ -65,16 +65,16 @@ export default function Hero() {
   return (
     <section id="hero" className="min-h-screen flex items-center justify-center relative overflow-hidden px-8 sm:px-16 md:px-24 lg:px-32" aria-label="Hero section">
       {/* Side Navigation */}
-      <nav className="fixed right-4 sm:right-16 md:right-24 lg:right-32 top-1/2 -translate-y-1/2 z-50 hidden lg:block" aria-label="Main navigation">
-        <div className="flex flex-col items-end gap-8">
+      <nav className="fixed right-4 top-1/2 -translate-y-1/2 z-50 hidden xl:block" aria-label="Main navigation">
+        <div className="flex flex-col items-end gap-6">
           {navItems.map((item) => (
             <a
               key={item.id}
               href={`#${item.id}`}
-              className="group flex items-center gap-4 transition-all duration-300"
+              className="group flex items-center gap-3 transition-all duration-300"
               aria-label={`Navigate to ${item.name} section`}
             >
-              <span className={`text-xs font-mono uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${
+              <span className={`text-xs font-mono uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap ${
                 activeSection === item.id ? 'opacity-100 text-accent' : 'text-muted'
               }`}>
                 {item.name}

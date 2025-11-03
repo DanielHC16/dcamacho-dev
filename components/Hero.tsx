@@ -169,16 +169,16 @@ export default function Hero() {
 
           {/* Main Heading */}
           <div className="space-y-3 sm:space-y-4">
-            <h1 className="text-3xl sm:text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-extralight tracking-tight text-foreground leading-none">
+            <h1 className="text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-extralight tracking-tight text-foreground leading-none">
               {personalInfo.name}
             </h1>
-            <p className="text-base sm:text-xl md:text-2xl text-muted font-light tracking-tight">
+            <p className="text-xl sm:text-2xl md:text-3xl text-muted font-light tracking-tight">
               {personalInfo.role}
             </p>
           </div>
 
           {/* Description */}
-          <p className="text-sm sm:text-base md:text-base text-muted font-light max-w-sm sm:max-w-md md:max-w-xl leading-relaxed">
+          <p className="text-sm sm:text-base md:text-lg text-muted font-light max-w-sm sm:max-w-md md:max-w-xl leading-relaxed">
             {personalInfo.tagline}
           </p>
         </div>

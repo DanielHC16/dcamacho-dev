@@ -1,7 +1,7 @@
 // Personal Information
 export const personalInfo = {
   name: "Daniel Camacho",
-  role: "Software Engineer",
+  role: "Software Developer",
   tagline: "Structured, thoughtful, and a little obsessive about detail.",
   bio: `I build software that balances logic and design.
 Each project reflects my belief that clarity and efficiency create the most meaningful results.`,

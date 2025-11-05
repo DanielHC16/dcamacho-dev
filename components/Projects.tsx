@@ -174,9 +174,7 @@ export default function Projects() {
           <div className="w-16 h-px bg-border"></div>
         </div>
         */}
-
-
-      </div>      
+      </div>
     </section>
   );
 }

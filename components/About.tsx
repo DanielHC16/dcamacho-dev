@@ -59,7 +59,7 @@ export default function About() {
         </div>
 
         {/* Divider - now placed closer to the end of section */}
-        <div className="flex items-center justify-center gap-4" style={{ marginTop: '10rem' }}>
+        <div className="flex items-center justify-center gap-4 w-full self-center" style={{ marginTop: '10rem' }}>
           <div className="w-16 h-px bg-border"></div>
           <div className="w-2 h-2 bg-accent rotate-45 animate-pulse hover:animate-spin transition-all duration-700"></div>
           <div className="w-16 h-px bg-border"></div>

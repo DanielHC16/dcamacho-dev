@@ -59,7 +59,7 @@ export default function Hero() {
     { id: 'about', label: '01', name: 'About' },
     { id: 'projects', label: '02', name: 'Work' },
     { id: 'skills', label: '03', name: 'Skills' },
-    { id: 'contact', label: '05', name: 'Contact' },
+    { id: 'contact', label: '04', name: 'Contact' },
   ];
 
   return (

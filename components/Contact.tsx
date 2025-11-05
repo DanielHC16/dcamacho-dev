@@ -35,7 +35,7 @@ export default function Contact() {
         <div className="w-full flex flex-col items-center md:items-start">
           <div className="flex items-center justify-center md:justify-start gap-4 mb-4">
             <div className="w-16 sm:w-20 h-px bg-border" />
-            <span className="text-xs text-muted font-mono">05</span>
+            <span className="text-xs text-muted font-mono">04</span>
             <div className="w-16 sm:w-20 h-px bg-border" />
           </div>
 

@@ -127,33 +127,41 @@ export default function Hero() {
       {/* Floating geometric shapes */}
       <div className="absolute inset-0 pointer-events-none">
         <div
-          className="absolute top-1/4 left-1/4 w-2 h-2 bg-accent rotate-45"
+          className="absolute top-1/4 left-1/4"
           style={{
-            transform: `translate(${mousePosition.x * 20}px, ${mousePosition.y * 20}px) rotate(45deg)`,
+            transform: `translate(${mousePosition.x * 20}px, ${mousePosition.y * 20}px)`,
             transition: 'transform 0.5s ease-out',
           }}
-        />
+        >
+          <div className="w-2 h-2 bg-accent rotate-45 animate-float" />
+        </div>
         <div
-          className="absolute bottom-1/3 right-1/3 w-3 h-3 border border-accent"
+          className="absolute bottom-1/3 right-1/3"
           style={{
             transform: `translate(${mousePosition.x * -15}px, ${mousePosition.y * -15}px)`,
             transition: 'transform 0.5s ease-out',
           }}
-        />
+        >
+          <div className="w-3 h-3 border border-accent animate-float-reverse" />
+        </div>
         <div
-          className="absolute top-1/2 right-1/6 w-1 h-1 bg-foreground"
+          className="absolute top-1/2 right-1/6"
           style={{
             transform: `translate(${mousePosition.x * 25}px, ${mousePosition.y * 25}px)`,
             transition: 'transform 0.5s ease-out',
           }}
-        />
+        >
+          <div className="w-1 h-1 bg-foreground animate-float" />
+        </div>
         <div
-          className="absolute top-1/3 right-1/2 w-2 h-2 border border-muted"
+          className="absolute top-1/3 right-1/2"
           style={{
             transform: `translate(${mousePosition.x * -20}px, ${mousePosition.y * -20}px) rotate(${mousePosition.x * 45}deg)`,
             transition: 'transform 0.6s ease-out',
           }}
-        />
+        >
+          <div className="w-2 h-2 border border-muted animate-float-reverse" />
+        </div>
       </div>
 
       {/* Hero Content */}
@@ -172,7 +180,7 @@ export default function Hero() {
             <h1 className="text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-extralight tracking-tight text-foreground leading-none">
               {personalInfo.name}
             </h1>
-            <p className="text-xl sm:text-2xl md:text-3xl text-muted font-light tracking-tight">
+            <p className="text-xl sm:text-2xl md:text-3xl text-muted font-light tracking-tight" style={{ paddingLeft: '0.08em' }}>
               {personalInfo.role}
             </p>
           </div>

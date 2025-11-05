@@ -8,6 +8,7 @@ import Skills from '@/components/Skills';
 import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
 import Loading from '@/components/Loading';
+import ThemeToggle from '@/components/ThemeToggle';
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
@@ -27,6 +28,7 @@ export default function Home() {
 
   return (
     <>
+      <ThemeToggle />
       <a 
         href="#about" 
         className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-accent focus:text-background focus:font-mono focus:text-sm"

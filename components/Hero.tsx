@@ -168,19 +168,31 @@ export default function Hero() {
       <div className="relative z-10 w-full max-w-md sm:max-w-xl md:max-w-3xl lg:max-w-5xl mx-auto">
         <div className="space-y-6 sm:space-y-7 md:space-y-8 animate-fadeIn">
           {/* Label */}
-          <div className="flex items-center gap-3 sm:gap-4">
+          <div className="flex items-center gap-3 sm:gap-4 relative">
+            {/* Corner accents */}
+            <div className="absolute -top-3 -left-2 w-6 h-6 border-l border-t border-border opacity-50"></div>
+            <div className="absolute -top-3 -right-2 w-6 h-6 border-r border-t border-border opacity-50"></div>
+            <div className="absolute -bottom-3 -left-2 w-6 h-6 border-l border-b border-border opacity-50"></div>
+            <div className="absolute -bottom-3 -right-2 w-6 h-6 border-r border-b border-border opacity-50"></div>
+            
             <div className="w-10 sm:w-12 md:w-16 h-px bg-accent"></div>
-            <span className="text-xs text-muted font-mono uppercase tracking-widest">
+            <span className="text-xs text-muted font-mono uppercase tracking-widest select-none">
               Portfolio_v2.01
             </span>
           </div>
 
           {/* Main Heading */}
-          <div className="space-y-3 sm:space-y-4">
-            <h1 className="text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-extralight tracking-tight text-foreground leading-none">
+          <div className="space-y-3 sm:space-y-4 relative">
+            {/* Corner accents */}
+            <div className="absolute -top-6 -left-4 w-8 h-8 border-l border-t border-border opacity-50"></div>
+            <div className="absolute -top-6 -right-4 w-8 h-8 border-r border-t border-border opacity-50"></div>
+            <div className="absolute -bottom-6 -left-4 w-8 h-8 border-l border-b border-border opacity-50"></div>
+            <div className="absolute -bottom-6 -right-4 w-8 h-8 border-r border-b border-border opacity-50"></div>
+            
+            <h1 className="text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-extralight tracking-tight text-foreground leading-none relative">
               {personalInfo.name}
             </h1>
-            <p className="text-xl sm:text-2xl md:text-3xl text-muted font-light tracking-tight" style={{ paddingLeft: '0.08em' }}>
+            <p className="text-xl sm:text-2xl md:text-3xl text-muted font-light tracking-tight">
               {personalInfo.role}
             </p>
           </div>

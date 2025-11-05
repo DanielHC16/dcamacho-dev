@@ -4,9 +4,34 @@ export default function About() {
   return (
     <section
       id="about"
-      className="min-h-screen flex items-center justify-center px-10 sm:px-8 md:px-12 lg:px-24 py-20 sm:py-28 bg-background"
+      className="min-h-screen flex items-center justify-center px-10 sm:px-8 md:px-12 lg:px-24 py-20 sm:py-28 bg-background relative overflow-hidden"
     >
-      <div className="w-full max-w-6xl mx-auto flex flex-col items-center md:items-start text-center md:text-left px-10 sm:px-0">
+      {/* Background Grid */}
+      <div className="absolute inset-0 opacity-20">
+        <div className="absolute inset-0">
+          {/* Horizontal lines */}
+          {[...Array(20)].map((_, i) => (
+            <div
+              key={`h-${i}`}
+              className="absolute w-full h-px bg-border"
+              style={{
+                top: `${i * 5}%`,
+              }}
+            />
+          ))}
+          {/* Vertical lines */}
+          {[...Array(20)].map((_, i) => (
+            <div
+              key={`v-${i}`}
+              className="absolute h-full w-px bg-border"
+              style={{
+                left: `${i * 5}%`,
+              }}
+            />
+          ))}
+        </div>
+      </div>
+      <div className="relative z-10 w-full max-w-6xl mx-auto flex flex-col items-center md:items-start text-center md:text-left px-10 sm:px-0">
         {/* Section header */}
         <div className="w-full flex flex-col items-center md:items-start">
           <div className="flex items-center justify-center md:justify-start gap-4 mb-4">

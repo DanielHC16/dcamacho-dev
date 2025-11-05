@@ -22,8 +22,34 @@ export default function Projects() {
   );
 
   return (
-    <section id="projects" className="min-h-screen flex items-center justify-center px-10 sm:px-8 md:px-12 lg:px-16 py-24">
-      <div className="max-w-6xl w-full mx-auto px-10 sm:px-0">
+    <section id="projects" className="min-h-screen flex items-center justify-center px-10 sm:px-8 md:px-12 lg:px-16 py-24 relative overflow-hidden">
+      {/* Background Grid */}
+      <div className="absolute inset-0 opacity-20">
+        <div className="absolute inset-0">
+          {/* Horizontal lines */}
+          {[...Array(20)].map((_, i) => (
+            <div
+              key={`h-${i}`}
+              className="absolute w-full h-px bg-border"
+              style={{
+                top: `${i * 5}%`,
+              }}
+            />
+          ))}
+          {/* Vertical lines */}
+          {[...Array(20)].map((_, i) => (
+            <div
+              key={`v-${i}`}
+              className="absolute h-full w-px bg-border"
+              style={{
+                left: `${i * 5}%`,
+              }}
+            />
+          ))}
+        </div>
+      </div>
+
+      <div className="relative z-10 max-w-6xl w-full mx-auto px-10 sm:px-0">
         {/* Section header */}
         <div className="flex items-center justify-center sm:justify-start gap-4 mb-8">
           <div className="w-20 h-px bg-border"></div>

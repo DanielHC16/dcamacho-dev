@@ -89,12 +89,12 @@ export default function Projects() {
                 </div>
 
                 {/* Project Title */}
-                <h3 className="text-2xl font-light text-foreground group-hover:text-accent transition-colors duration-300" style={{ paddingLeft: '1.5rem', paddingRight: '1.5rem', marginBottom: '1.25rem' }}>
+                <h3 className="text-2xl font-normal text-foreground group-hover:text-accent transition-colors duration-300 leading-relaxed" style={{ paddingLeft: '1.5rem', paddingRight: '1.5rem', marginBottom: '1.25rem', letterSpacing: '0.01em' }}>
                   {project.title}
                 </h3>
 
                 {/* Project Description */}
-                <p className="text-sm text-muted font-light leading-relaxed min-h-12" style={{ paddingLeft: '1.5rem', paddingRight: '1.5rem', marginBottom: '1.5rem' }}>
+                <p className="text-base text-foreground/80 font-normal leading-relaxed min-h-12" style={{ paddingLeft: '1.5rem', paddingRight: '1.5rem', marginBottom: '1.5rem', lineHeight: '1.75', letterSpacing: '0.01em' }}>
                   {project.description}
                 </p>
 

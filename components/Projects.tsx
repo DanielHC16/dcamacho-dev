@@ -58,8 +58,8 @@ export default function Projects() {
         </div>
 
         {/* Section Title with Navigation */}
-        <div className="flex items-start justify-between px-10 sm:px-0" style={{ marginBottom: '2.5rem' }}>
-          <div>
+        <div className="flex flex-col sm:flex-row items-center sm:items-start justify-between gap-4 px-10 sm:px-0" style={{ marginBottom: '2.5rem' }}>
+          <div className="flex items-center justify-center sm:justify-start">
             <span className="text-xs font-mono uppercase tracking-widest font-semibold text-foreground">
               projects
             </span>

@@ -139,6 +139,25 @@ body {
   animation: float-reverse 10s ease-in-out infinite;
 }
 
+@keyframes loading-bar {
+  0% {
+    width: 0%;
+    left: 0%;
+  }
+  50% {
+    width: 100%;
+    left: 0%;
+  }
+  100% {
+    width: 0%;
+    left: 100%;
+  }
+}
+
+.animate-loading-bar {
+  animation: loading-bar 2s ease-in-out infinite;
+}
+
 /* Accessibility */
 .sr-only {
   position: absolute;

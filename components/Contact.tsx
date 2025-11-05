@@ -30,37 +30,41 @@ export default function Contact() {
         </div>
       </div>
 
-      <div className="relative z-10 max-w-6xl w-full mx-auto">
+      <div className="relative z-10 w-full max-w-6xl mx-auto flex flex-col items-center md:items-start text-center md:text-left px-10 sm:px-0">
         {/* Section header */}
-        <div className="flex items-center gap-4 mb-8">
-          <div className="w-20 h-px bg-border"></div>
-          <span className="text-xs text-muted font-mono">05</span>
-          <div className="w-20 h-px bg-border"></div>
-        </div>
+        <div className="w-full flex flex-col items-center md:items-start">
+          <div className="flex items-center justify-center md:justify-start gap-4 mb-4">
+            <div className="w-16 sm:w-20 h-px bg-border" />
+            <span className="text-xs text-muted font-mono">05</span>
+            <div className="w-16 sm:w-20 h-px bg-border" />
+          </div>
 
-        {/* Section Title */}
-        <div className="mb-20">
-          <span className="text-xs font-mono uppercase tracking-widest font-semibold text-foreground">
-            Let&apos;s_Connect
-          </span>
+          {/* Section Title */}
+          <div className="mb-12 sm:mb-20">
+            <span className="text-sm sm:text-base font-mono uppercase tracking-widest font-semibold text-foreground">
+              Let&apos;s_Connect
+            </span>
+          </div>
         </div>
 
         {/* Description */}
-        <p className="text-sm text-muted font-light leading-relaxed max-w-2xl" style={{ marginBottom: '3.5rem' }}>
+        <p className="text-sm sm:text-base text-muted font-light leading-relaxed max-w-2xl px-10 sm:px-0 text-center md:text-left" style={{ marginBottom: '3.5rem' }}>
           Open to new opportunities and collaborations. Reach out through any of these channels.
         </p>
 
         {/* Social Links - Clean List */}
-        <div className="max-w-xl" style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+        <div className="max-w-xl w-full px-10 sm:px-0 flex flex-col items-center md:items-start" style={{ gap: '2rem' }}>
           <a
             href={personalInfo.github}
             target="_blank"
             rel="noopener noreferrer"
-            className="group flex items-center gap-6 border-b border-border hover:border-accent transition-all duration-300"
+            className="group flex items-center gap-6 border-b border-border hover:border-accent transition-all duration-300 w-full"
             style={{ paddingBottom: '1.5rem' }}
           >
-            <FaGithub className="w-5 h-5 text-muted group-hover:text-accent transition-colors duration-300" />
-            <div className="flex flex-col gap-1">
+            <div className="w-5 h-5 flex items-center justify-center flex-shrink-0">
+              <FaGithub className="w-5 h-5 text-muted group-hover:text-accent transition-colors duration-300" />
+            </div>
+            <div className="flex flex-col gap-1 text-justify md:text-left">
               <span className="text-xs font-mono uppercase tracking-widest text-muted group-hover:text-foreground transition-colors duration-300">
                 GitHub
               </span>
@@ -74,11 +78,13 @@ export default function Contact() {
             href={personalInfo.linkedin}
             target="_blank"
             rel="noopener noreferrer"
-            className="group flex items-center gap-6 border-b border-border hover:border-accent transition-all duration-300"
+            className="group flex items-center gap-6 border-b border-border hover:border-accent transition-all duration-300 w-full"
             style={{ paddingBottom: '1.5rem' }}
           >
-            <FaLinkedin className="w-5 h-5 text-muted group-hover:text-accent transition-colors duration-300" />
-            <div className="flex flex-col gap-1">
+            <div className="w-5 h-5 flex items-center justify-center flex-shrink-0">
+              <FaLinkedin className="w-5 h-5 text-muted group-hover:text-accent transition-colors duration-300" />
+            </div>
+            <div className="flex flex-col gap-1 text-justify md:text-left">
               <span className="text-xs font-mono uppercase tracking-widest text-muted group-hover:text-foreground transition-colors duration-300">
                 LinkedIn
               </span>
@@ -92,11 +98,13 @@ export default function Contact() {
             href={personalInfo.instagram}
             target="_blank"
             rel="noopener noreferrer"
-            className="group flex items-center gap-6 border-b border-border hover:border-accent transition-all duration-300"
+            className="group flex items-center gap-6 border-b border-border hover:border-accent transition-all duration-300 w-full"
             style={{ paddingBottom: '1.5rem' }}
           >
-            <FaInstagram className="w-5 h-5 text-muted group-hover:text-accent transition-colors duration-300" />
-            <div className="flex flex-col gap-1">
+            <div className="w-5 h-5 flex items-center justify-center flex-shrink-0">
+              <FaInstagram className="w-5 h-5 text-muted group-hover:text-accent transition-colors duration-300" />
+            </div>
+            <div className="flex flex-col gap-1 text-justify md:text-left">
               <span className="text-xs font-mono uppercase tracking-widest text-muted group-hover:text-foreground transition-colors duration-300">
                 Instagram
               </span>
@@ -108,11 +116,13 @@ export default function Contact() {
 
           <a
             href={`mailto:${personalInfo.email}`}
-            className="group flex items-center gap-6 border-b border-border hover:border-accent transition-all duration-300"
+            className="group flex items-center gap-6 border-b border-border hover:border-accent transition-all duration-300 w-full"
             style={{ paddingBottom: '1.5rem' }}
           >
-            <FaEnvelope className="w-5 h-5 text-muted group-hover:text-accent transition-colors duration-300" />
-            <div className="flex flex-col gap-1">
+            <div className="w-5 h-5 flex items-center justify-center flex-shrink-0">
+              <FaEnvelope className="w-5 h-5 text-muted group-hover:text-accent transition-colors duration-300" />
+            </div>
+            <div className="flex flex-col gap-1 text-justify md:text-left">
               <span className="text-xs font-mono uppercase tracking-widest text-muted group-hover:text-foreground transition-colors duration-300">
                 Email
               </span>

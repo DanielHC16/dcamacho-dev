@@ -28,7 +28,9 @@ export default function Hero() {
     const handleScroll = () => {
       clearTimeout(scrollTimeout);
       scrollTimeout = setTimeout(() => {
-        setScrolled(window.scrollY > 100);
+        // Responsive scroll threshold: smaller on mobile
+        const scrollThreshold = window.innerWidth < 640 ? 50 : 100;
+        setScrolled(window.scrollY > scrollThreshold);
         
         // Determine active section
         const sections = ['hero', 'about', 'projects', 'skills', 'contact'];
@@ -36,7 +38,8 @@ export default function Hero() {
           const element = document.getElementById(section);
           if (element) {
             const rect = element.getBoundingClientRect();
-            return rect.top <= 100 && rect.bottom >= 100;
+            const threshold = window.innerWidth < 640 ? 50 : 100;
+            return rect.top <= threshold && rect.bottom >= threshold;
           }
           return false;
         });
@@ -205,13 +208,13 @@ export default function Hero() {
       </div>
 
       {/* Scroll Indicator with Animation */}
-      <div className={`absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 sm:gap-4 transition-all duration-500 ${
-        scrolled ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'
+      <div className={`scroll-indicator-mobile absolute bottom-12 sm:bottom-6 md:bottom-8 lg:bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 sm:gap-3 md:gap-4 transition-all duration-500 z-20 ${
+        scrolled ? 'opacity-0 translate-y-4 pointer-events-none' : 'opacity-100 translate-y-0'
       }`}>
-        <span className="text-xs text-muted font-mono uppercase tracking-widest rotate-90">
+        <span className="text-[10px] sm:text-xs text-muted font-mono uppercase tracking-widest rotate-90 select-none">
           Scroll
         </span>
-        <div className="w-px h-12 sm:h-16 bg-border relative overflow-hidden">
+        <div className="w-[1px] sm:w-px h-6 sm:h-10 md:h-12 lg:h-16 bg-border relative overflow-hidden">
           <div className="absolute top-0 left-0 w-full h-full bg-accent animate-scroll-line"></div>
         </div>
       </div>

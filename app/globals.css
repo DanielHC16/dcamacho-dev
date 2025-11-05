@@ -100,14 +100,29 @@ body {
 @keyframes scroll-line {
   0% {
     transform: translateY(-100%);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
   }
   100% {
     transform: translateY(100%);
+    opacity: 0;
   }
 }
 
 .animate-scroll-line {
   animation: scroll-line 2s ease-in-out infinite;
+}
+
+/* Mobile-optimized animation */
+@media (max-width: 640px) {
+  .animate-scroll-line {
+    animation: scroll-line 1.5s ease-in-out infinite;
+  }
 }
 
 @keyframes float {
@@ -202,6 +217,17 @@ body {
   overflow: visible;
   clip: auto;
   white-space: normal;
+}
+
+/* Mobile scroll indicator positioning - ensures no overlap with browser scrollbar */
+@media (max-width: 640px) {
+  .scroll-indicator-mobile {
+    bottom: calc(2.5rem + env(safe-area-inset-bottom, 0px)) !important;
+    left: 50% !important;
+    transform: translateX(calc(-50% - 20px)) !important;
+    padding-right: 0 !important;
+    margin-right: 0 !important;
+  }
 }
 
 /* Focus Indicators */

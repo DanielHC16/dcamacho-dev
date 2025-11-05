@@ -35,22 +35,38 @@ export default function About() {
         >
           {/* Left Column - Description */}
           <div className="w-full max-w-md">
-            <p className="text-sm sm:text-base text-muted font-light leading-relaxed text-justify pl-10 sm:pl-0">
+            <p className="text-sm sm:text-base text-foreground/80 font-normal leading-relaxed text-justify px-10 sm:px-0" style={{ lineHeight: '1.75', letterSpacing: '0.01em' }}>
               {personalInfo.bio}
             </p>
           </div>
 
           {/* Right Column - Key Points */}
-          <div className="w-full max-w-md space-y-8 pl-10 sm:pl-0">
+          <div className="w-full max-w-md space-y-8 px-10 sm:px-0">
             {aboutPoints.map((point, index) => (
-              <div key={index} className="group">
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="w-2 h-2 border border-accent rotate-45 shrink-0 group-hover:bg-accent transition-colors duration-300" />
-                  <h3 className="text-base sm:text-lg font-light text-foreground">
+              <div key={index} className="group relative">
+                {/* Mobile: Left decorative elements - absolutely positioned on side */}
+                <div className="absolute left-0 top-0 flex items-center gap-3 sm:hidden">
+                  <div className="w-2 h-2 border border-accent rotate-45 shrink-0 group-hover:bg-accent transition-colors duration-300"></div>
+                  <div className="w-8 h-px bg-border"></div>
+                </div>
+                {/* Mobile: Right decorative elements - absolutely positioned on side */}
+                <div className="absolute right-0 top-0 flex items-center gap-3 sm:hidden">
+                  <div className="w-8 h-px bg-border"></div>
+                  <div className="w-2 h-2 border border-accent rotate-45 shrink-0 group-hover:bg-accent transition-colors duration-300"></div>
+                </div>
+                {/* Desktop: Flex layout with decorative elements */}
+                <div className="hidden sm:flex items-center gap-3 mb-3">
+                  <div className="w-2 h-2 border border-accent rotate-45 shrink-0 group-hover:bg-accent transition-colors duration-300"></div>
+                  <div className="w-8 sm:w-12 md:w-12 h-px bg-border"></div>
+                  <h3 className="text-base sm:text-lg font-normal text-foreground text-left" style={{ letterSpacing: '0.01em' }}>
                     {point.title}
                   </h3>
                 </div>
-                <p className="text-sm sm:text-base text-muted font-light leading-relaxed text-justify ml-5">
+                {/* Mobile: Title centered with padding to avoid overlap */}
+                <h3 className="text-base font-normal text-foreground text-center mb-3 px-12 sm:hidden" style={{ letterSpacing: '0.01em' }}>
+                  {point.title}
+                </h3>
+                <p className="text-base text-foreground/80 font-normal leading-relaxed text-justify ml-0 sm:ml-5" style={{ lineHeight: '1.75', letterSpacing: '0.01em' }}>
                   {point.description}
                 </p>
               </div>

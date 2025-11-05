@@ -22,7 +22,7 @@ export default function Projects() {
   );
 
   return (
-    <section id="projects" className="min-h-screen flex items-center justify-center px-6 py-24">
+    <section id="projects" className="min-h-screen flex items-center justify-center px-10 sm:px-8 md:px-12 lg:px-16 py-24">
       <div className="max-w-6xl w-full mx-auto">
         {/* Section header */}
         <div className="flex items-center gap-4 mb-8">

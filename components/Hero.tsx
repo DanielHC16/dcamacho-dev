@@ -63,7 +63,7 @@ export default function Hero() {
   ];
 
   return (
-    <section id="hero" className="min-h-screen flex items-center justify-center relative overflow-hidden px-8 sm:px-16 md:px-24 lg:px-32" aria-label="Hero section">
+    <section id="hero" className="min-h-screen flex items-center justify-center relative overflow-hidden px-10 sm:px-8 md:px-16 lg:px-24 xl:px-32" aria-label="Hero section">
       {/* Side Navigation */}
       <nav className="fixed right-4 top-1/2 -translate-y-1/2 z-50 hidden xl:block" aria-label="Main navigation">
         <div className="flex flex-col items-end gap-6">

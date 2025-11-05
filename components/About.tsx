@@ -4,7 +4,7 @@ export default function About() {
   return (
     <section
       id="about"
-      className="min-h-screen flex items-center justify-center px-6 sm:px-10 lg:px-24 py-20 sm:py-28 bg-background"
+      className="min-h-screen flex items-center justify-center px-10 sm:px-8 md:px-12 lg:px-24 py-20 sm:py-28 bg-background"
     >
       <div className="w-full max-w-6xl mx-auto flex flex-col items-center md:items-start text-center md:text-left">
         {/* Section header */}

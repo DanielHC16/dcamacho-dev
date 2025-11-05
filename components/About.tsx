@@ -6,7 +6,7 @@ export default function About() {
       id="about"
       className="min-h-screen flex items-center justify-center px-10 sm:px-8 md:px-12 lg:px-24 py-20 sm:py-28 bg-background"
     >
-      <div className="w-full max-w-6xl mx-auto flex flex-col items-center md:items-start text-center md:text-left">
+      <div className="w-full max-w-6xl mx-auto flex flex-col items-center md:items-start text-center md:text-left px-10 sm:px-0">
         {/* Section header */}
         <div className="w-full flex flex-col items-center md:items-start">
           <div className="flex items-center justify-center md:justify-start gap-4 mb-4">
@@ -30,17 +30,18 @@ export default function About() {
             w-full 
             justify-items-center 
             md:justify-items-start
+            px-10 sm:px-0
           "
         >
           {/* Left Column - Description */}
           <div className="w-full max-w-md">
-            <p className="text-sm sm:text-base text-muted font-light leading-relaxed text-justify">
+            <p className="text-sm sm:text-base text-muted font-light leading-relaxed text-justify pl-10 sm:pl-0">
               {personalInfo.bio}
             </p>
           </div>
 
           {/* Right Column - Key Points */}
-          <div className="w-full max-w-md space-y-8">
+          <div className="w-full max-w-md space-y-8 pl-10 sm:pl-0">
             {aboutPoints.map((point, index) => (
               <div key={index} className="group">
                 <div className="flex items-center gap-3 mb-2">

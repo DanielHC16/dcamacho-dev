@@ -23,16 +23,16 @@ export default function Projects() {
 
   return (
     <section id="projects" className="min-h-screen flex items-center justify-center px-10 sm:px-8 md:px-12 lg:px-16 py-24">
-      <div className="max-w-6xl w-full mx-auto">
+      <div className="max-w-6xl w-full mx-auto px-10 sm:px-0">
         {/* Section header */}
-        <div className="flex items-center gap-4 mb-8">
+        <div className="flex items-center justify-center sm:justify-start gap-4 mb-8">
           <div className="w-20 h-px bg-border"></div>
           <span className="text-xs text-muted font-mono">02</span>
           <div className="w-20 h-px bg-border"></div>
         </div>
 
         {/* Section Title with Navigation */}
-        <div className="flex items-start justify-between" style={{ marginBottom: '2.5rem' }}>
+        <div className="flex items-start justify-between px-10 sm:px-0" style={{ marginBottom: '2.5rem' }}>
           <div>
             <span className="text-xs font-mono uppercase tracking-widest font-semibold text-foreground">
               projects
@@ -63,7 +63,7 @@ export default function Projects() {
         </div>
 
         {/* Projects Grid */}
-        <div className="grid md:grid-cols-3 gap-10 mb-16">
+        <div className="grid md:grid-cols-3 gap-10 mb-16 px-10 sm:px-0">
           {currentProjects.map((project, index) => (
             <div
               key={`${currentSlide}-${index}`}

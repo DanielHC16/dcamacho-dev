@@ -4,8 +4,17 @@ import { useState } from 'react';
 import { experiences } from '@/lib/data';
 
 export default function Experience() {
-  const [activeId, setActiveId] = useState(experiences[0].id);
-  const activeExperience = experiences.find((experience) => experience.id === activeId) ?? experiences[0];
+  const [activeId, setActiveId] = useState<number | null>(experiences[0]?.id ?? null);
+
+  if (activeId === null || experiences.length === 0) {
+    return null;
+  }
+
+  const activeExperience = experiences.find((experience) => experience.id === activeId);
+
+  if (!activeExperience) {
+    return null;
+  }
 
   return (
     <section
@@ -36,10 +45,10 @@ export default function Experience() {
           </span>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] gap-8 lg:gap-10">
+        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] gap-8 lg:gap-10">
           <div className="border border-border/60 p-6 sm:p-7 lg:p-8">
             <div className="flex flex-col gap-4">
-              {experiences.map((experience, index) => (
+              {experiences.map((experience) => (
                 <button
                   key={experience.id}
                   type="button"
@@ -57,7 +66,7 @@ export default function Experience() {
                       }`}
                     />
                     <span className="text-[11px] font-mono uppercase tracking-[0.18em] text-muted">
-                      {`NODE ${String(index + 1).padStart(2, '0')}`}
+                      {experience.node}
                     </span>
                   </div>
                   <p className="mt-3 text-sm text-foreground">{experience.title}</p>
@@ -105,7 +114,7 @@ export default function Experience() {
               </p>
             </section>
 
-            <section className="mt-11 border-t border-border/25 pt-8 grid grid-cols-1 md:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)] gap-9 lg:gap-12">
+            <section className="mt-11 border-t border-border/25 pt-8 grid grid-cols-1 md:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] gap-9 lg:gap-12">
               <div>
                 <p className="text-[10px] font-mono uppercase tracking-[0.2em] text-muted/90">Highlights</p>
                 <ul className="mt-4 space-y-3.5 list-disc pl-5 marker:text-foreground/45">

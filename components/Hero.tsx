@@ -180,7 +180,7 @@ export default function Hero() {
             
             <div className="w-10 sm:w-12 md:w-16 h-px bg-accent"></div>
             <span className="text-xs text-muted font-mono uppercase tracking-widest select-none">
-              Portfolio_v2.01
+              Portfolio_v2.02
             </span>
           </div>
 

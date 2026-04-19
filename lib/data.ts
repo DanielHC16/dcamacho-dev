@@ -8,7 +8,7 @@ Each project reflects my belief that clarity and efficiency create the most mean
   email: "danielcamacho0416@gmail.com",
   github: "https://github.com/DanielHC16",
   linkedin: "https://linkedin.com/in/danielcamacho777",
-  instagram: "https://instagram.com/https.hajin",
+  instagram: "https://www.instagram.com/daji.env",
 };
 
 // About Me Points

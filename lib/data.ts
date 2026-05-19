@@ -92,6 +92,77 @@ export const projects: Project[] = [
     }
 ];
 
+// Experience Timeline
+export interface Experience {
+  id: number;
+  nodeNumber?: number;
+  defaultActive?: boolean;
+  period: string;
+  title: string;
+  company: string;
+  location: string;
+  type: string;
+  summary: string;
+  highlights: string[];
+  stack: string[];
+}
+
+// Replace or extend these entries to update the Experiences section.
+export const experiences: Experience[] = [
+  {
+    id: 0,
+    nodeNumber: 1,
+    period: "Temporary",
+    title: "Experience Placeholder",
+    company: "Temporary Node",
+    location: "Manila, Philippines",
+    type: "Placeholder",
+    summary:
+      "Temporary placeholder entry to help visualize the active experience network while the section layout is being finalized.",
+    highlights: [
+      "Use this temporary node to validate spacing, animation, and graph behavior.",
+      "Replace this item with a real experience entry once the final content is ready.",
+      "Keep the node structure intact so the graph remains balanced as more experiences are added."
+    ],
+    stack: ["TBD", "Port", "Layout", "UX", "Graph", "Animation", "Design"]
+  },
+  {
+    id: 1,
+    nodeNumber: 2,
+    period: "Current Track",
+    title: "BS Computer Science",
+    company: "Pamantasan ng Lungsod ng Maynila",
+    location: "Manila, Philippines",
+    type: "Academic",
+    summary:
+      "Developing a strong software engineering foundation through systems thinking, disciplined problem-solving, and hands-on implementation.",
+    highlights: [
+      "Strengthening core fundamentals across algorithms, programming, and software design.",
+      "Applying classroom concepts through independent builds, portfolio work, and iterative refinement.",
+      "Building a workflow centered on clarity, precision, and deliberate execution."
+    ],
+    stack: ["Python", "Java", "C", "PostgreSQL"]
+  },
+  {
+    id: 2,
+    nodeNumber: 3,
+    defaultActive: true,
+    period: "Present",
+    title: "Web Development Lead",
+    company: "GDG on Campus PLM",
+    location: "Manila, Philippines",
+    type: "Leadership",
+    summary:
+      "Leading web-focused initiatives with an emphasis on structure, maintainability, and polished user-facing execution.",
+    highlights: [
+      "Support planning and delivery for student-led web projects and community initiatives.",
+      "Translate direction into clean, consistent interfaces that feel intentional across screens.",
+      "Help keep collaboration organized so builds stay thoughtful, scalable, and reliable."
+    ],
+    stack: ["React", "Next.js", "TypeScript", "Figma"]
+  }
+];
+
 // Skills/Tools
 export const skills = {
   languages: ["Python", "JavaScript", "TypeScript", "Java", "C"],

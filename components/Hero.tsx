@@ -33,7 +33,7 @@ export default function Hero() {
         setScrolled(window.scrollY > scrollThreshold);
         
         // Determine active section
-        const sections = ['hero', 'about', 'projects', 'skills', 'contact'];
+        const sections = ['hero', 'about', 'projects', 'experiences', 'skills', 'contact'];
         const current = sections.find(section => {
           const element = document.getElementById(section);
           if (element) {
@@ -61,8 +61,9 @@ export default function Hero() {
     { id: 'hero', label: '00', name: 'Home' },
     { id: 'about', label: '01', name: 'About' },
     { id: 'projects', label: '02', name: 'Work' },
-    { id: 'skills', label: '03', name: 'Skills' },
-    { id: 'contact', label: '04', name: 'Contact' },
+    { id: 'experiences', label: '03', name: 'Experience' },
+    { id: 'skills', label: '04', name: 'Skills' },
+    { id: 'contact', label: '05', name: 'Contact' },
   ];
 
   return (

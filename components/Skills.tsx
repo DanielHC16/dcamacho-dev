@@ -33,7 +33,7 @@ export default function Skills() {
         {/* Section header */}
         <div className="flex items-center justify-center sm:justify-start gap-4 mb-8">
           <div className="w-20 h-px bg-border"></div>
-          <span className="text-xs text-muted font-mono">03</span>
+          <span className="text-xs text-muted font-mono">04</span>
           <div className="w-20 h-px bg-border"></div>
         </div>
 

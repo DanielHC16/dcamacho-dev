@@ -2,22 +2,23 @@
 
 import { useState, useEffect } from 'react';
 
+function getPreferredTheme() {
+  if (typeof window === 'undefined') {
+    return false;
+  }
+
+  const savedTheme = localStorage.getItem('theme');
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+  return savedTheme === 'dark' || (!savedTheme && prefersDark);
+}
+
 export default function ThemeToggle() {
-  const [isDark, setIsDark] = useState(false);
+  const [isDark, setIsDark] = useState(getPreferredTheme);
 
   useEffect(() => {
-    // Check for saved theme preference or default to light mode
-    const savedTheme = localStorage.getItem('theme');
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    
-    if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
-      setIsDark(true);
-      document.documentElement.classList.add('dark');
-    } else {
-      setIsDark(false);
-      document.documentElement.classList.remove('dark');
-    }
-  }, []);
+    document.documentElement.classList.toggle('dark', isDark);
+  }, [isDark]);
 
   const toggleTheme = () => {
     const newTheme = !isDark;
@@ -37,6 +38,7 @@ export default function ThemeToggle() {
       onClick={toggleTheme}
       className="fixed top-4 right-4 z-50 group flex items-center justify-center w-10 h-10 border border-border bg-surface/50 backdrop-blur-sm hover:border-accent transition-all duration-500 ease-out cursor-pointer select-none"
       aria-label={`Switch to ${isDark ? 'light' : 'dark'} mode`}
+      suppressHydrationWarning
     >
       {/* Sun icon (light mode) */}
       {!isDark && (

@@ -19,6 +19,7 @@ Web Development Lead - GDGOC PLM
 A modern, responsive portfolio showcasing:
 
 - **Projects** - Featured work with live demos and source code
+- **Experiences** - Timeline-based highlights for roles, leadership, and academic work
 - **Skills** - Technical expertise across languages, frameworks, and tools  
 - **About** - Professional background and development philosophy
 - **Contact** - Multiple channels to connect and collaborate

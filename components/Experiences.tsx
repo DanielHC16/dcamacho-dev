@@ -125,7 +125,6 @@ export default function Experiences() {
 
   const activeExperience = experiences[activeIndex] ?? experiences[0];
   const { points: graphPoints } = getGraphLayout(experiences.length);
-  const activePoint = graphPoints[activeIndex] ?? graphPoints[0];
   const activeNodeNumber = getNodeNumber(activeExperience, activeIndex);
 
   return (
@@ -152,18 +151,18 @@ export default function Experiences() {
         }}
       />
 
-      <div className="relative z-10 max-w-[1480px] w-full mx-auto">
-        <div className="flex items-center justify-center sm:justify-start gap-4 mb-8">
+      <div className="relative z-10 max-w-[1320px] w-full mx-auto">
+        <div className="flex items-center justify-center gap-4 mb-8 sm:justify-start xl:mx-auto xl:w-[1292px]">
           <div className="w-20 h-px bg-border" />
           <span className="text-xs text-muted font-mono">03</span>
           <div className="w-20 h-px bg-border" />
         </div>
 
-        <div className="mb-8 max-w-xl">
+        <div className="mb-6 max-w-xl xl:mx-auto xl:w-[1292px] xl:max-w-none">
           <span className="text-xs font-mono uppercase tracking-widest font-semibold text-foreground">
             Experience_Network
           </span>
-          <h2 className="text-2xl sm:text-3xl lg:text-[2.6rem] font-extralight tracking-tight text-foreground leading-[1.05] mt-4 uppercase">
+          <h2 className="text-2xl sm:text-3xl lg:text-[2.25rem] font-extralight tracking-tight text-foreground leading-[1.05] mt-3 uppercase">
             Experience
           </h2>
           <p className="text-sm text-muted font-light mt-3 max-w-md leading-relaxed">
@@ -171,15 +170,15 @@ export default function Experiences() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 gap-8 xl:grid-cols-[minmax(32rem,36rem)_minmax(42rem,54rem)] xl:justify-center">
+        <div className="grid grid-cols-1 gap-8 xl:grid-cols-[500px_760px] xl:justify-center">
           
           {/* LEFT CARD - GRAPH */}
           <div
-            className="relative flex h-[704px] flex-col overflow-hidden border border-border/80 bg-surface/78 shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--border)_60%,transparent)] backdrop-blur-sm"
+            className="relative flex h-[620px] flex-col overflow-hidden border border-border/80 bg-surface/78 shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--border)_60%,transparent)] backdrop-blur-sm"
             style={{ width: '100%' }}
           >
             {/* Top Header */}
-            <div className="flex items-center justify-between px-10 py-8 lg:px-12 lg:py-9 border-b border-border/40">
+            <div className="flex items-center justify-between border-b border-border/40 px-8 py-6 lg:px-10">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-px bg-accent" />
                 <span className="text-[10px] font-mono uppercase tracking-[0.32em] text-muted">
@@ -192,137 +191,138 @@ export default function Experiences() {
             </div>
 
             {/* Canvas Area */}
-            <div className="relative flex-1 overflow-hidden px-5 py-6 sm:px-6 sm:py-7">
-              <div
-                className="absolute inset-x-5 inset-y-6 opacity-75 sm:inset-x-6 sm:inset-y-7"
-                style={{
-                  backgroundImage: `
-                    linear-gradient(to right, color-mix(in srgb, var(--border) 58%, transparent) 1px, transparent 1px),
-                    linear-gradient(to bottom, color-mix(in srgb, var(--border) 58%, transparent) 1px, transparent 1px)
-                  `,
-                  backgroundSize: '5rem 5rem',
-                }}
-              />
-
-              <svg className="absolute inset-x-5 inset-y-6 h-[calc(100%-3rem)] w-[calc(100%-2.5rem)] sm:inset-x-6 sm:inset-y-7 sm:h-[calc(100%-3.5rem)] sm:w-[calc(100%-3rem)]" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-                <defs>
-                  <linearGradient id="experience-line" x1="0%" x2="100%" y1="0%" y2="0%">
-                    <stop offset="0%" stopColor="var(--border)" />
-                    <stop offset="50%" stopColor="var(--accent)" />
-                    <stop offset="100%" stopColor="var(--border)" />
-                  </linearGradient>
-                  <radialGradient id="experience-glow" cx="50%" cy="50%" r="50%">
-                    <stop offset="0%" stopColor="var(--accent)" stopOpacity="0.35" />
-                    <stop offset="100%" stopColor="var(--accent)" stopOpacity="0" />
-                  </radialGradient>
-                </defs>
-
-                {graphPoints.map((point, index) => {
-                  const nextPoint = graphPoints[index + 1];
-                  if (!nextPoint) return null;
-
-                  return (
-                    <path
-                      key={`path-${index}`}
-                      d={getCurvePath(point, nextPoint, index)}
-                      fill="none"
-                      stroke="url(#experience-line)"
-                      strokeOpacity={index === activeIndex || index + 1 === activeIndex ? '0.92' : '0.48'}
-                      strokeWidth="0.38"
-                      strokeDasharray={index === activeIndex || index + 1 === activeIndex ? '0' : '1.2 2'}
-                    />
-                  );
-                })}
-                <circle cx={activePoint.x} cy={activePoint.y} r="10.5" fill="url(#experience-glow)" />
-              </svg>
-
-              {ambientNodes.map((point, index) => (
+            <div className="relative flex-1 overflow-hidden">
+              <div className="absolute inset-x-5 inset-y-6 sm:inset-x-6 sm:inset-y-7">
                 <div
-                  key={`ambient-${index}`}
-                  className={`pointer-events-none absolute rounded-full bg-border/70 ${point.className}`}
+                  className="absolute inset-0 opacity-75"
                   style={{
-                    left: `${point.x}%`,
-                    top: `${point.y}%`,
-                    width: `${point.size}px`,
-                    height: `${point.size}px`,
-                    animationDelay: point.delay,
-                    animationDuration: point.duration,
+                    backgroundImage: `
+                      linear-gradient(to right, color-mix(in srgb, var(--border) 58%, transparent) 1px, transparent 1px),
+                      linear-gradient(to bottom, color-mix(in srgb, var(--border) 58%, transparent) 1px, transparent 1px)
+                    `,
+                    backgroundSize: '5rem 5rem',
                   }}
                 />
-              ))}
 
-              {experiences.map((experience, index) => {
-                const point = graphPoints[index];
-                const isSelected = index === activeIndex;
-                const isSelectable = getNodeNumber(experience, index) <= SELECTABLE_NODE_LIMIT;
+                <svg className="absolute inset-0 h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+                  <defs>
+                    <linearGradient id="experience-line" x1="0%" x2="100%" y1="0%" y2="0%">
+                      <stop offset="0%" stopColor="var(--border)" />
+                      <stop offset="50%" stopColor="var(--accent)" />
+                      <stop offset="100%" stopColor="var(--border)" />
+                    </linearGradient>
+                  </defs>
 
-                return (
-                  <button
-                    key={experience.id}
-                    type="button"
-                    onClick={() => setActiveIndex(index)}
-                    aria-pressed={isSelected}
-                    aria-label={`Show details for node ${getNodeNumber(experience, index)}: ${experience.title}`}
-                    className="group absolute -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-2"
-                    style={{ left: `${point.x}%`, top: `${point.y}%` }}
-                  >
-                    <span className="relative grid place-items-center h-20 w-20">
-                      {isSelectable && (
-                        <>
-                          <span className="pointer-events-none absolute inset-1 rounded-full border border-accent/28 animate-node-available-ring" />
+                  {graphPoints.map((point, index) => {
+                    const nextPoint = graphPoints[index + 1];
+                    if (!nextPoint) return null;
+
+                    return (
+                      <path
+                        key={`path-${index}`}
+                        d={getCurvePath(point, nextPoint, index)}
+                        fill="none"
+                        stroke="url(#experience-line)"
+                        strokeOpacity={index === activeIndex || index + 1 === activeIndex ? '0.92' : '0.48'}
+                        strokeWidth="0.38"
+                        strokeDasharray={index === activeIndex || index + 1 === activeIndex ? '0' : '1.2 2'}
+                      />
+                    );
+                  })}
+                </svg>
+
+                {ambientNodes.map((point, index) => (
+                  <div
+                    key={`ambient-${index}`}
+                    className={`pointer-events-none absolute rounded-full bg-border/70 ${point.className}`}
+                    style={{
+                      left: `${point.x}%`,
+                      top: `${point.y}%`,
+                      width: `${point.size}px`,
+                      height: `${point.size}px`,
+                      animationDelay: point.delay,
+                      animationDuration: point.duration,
+                    }}
+                  />
+                ))}
+
+                {experiences.map((experience, index) => {
+                  const point = graphPoints[index];
+                  const isSelected = index === activeIndex;
+                  const isSelectable = getNodeNumber(experience, index) <= SELECTABLE_NODE_LIMIT;
+
+                  return (
+                    <button
+                      key={experience.id}
+                      type="button"
+                      onClick={() => setActiveIndex(index)}
+                      aria-pressed={isSelected}
+                      aria-label={`Show details for node ${getNodeNumber(experience, index)}: ${experience.title}`}
+                      className="group absolute -translate-x-1/2 -translate-y-10 flex flex-col items-center gap-2"
+                      style={{ left: `${point.x}%`, top: `${point.y}%` }}
+                    >
+                      <span className="relative grid place-items-center h-20 w-20">
+                        {isSelected && (
+                          <span className="pointer-events-none absolute inset-1 rounded-full bg-accent/20 blur-2xl" />
+                        )}
+
+                        {isSelectable && (
+                          <>
+                            <span className="pointer-events-none absolute inset-1 rounded-full border border-accent/28 animate-node-available-ring" />
+                            <span
+                              className="pointer-events-none absolute inset-1 rounded-full border border-accent/16 animate-node-available-ring"
+                              style={{ animationDelay: `${index * 0.45}s` }}
+                            />
+                          </>
+                        )}
+
+                        {isSelected && (
+                          <span className="pointer-events-none absolute inset-0 rounded-full border border-accent/32 animate-node-selected-ring" />
+                        )}
+
+                        <span
+                          className={`relative flex h-12 w-12 items-center justify-center rounded-full border transition-all duration-300 ${
+                            isSelected
+                              ? 'border-accent bg-background shadow-[0_0_0_12px_color-mix(in_srgb,var(--accent)_10%,transparent)]'
+                              : isSelectable
+                                ? 'border-accent/60 bg-background/96 hover:border-accent'
+                                : 'border-border bg-background/92 hover:border-accent'
+                          }`}
+                        >
                           <span
-                            className="pointer-events-none absolute inset-1 rounded-full border border-accent/16 animate-node-available-ring"
-                            style={{ animationDelay: `${index * 0.45}s` }}
+                            className={`absolute rounded-full border transition-all duration-300 ${
+                              isSelected
+                                ? 'inset-[-0.55rem] border-accent/28'
+                                : isSelectable
+                                  ? '-inset-2 border-accent/24 group-hover:border-accent/34'
+                                  : 'inset-[-0.45rem] border-border/58 group-hover:border-accent/26'
+                            }`}
                           />
-                        </>
-                      )}
-
-                      {isSelected && (
-                        <span className="pointer-events-none absolute inset-0 rounded-full border border-accent/32 animate-node-selected-ring" />
-                      )}
+                          <span
+                            className={`h-3 w-3 rounded-full transition-colors duration-300 ${
+                              isSelected
+                                ? 'bg-accent animate-node-core-pulse'
+                                : isSelectable
+                                  ? 'bg-accent/78 animate-node-idle-pulse group-hover:bg-accent'
+                                  : 'bg-muted/60 group-hover:bg-accent'
+                            }`}
+                          />
+                        </span>
+                      </span>
 
                       <span
-                        className={`relative flex h-12 w-12 items-center justify-center rounded-full border transition-all duration-300 ${
-                          isSelected
-                            ? 'border-accent bg-background shadow-[0_0_0_12px_color-mix(in_srgb,var(--accent)_10%,transparent)]'
-                            : isSelectable
-                              ? 'border-accent/60 bg-background/96 hover:border-accent'
-                              : 'border-border bg-background/92 hover:border-accent'
+                        className={`text-[10px] font-mono uppercase tracking-[0.32em] transition-colors duration-300 ${
+                          isSelected ? 'text-accent' : isSelectable ? 'text-foreground/72' : 'text-muted'
                         }`}
                       >
-                        <span
-                          className={`absolute rounded-full border transition-all duration-300 ${
-                            isSelected
-                              ? 'inset-[-0.55rem] border-accent/28'
-                              : isSelectable
-                                ? '-inset-2 border-accent/24 group-hover:border-accent/34'
-                                : 'inset-[-0.45rem] border-border/58 group-hover:border-accent/26'
-                          }`}
-                        />
-                        <span
-                          className={`h-3 w-3 rounded-full transition-colors duration-300 ${
-                            isSelected
-                              ? 'bg-accent animate-node-core-pulse'
-                              : isSelectable
-                                ? 'bg-accent/78 animate-node-idle-pulse group-hover:bg-accent'
-                                : 'bg-muted/60 group-hover:bg-accent'
-                          }`}
-                        />
+                        {String(getNodeNumber(experience, index)).padStart(2, '0')}
                       </span>
-                    </span>
+                    </button>
+                  );
+                })}
+              </div>
 
-                    <span
-                      className={`text-[10px] font-mono uppercase tracking-[0.32em] transition-colors duration-300 ${
-                        isSelected ? 'text-accent' : isSelectable ? 'text-foreground/72' : 'text-muted'
-                      }`}
-                    >
-                      {String(getNodeNumber(experience, index)).padStart(2, '0')}
-                    </span>
-                  </button>
-                );
-              })}
-
-              <div className="absolute inset-x-0 bottom-16 flex items-center justify-center">
+              <div className="absolute inset-x-0 bottom-14 flex items-center justify-center">
                 <div className="flex items-center justify-center gap-2.5 bg-surface/80 px-4 py-2 backdrop-blur-sm">
                   {experiences.map((experience, index) => {
                     const isSelected = index === activeIndex;
@@ -346,15 +346,15 @@ export default function Experiences() {
 
           <div
             key={activeExperience.id}
-            className="h-[704px] overflow-hidden border border-border/80 bg-surface shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--border)_60%,transparent)] backdrop-blur-sm"
+            className="h-[620px] overflow-hidden border border-border/80 bg-surface shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--border)_60%,transparent)] backdrop-blur-sm"
             style={{
               width: '100%',
-              padding: '2.5rem',
+              padding: '2rem',
             }}
           >
             <div
-              className="grid h-full grid-rows-[9rem_5rem_6.5rem_minmax(0,1fr)] gap-8"
-              style={{ paddingLeft: '1.5rem', paddingRight: '1.5rem' }}
+              className="grid h-full grid-rows-[7.75rem_4.75rem_5.75rem_minmax(0,1fr)] gap-7"
+              style={{ paddingLeft: '1.25rem', paddingRight: '1.25rem' }}
             >
               <header>
                 <div className="flex items-center gap-4" style={{ marginBottom: '1.25rem' }}>
@@ -367,25 +367,25 @@ export default function Experiences() {
                   </span>
                 </div>
 
-                <h3 className="text-[2.35rem] font-light leading-tight text-foreground sm:text-[2.65rem] lg:text-[2.9rem]">
+                <h3 className="text-[2rem] font-light leading-tight text-foreground sm:text-[2.25rem] lg:text-[2.45rem]">
                   {activeExperience.title}
                 </h3>
                 <p
-                  className="max-w-[34rem] text-base font-normal text-foreground/80"
-                  style={{ marginTop: '1rem', lineHeight: '1.75' }}
+                  className="max-w-[34rem] text-sm font-normal text-foreground/80"
+                  style={{ marginTop: '0.75rem', lineHeight: '1.7' }}
                 >
                   {activeExperience.company}
                 </p>
               </header>
 
-              <section className="grid grid-cols-1 gap-8 sm:grid-cols-3">
+              <section className="grid grid-cols-1 gap-7 sm:grid-cols-3">
                 <div>
                   <span className={`block ${DETAIL_LABEL_CLASSNAME}`}>
                     Location
                   </span>
                   <p
-                    className="text-base font-normal text-foreground/90"
-                    style={{ marginTop: '1rem', lineHeight: '1.6' }}
+                    className="text-sm font-normal text-foreground/90"
+                    style={{ marginTop: '0.85rem', lineHeight: '1.6' }}
                   >
                     {activeExperience.location}
                   </p>
@@ -396,8 +396,8 @@ export default function Experiences() {
                     Period
                   </span>
                   <p
-                    className="text-base font-normal text-foreground/90"
-                    style={{ marginTop: '1rem', lineHeight: '1.6' }}
+                    className="text-sm font-normal text-foreground/90"
+                    style={{ marginTop: '0.85rem', lineHeight: '1.6' }}
                   >
                     {activeExperience.period}
                   </p>
@@ -408,8 +408,8 @@ export default function Experiences() {
                     Company
                   </span>
                   <p
-                    className="text-base font-normal text-foreground/90"
-                    style={{ marginTop: '1rem', lineHeight: '1.6' }}
+                    className="text-sm font-normal text-foreground/90"
+                    style={{ marginTop: '0.85rem', lineHeight: '1.6' }}
                   >
                     {activeExperience.company}
                   </p>
@@ -421,28 +421,28 @@ export default function Experiences() {
                   Summary
                 </span>
                 <p
-                  className="max-w-[46rem] text-base font-normal text-foreground/90"
-                  style={{ marginTop: '1rem', lineHeight: '1.75' }}
+                  className="max-w-[42rem] text-sm font-normal text-foreground/90"
+                  style={{ marginTop: '0.85rem', lineHeight: '1.7' }}
                 >
                   {activeExperience.summary}
                 </p>
               </section>
 
-              <section className="grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,1fr)_18rem]">
+              <section className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1fr)_16rem]">
                 <div>
                   <span className={DETAIL_LABEL_CLASSNAME}>
                     Highlights
                   </span>
 
                   <ul
-                    className="list-outside list-disc space-y-3 pl-5 marker:text-accent"
-                    style={{ marginTop: '1rem' }}
+                    className="list-outside list-disc space-y-2.5 pl-5 marker:text-accent"
+                    style={{ marginTop: '0.85rem' }}
                   >
                     {activeExperience.highlights.map((highlight) => (
                       <li
                         key={highlight}
-                        className="pl-2 text-base font-normal text-foreground/90"
-                        style={{ lineHeight: '1.75' }}
+                        className="pl-2 text-sm font-normal text-foreground/90"
+                        style={{ lineHeight: '1.65' }}
                       >
                         {highlight}
                       </li>
@@ -457,12 +457,12 @@ export default function Experiences() {
 
                   <div
                     className="grid grid-cols-2 gap-2.5"
-                    style={{ marginTop: '1rem' }}
+                    style={{ marginTop: '0.85rem' }}
                   >
                     {activeExperience.stack.map((item) => (
                       <span
                         key={item}
-                        className="flex h-9 items-center justify-center border border-border bg-surface px-3 font-mono text-sm text-muted transition-colors duration-300 hover:border-accent hover:text-accent"
+                        className="flex h-8 items-center justify-center border border-border bg-surface px-3 font-mono text-xs text-muted transition-colors duration-300 hover:border-accent hover:text-accent"
                       >
                         {item}
                       </span>

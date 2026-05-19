@@ -69,25 +69,25 @@ export default function Hero() {
   return (
     <section id="hero" className="min-h-screen flex items-center justify-center relative overflow-hidden px-10 sm:px-8 md:px-16 lg:px-24 xl:px-32" aria-label="Hero section">
       {/* Side Navigation */}
-      <nav className="fixed right-4 top-1/2 -translate-y-1/2 z-50 hidden xl:block" aria-label="Main navigation">
-        <div className="flex flex-col items-end gap-6">
+      <nav className="fixed right-5 top-1/2 -translate-y-1/2 z-50 hidden xl:block" aria-label="Main navigation">
+        <div className="flex flex-col items-end gap-5">
           {navItems.map((item) => (
             <a
               key={item.id}
               href={`#${item.id}`}
-              className="group flex items-center gap-3 transition-all duration-300"
+              className="group flex items-center gap-2.5 transition-all duration-300"
               aria-label={`Navigate to ${item.name} section`}
             >
-              <span className={`text-xs font-mono uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap ${
+              <span className={`text-[10px] font-mono uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap ${
                 activeSection === item.id ? 'opacity-100 text-accent' : 'text-muted'
               }`}>
                 {item.name}
               </span>
               <div className="flex items-center gap-2">
                 <div className={`h-px transition-all duration-300 ${
-                  activeSection === item.id ? 'w-8 bg-accent' : 'w-6 bg-border group-hover:w-8 group-hover:bg-accent'
+                  activeSection === item.id ? 'w-6 bg-accent' : 'w-4 bg-border group-hover:w-6 group-hover:bg-accent'
                 }`}></div>
-                <span className={`text-xs font-mono transition-colors duration-300 ${
+                <span className={`text-[10px] font-mono transition-colors duration-300 ${
                   activeSection === item.id ? 'text-accent' : 'text-muted group-hover:text-accent'
                 }`}>
                   {item.label}

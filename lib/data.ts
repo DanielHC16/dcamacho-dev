@@ -9,6 +9,7 @@ Each project reflects my belief that clarity and efficiency create the most mean
   github: "https://github.com/DanielHC16",
   linkedin: "https://linkedin.com/in/danielcamacho777",
   instagram: "https://www.instagram.com/daji.env",
+  portia: "https://portia-compiler.vercel.app/"
 };
 
 // About Me Points
@@ -37,20 +38,22 @@ export interface Project {
   demo?: string;
   featured?: boolean;
 }
-
+// TODO: Implement proper and defined spacing based on text. Implement proper link to project button + GitHub Button (if applicable). Add more projects as needed, and update the placeholder project when ready. Implement proper element spacing inside cards
+// Projects should have their own obj link, rn we rely on the personalInfo obj. This is not ideal, and should be changed. The "VIEW PROJECT" button should link to the demo, while the GitHub button (if applicable) should link to the GitHub repo. If a project is private and doesn't have a GitHub repo, simply omit the GitHub button for that project.
+// Also, add images for projects! Decide if slide (for more images) or just one.
 export const projects: Project[] = [
     {
         id: 1,
-        title: "TBA",
-        description: "Currently focusing on academic commitments; project details will be provided once available.",
-        tags: ["TBA"],
-        github: personalInfo.github,
-        demo: personalInfo.github,
+        title: "PORTIA Language and Compiler",
+        description: "PORTIA is a high-level, statically typed procedural language and compiler designed for strict clarity, readability, and precise execution.",
+        tags: ["Python", "TypeScript", "Compiler", "Language Design", "FastAPI", "Vercel"],
+        github: personalInfo.portia, // This is NOT supposed to be the "VIEW PROJECT" button. This is supposed to be the GitHub Link for the project. Add a separate button for GITHUB Link. (if applicable, some projects are private.)
+        demo: personalInfo.portia, // This should be the link to the live demo of the project.
         featured: true
     },
     {
         id: 2,
-        title: "TBA",
+        title: "Sta. Mesa 587 Connect",
         description: "Currently focusing on academic commitments; project details will be provided once available.",
         tags: ["TBA"],
         github: personalInfo.github,

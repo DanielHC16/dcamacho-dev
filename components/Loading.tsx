@@ -73,7 +73,7 @@ export default function Loading() {
         <div className="flex items-center gap-3">
           <div className="w-12 h-px bg-border"></div>
           <span className="text-xs text-muted font-mono uppercase tracking-widest">
-            Portfolio_v2.01
+            Portfolio_v2.02
           </span>
           <div className="w-12 h-px bg-border"></div>
         </div>

@@ -1,7 +1,12 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  turbopack: {
+    root: __dirname,
+  },
+  images: {
+    qualities: [75, 100],
+  },
   reactCompiler: true,
 };
 

@@ -13,7 +13,7 @@ export default function Footer() {
         {/* CENTER */}
         <div className="flex items-center justify-center">
           <span className="text-xs text-muted font-mono uppercase tracking-widest">
-            Portfolio_v2.01
+            Portfolio_v2.02
           </span>
         </div>
 

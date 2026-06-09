@@ -3,8 +3,7 @@ export const personalInfo = {
   name: "Daniel Camacho",
   role: "Software Developer",
   tagline: "Structured, thoughtful, and a little obsessive about detail.",
-  bio: `I build software that balances logic and design.
-Each project reflects my belief that clarity and efficiency create the most meaningful results.`,
+  bio: "I'm a software engineer focused on building practical, well-crafted solutions. I enjoy transforming ideas into products that are intuitive, reliable, and meaningful. Every project is an opportunity to learn, improve, and create something worth using.",
   email: "danielcamacho0416@gmail.com",
   github: "https://github.com/DanielHC16",
   linkedin: "https://linkedin.com/in/danielcamacho777",
@@ -15,84 +14,229 @@ Each project reflects my belief that clarity and efficiency create the most mean
 // About Me Points
 export const aboutPoints = [
   {
-    title: "Problem Solver",
-    description: "Analytical approach to complex challenges with elegant solutions"
+    title: "Building With Intention",
+    description: "Turning ideas into thoughtful, practical solutions through code, creativity, and attention to detail."
   },
   {
-    title: "Precision Architect",
-    description: "Focused on building structured, reliable systems through clarity, logic, and intent."
+    title: "Curious Problem Solver",
+    description: "Enjoy solving complex challenges by breaking them down, asking questions, and finding better ways forward."
   },
   {
-    title: "Human-Centered Developer",
-    description: "Creating meaningful impact through clean, intentional design."
+    title: "Always Learning",
+    description: "Driven by a constant desire to grow, refine my craft, and explore new technologies and perspectives."
+  },
+  {
+    title: "Leading With Purpose",
+    description: "Bringing structure, accountability, and a collaborative mindset to every team and project I’m part of."
   }
 ];
 
 // Projects
+export interface ProjectImage {
+  src: string;
+  alt: string;
+}
+
 export interface Project {
   id: number;
   title: string;
   description: string;
   tags: string[];
-  github?: string;
-  demo?: string;
+  image: ProjectImage;
+  images?: ProjectImage[];
+  links: {
+    demo?: string;
+    github?: string;
+  };
   featured?: boolean;
 }
-// TODO: Implement proper and defined spacing based on text. Implement proper link to project button + GitHub Button (if applicable). Add more projects as needed, and update the placeholder project when ready. Implement proper element spacing inside cards
-// Projects should have their own obj link, rn we rely on the personalInfo obj. This is not ideal, and should be changed. The "VIEW PROJECT" button should link to the demo, while the GitHub button (if applicable) should link to the GitHub repo. If a project is private and doesn't have a GitHub repo, simply omit the GitHub button for that project.
-// Also, add images for projects! Decide if slide (for more images) or just one.
+
 export const projects: Project[] = [
-    {
-        id: 1,
-        title: "PORTIA Language and Compiler",
-        description: "PORTIA is a high-level, statically typed procedural language and compiler designed for strict clarity, readability, and precise execution.",
-        tags: ["Python", "TypeScript", "Compiler", "Language Design", "FastAPI", "Vercel"],
-        github: personalInfo.portia, // This is NOT supposed to be the "VIEW PROJECT" button. This is supposed to be the GitHub Link for the project. Add a separate button for GITHUB Link. (if applicable, some projects are private.)
-        demo: personalInfo.portia, // This should be the link to the live demo of the project.
-        featured: true
+  {
+    id: 1,
+    title: "PORTIA Language and Compiler",
+    description: "A high-level, statically typed procedural language and compiler designed around strict clarity, readable syntax, and precise execution.",
+    tags: ["Python", "TypeScript", "FastAPI", "Compiler", "Automata", "Language Design"],
+    image: {
+      src: "/projects/portia1.png",
+      alt: "PORTIA compiler preview"
     },
-    {
-        id: 2,
-        title: "Sta. Mesa 587 Connect",
-        description: "Currently focusing on academic commitments; project details will be provided once available.",
-        tags: ["TBA"],
-        github: personalInfo.github,
-        demo: personalInfo.github,
-        featured: true
+    images: [
+      {
+        src: "/projects/portia1.png",
+        alt: "PORTIA compiler preview 1"
+      },
+      {
+        src: "/projects/portia2.png",
+        alt: "PORTIA compiler preview 2"
+      },
+      {
+        src: "/projects/portia3.png",
+        alt: "PORTIA compiler preview 3"
+      }
+    ],
+    links: {
+      demo: "https://portia-compiler.vercel.app/",
+      github: "https://github.com/DanielHC16/portia-compiler"
     },
-    {
-        id: 3,
-        title: "TBA",
-        description: "Currently focusing on academic commitments; project details will be provided once available.",
-        tags: ["TBA"],
-        github: personalInfo.github,
-        demo: personalInfo.github,
-        featured: true
+    featured: true
+  },
+  {
+    id: 2,
+    title: "Sta. Mesa 587 Connect",
+    description: "Sta. Mesa 587 Connect is a PWA for Barangay 587, with over 1000 users. It streamlines document requests, issue reporting, and updates, backed by a dedicated admin system to manage it all.",
+    tags: ["Next.js", "TypeScript", "PWA", "Tailwind CSS", "Real-Time", "NeonDB"],
+    image: {
+      src: "/projects/587-1.png",
+      alt: "Sta. Mesa 587 Connect dashboard preview"
     },
-    {
-        id: 4,
-        title: "TBA",
-        description: "Currently focusing on academic commitments; project details will be provided once available.",
-        tags: ["TBA"],
-        github: personalInfo.github,
-        demo: personalInfo.github
+    images: [
+      {
+        src: "/projects/587-1.png",
+        alt: "Sta. Mesa 587 Connect dashboard preview 1"
+      },
+      {
+        src: "/projects/587-2.png",
+        alt: "Sta. Mesa 587 Connect dashboard preview 2"
+      },
+      {
+        src: "/projects/587-3.png",
+        alt: "Sta. Mesa 587 Connect dashboard preview 3"
+      }
+    ],
+    links: {
+      demo: "https://587connect-hero.vercel.app"
     },
-    {
-        id: 5,
-        title: "TBA",
-        description: "Currently focusing on academic commitments; project details will be provided once available.",
-        tags: ["TBA"],
-        github: personalInfo.github,
-        demo: personalInfo.github
+    featured: true
+  },
+  {
+    id: 3,
+    title: "MEDIC: Monitoring For Elderly Daily Intervention & Care",
+    description: "A care support and monitoring app for elderly patients, caregivers, and family members, built around daily care and medication coordination.",
+    tags: ["NextJS", "TypeScript", "React", "Gemini AI", "PWA", "NeonDB"],
+    image: {
+      src: "/projects/medic.png",
+      alt: "MEDIC dashboard preview"
     },
-    {
-        id: 6,
-        title: "Easter Egg",
-        description: "Wow. Still here? You must be really curious",
-        tags: ["Hello World"],
-        github: personalInfo.instagram,
-        demo: personalInfo.instagram
+    images: [
+      {
+        src: "/projects/medic.png",
+        alt: "MEDIC dashboard preview 1"
+      },
+      {
+        src: "/projects/medic1.jpg",
+        alt: "MEDIC dashboard preview 2"
+      },
+      {
+        src: "/projects/medic2.jpg",
+        alt: "MEDIC dashboard preview 3"
+      },
+      {
+        src: "/projects/medic3.jpg",
+        alt: "MEDIC dashboard preview 4"
+      },
+      {
+        src: "/projects/medic4.jpg",
+        alt: "MEDIC dashboard preview 5"
+      }
+    ],
+    links: {
+      demo: "https://medic-orpin.vercel.app/",
+      github: "https://github.com/DanielHC16/medic"
+    },
+    featured: true
+  },
+  {
+    id: 7,
+    title: "AIvin: Smart Multi-Institute Queuing System",
+    description: "AIvin modernizes institutional queuing using an AI agent that guides users through requirements and forms before issuing a ticket.",
+    tags: ["Next.js", "TypeScript", "Gemini AI"],
+    image: {
+      src: "/projects/alvin.png",
+      alt: "AIvin queuing system preview"
+    },
+    images: [
+      {
+        src: "/projects/alvin.png",
+        alt: "AIvin queuing system preview 1"
+      },
+      {
+        src: "/projects/alvin1.png",
+        alt: "AIvin queuing system preview 2"
+      },
+      {
+        src: "/projects/alvin2.png",
+        alt: "AIvin queuing system preview 3"
+      }
+    ],
+    links: {
+      github: "https://https://github.com/DanielHC16/Smart-Multi-Institute-Queuing-System.com/DanielHC16/dcamacho-dev"
     }
+  },
+  {
+    id: 6,
+    title: "PayFlow",
+    description: "A B2B2C payroll platform concept with AI-assisted migration and employee wage access flows for modern payroll management.",
+    tags: ["NextJS", "Python", "OpenAI GPT-4", "MVP", "Hackathon Finalist"],
+    image: {
+      src: "/projects/PAYFLOW.png",
+      alt: "PayFlow payroll dashboard preview"
+    },
+    images: [
+      {
+        src: "/projects/PAYFLOW.png",
+        alt: "PayFlow payroll dashboard preview 1"
+      },
+      {
+        src: "/projects/PAYFLOW1.png",
+        alt: "PayFlow payroll dashboard preview 2"
+      }
+    ],
+    links: {
+      demo: "https://payflow-psi.vercel.app/",
+      github: "https://github.com/DanielHC16/payflow"
+    }
+  },
+  {
+    id: 4,
+    title: "TALLY: Think and Learn Life Yields",
+    description: "TALLY is a gamified platform that bridges the financial literacy gap in the Philippines by making money management fun and engaging for the youth.",
+    tags: ["FlutterFlow", "Hackathon Winner", "Fintech", "MVP"],
+    image: {
+      src: "/projects/TALLY.png",
+      alt: "TALLY financial literacy project preview"
+    },
+    links: {
+      github: "https://github.com/timtulang/Tally",
+      demo: "https://devpost.com/software/tally-teach-and-learn-life-yields#/"
+    }
+  },
+  {
+    id: 5,
+    title: "Enhanced GCN Vulnerability Prediction System",
+    description: "A graph-based system that uses an enhanced Graph Convolutional Network (GCN) to predict vulnerabilities in the rice supply chain under climate and demand shocks.",
+    tags: ["GCN", "Machine Learning", "Supply Chain", "Thesis", "Ongoing"],
+    image: {
+      src: "/projects/GCN-system.png",
+      alt: "Placeholder project preview 7"
+    },
+    links: {
+      github: "https://github.com/DanielHC16/gcn-enhanced-vulnerability-system"
+    }
+  },
+  {
+    id: 9,
+    title: "SaaSified and Amplified: PHSW x PLM Event Website",
+    description: "SaaSified and Amplified: Ascending Software to the Sky is a GDGoC PLM and Philippine Startup Week 2025 keynote focused on scaling Filipino software innovation globally.",
+    tags: ["React", "Tailwind CSS", "Vercel"],
+    image: {
+      src: "/projects/PHSW.png",
+      alt: "Placeholder project preview 9"
+    },
+    links: {
+      demo: "https://phsw2025-b56f9.web.app/"
+    }
+  }
 ];
 
 // Experience Timeline
@@ -115,63 +259,71 @@ export const experiences: Experience[] = [
   {
     id: 0,
     nodeNumber: 1,
-    period: "Temporary",
-    title: "Experience Placeholder",
-    company: "Temporary Node",
+    period: "2017-2023",
+    title: "Academic Commissioned Work",
+    company: "Freelance",
     location: "Manila, Philippines",
-    type: "Placeholder",
+    type: "Freelance Work",
     summary:
-      "Temporary placeholder entry to help visualize the active experience network while the section layout is being finalized.",
+      "Completed commissioned academic tasks such as essays, reports, and presentations based on client requirements, ensuring quality, proper formatting, and on-time delivery.",
     highlights: [
-      "Use this temporary node to validate spacing, animation, and graph behavior.",
-      "Replace this item with a real experience entry once the final content is ready.",
-      "Keep the node structure intact so the graph remains balanced as more experiences are added."
+      "Completed commissioned academic tasks including essays, research papers, reports, and presentations based on specific requirements",
+      "Conducted research and produced well-structured, properly formatted academic outputs",
+      "Managed multiple deadlines while ensuring timely and quality delivery"
     ],
-    stack: ["TBD", "Port", "Layout", "UX", "Graph", "Animation", "Design"]
+    stack: ["Microsoft Office", "Canva", "Photoshop", "Research", "Time Management", "Self Direction"]
   },
   {
     id: 1,
     nodeNumber: 2,
-    period: "Current Track",
-    title: "BS Computer Science",
-    company: "Pamantasan ng Lungsod ng Maynila",
+    period: "2025-2026",
+    title: "Web Development Lead",
+    company: "Google Developer Groups on Campus - PLM",
     location: "Manila, Philippines",
-    type: "Academic",
+    type: "Academic Organization",
     summary:
-      "Developing a strong software engineering foundation through systems thinking, disciplined problem-solving, and hands-on implementation.",
+      "Led web development projects and seminars, guiding team execution, technical direction, and delivery of responsive, scalable web applications.",
     highlights: [
-      "Strengthening core fundamentals across algorithms, programming, and software design.",
-      "Applying classroom concepts through independent builds, portfolio work, and iterative refinement.",
-      "Building a workflow centered on clarity, precision, and deliberate execution."
+      "Led a 10 person developer team, managing communication, task distribution, and technical alignment across projects",
+      "Ensured strict deadline adherence through structured planning, sprint coordination, and progress tracking.",
+      "Facilitated technical seminars to improve team skills and development practices."
     ],
-    stack: ["Python", "Java", "C", "PostgreSQL"]
+    stack: ["React", "Next.js", "Leadership", "Communication"]
   },
   {
     id: 2,
     nodeNumber: 3,
     defaultActive: true,
     period: "Present",
-    title: "Web Development Lead",
-    company: "GDG on Campus PLM",
-    location: "Manila, Philippines",
-    type: "Leadership",
+    title: "Software Engineer Intern",
+    company: "Aboitiz Foods Company - Pilmico Foods Corporation",
+    location: "Makati, Philippines",
+    type: "Traineeship",
     summary:
-      "Leading web-focused initiatives with an emphasis on structure, maintainability, and polished user-facing execution.",
+      "Develop and test responsive frontend web pages for internal applications, actively engaging in the full Agile software development lifecycle.",
     highlights: [
-      "Support planning and delivery for student-led web projects and community initiatives.",
-      "Translate direction into clean, consistent interfaces that feel intentional across screens.",
-      "Help keep collaboration organized so builds stay thoughtful, scalable, and reliable."
+      "Engineer dynamic front-end web pages by building out UI designs, implementing core application logic, and consuming RESTful APIs.",
+      "Execute unit and User Acceptance Testing (UAT) to ensure robust application performance.",
+      "Drive project momentum through active participation in core Agile ceremonies."
     ],
-    stack: ["React", "Next.js", "TypeScript", "Figma"]
+    stack: ["JavaScript", "Jquery", "React", "APIs", "Git", "Agile", "Collaboration"]
   }
 ];
 
 // Skills/Tools
 export const skills = {
   languages: ["Python", "JavaScript", "TypeScript", "Java", "C"],
-  frontend: ["React", "Next.js", "Tailwind CSS"],
-  backend: ["Node.js", "Express", "FastAPI", "PostgreSQL", "MongoDB"],
+  frontend: ["React", "Next.js", "Tailwind CSS", "Jquery"],
+  backend: ["Node.js", "Express", "FastAPI", "PostgreSQL", "SQLite", "NeonDB"],
   tools: ["Git", "Figma", "Vercel", "AWS", "GCP"]
+};
+
+// Soft Skills
+export const softSkills = {
+  communication: ["Public Speaking", "Technical Writing", "Active Listening", "Cross-functional"],
+  leadership: ["Project Management", "Team Mentorship", "Event Coordination", "Agile Collaboration"],
+  analytical: ["Critical Thinking", "Systems Analysis", "Research", "Adaptability"],
+  work_ethic: ["Time Management", "Resilience", "Self-Direction", "Prioritization"]
 };
 
 // Social Links

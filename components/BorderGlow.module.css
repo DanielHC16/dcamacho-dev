@@ -1,0 +1,168 @@
+/* ─────────────────────────────────────────────────────────
+   Base card shell
+   NOTE: --cursor-angle / --cursor-angle-b are set directly
+   via JS (requestAnimationFrame) — no @property needed.
+───────────────────────────────────────────────────────── */
+.card {
+  --cursor-angle: 0deg;
+  --cursor-angle-b: 180deg;
+  --border-radius: 2px;
+  --glow-padding: 44px;
+  --cone-spread: 13;
+  --cone-fade: 10;
+
+  position: relative;
+  display: grid;
+  min-height: 100%;
+  border-radius: var(--border-radius);
+  background: var(--card-bg, var(--surface));
+  /* Subtle permanent border so the card boundary is always visible */
+  border: 1px solid color-mix(in oklab, var(--border) 65%, transparent);
+  box-shadow:
+    0 14px 42px rgb(0 0 0 / 8%),
+    0 1px 0 rgb(255 255 255 / 10%) inset;
+
+  /* NO isolation:isolate — that breaks blend modes */
+  overflow: visible;
+}
+
+/* ─────────────────────────────────────────────────────────
+   Shared pseudo-element base
+───────────────────────────────────────────────────────── */
+.card::before,
+.card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+/* ─────────────────────────────────────────────────────────
+   ::before — spinning gradient BORDER
+   Two conic masks (A + B = two beams, 180° apart)
+───────────────────────────────────────────────────────── */
+.card::before {
+  z-index: 0;
+  border: 2px solid transparent;
+  background:
+    linear-gradient(var(--card-bg, var(--surface)) 0 100%) padding-box,
+    linear-gradient(rgb(255 255 255 / 0%) 0% 100%) border-box,
+    var(--gradient-one,   radial-gradient(at 80% 55%, var(--accent)              0px, transparent 50%)) border-box,
+    var(--gradient-two,   radial-gradient(at 69% 34%, var(--project-glow-two)   0px, transparent 50%)) border-box,
+    var(--gradient-three, radial-gradient(at  8%  6%, var(--project-glow-three) 0px, transparent 50%)) border-box,
+    var(--gradient-four,  radial-gradient(at 41% 38%, var(--accent)              0px, transparent 50%)) border-box,
+    var(--gradient-five,  radial-gradient(at 86% 85%, var(--project-glow-two)   0px, transparent 50%)) border-box,
+    var(--gradient-six,   radial-gradient(at 82% 18%, var(--project-glow-three) 0px, transparent 50%)) border-box,
+    var(--gradient-seven, radial-gradient(at 51%  4%, var(--project-glow-two)   0px, transparent 50%)) border-box,
+    var(--gradient-base,  linear-gradient(var(--accent) 0 100%)) border-box;
+
+  mask-image:
+    conic-gradient(
+      from var(--cursor-angle) at center,
+      black calc(var(--cone-spread) * 1%),
+      transparent calc((var(--cone-spread) + var(--cone-fade)) * 1%),
+      transparent calc((100 - var(--cone-spread) - var(--cone-fade)) * 1%),
+      black calc((100 - var(--cone-spread)) * 1%)
+    ),
+    conic-gradient(
+      from var(--cursor-angle-b) at center,
+      black calc(var(--cone-spread) * 1%),
+      transparent calc((var(--cone-spread) + var(--cone-fade)) * 1%),
+      transparent calc((100 - var(--cone-spread) - var(--cone-fade)) * 1%),
+      black calc((100 - var(--cone-spread)) * 1%)
+    );
+  mask-composite: add;
+  opacity: 1;
+}
+
+/* ─────────────────────────────────────────────────────────
+   ::after — subtle inner-fill tint that follows the beam
+───────────────────────────────────────────────────────── */
+.card::after {
+  z-index: 0;
+  background:
+    var(--gradient-one,   radial-gradient(at 80% 55%, var(--accent)            0px, transparent 50%)),
+    var(--gradient-two,   radial-gradient(at 69% 34%, var(--project-glow-two) 0px, transparent 50%)),
+    var(--gradient-three, radial-gradient(at  8%  6%, var(--accent)            0px, transparent 50%)),
+    var(--gradient-four,  radial-gradient(at 41% 38%, var(--project-glow-two) 0px, transparent 50%));
+  mask-image:
+    linear-gradient(to bottom, black, black),
+    radial-gradient(ellipse at 50% 50%, black 30%, transparent 65%),
+    conic-gradient(
+      from var(--cursor-angle) at center,
+      transparent 5%,
+      black 15%,
+      black 85%,
+      transparent 95%
+    );
+  mask-composite: subtract, add;
+  mix-blend-mode: soft-light;
+  opacity: var(--fill-opacity, 0.07);
+}
+
+/* ─────────────────────────────────────────────────────────
+   .edgeLight — outer halo ring (two opposing beams)
+   Sits OUTSIDE the card via negative inset
+───────────────────────────────────────────────────────── */
+.edgeLight {
+  display: block;
+  position: absolute;
+  inset: calc(var(--glow-padding) * -1);
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 2;
+
+  mask-image:
+    conic-gradient(
+      from var(--cursor-angle) at center,
+      black 2.5%,
+      transparent 9%,
+      transparent 91%,
+      black 97.5%
+    ),
+    conic-gradient(
+      from var(--cursor-angle-b) at center,
+      black 2.5%,
+      transparent 9%,
+      transparent 91%,
+      black 97.5%
+    );
+  mask-composite: add;
+  opacity: 1;
+}
+
+.edgeLight::before {
+  content: "";
+  position: absolute;
+  inset: var(--glow-padding);
+  border-radius: inherit;
+  box-shadow:
+    /* Inner rim — yellow-gold matching glowColor HSL 46° 62% 72% ≈ rgb(219,196,131) */
+    inset 0 0 0 1.5px var(--glow-color,     rgba(219, 196, 131, 1.0)),
+    inset 0 0  5px 1px  var(--glow-color-60, rgba(219, 196, 131, 0.6)),
+    inset 0 0 14px 3px  var(--glow-color-40, rgba(219, 196, 131, 0.4)),
+    inset 0 0 32px 6px  var(--glow-color-20, rgba(219, 196, 131, 0.2)),
+    /* Outer spread */
+    0 0  5px 1px  var(--glow-color-60, rgba(219, 196, 131, 0.6)),
+    0 0 14px 4px  var(--glow-color-40, rgba(219, 196, 131, 0.4)),
+    0 0 34px 10px var(--glow-color-20, rgba(219, 196, 131, 0.2)),
+    0 0 64px 18px var(--glow-color-10, rgba(219, 196, 131, 0.1));
+}
+
+/* ─────────────────────────────────────────────────────────
+   .inner — content layer (above all glow)
+───────────────────────────────────────────────────────── */
+.inner {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  min-height: 100%;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: max(0px, calc(var(--border-radius) - 1px));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* The JS loop checks this separately in the component */
+}

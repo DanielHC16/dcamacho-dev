@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
+const siteUrl = "https://danielcamacho.vercel.app";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -13,16 +15,16 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://danielcamacho.vercel.app'),
+  metadataBase: new URL(siteUrl),
   title: "Daniel Camacho | Software Engineer",
-  description: "Software engineer portfolio - Building elegant solutions through clean code and thoughtful design. NieR: Automata inspired minimalist design.",
+  description: "Software engineer portfolio - Building elegant solutions through clean code and thoughtful design.",
   keywords: ["Daniel Camacho", "Software Engineer", "Web Developer", "Portfolio", "React", "Next.js", "TypeScript", "Full Stack Developer"],
   authors: [{ name: "Daniel Camacho" }],
   creator: "Daniel Camacho",
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://danielcamacho.vercel.app",
+    url: siteUrl,
     title: "Daniel Camacho | Software Engineer",
     description: "Software engineer portfolio - Building elegant solutions through clean code and thoughtful design.",
     siteName: "Daniel Camacho Portfolio",
@@ -44,9 +46,6 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
-  verification: {
-    google: "your-google-verification-code",
-  },
 };
 
 export default function RootLayout({
@@ -59,11 +58,11 @@ export default function RootLayout({
     "@type": "Person",
     "name": "Daniel Camacho",
     "jobTitle": "Software Engineer",
-    "url": "https://danielcamacho.dev",
+    "url": siteUrl,
     "sameAs": [
       "https://github.com/DanielHC16",
       "https://linkedin.com/in/danielcamacho777",
-      "https://instagram.com/https.hajin"
+      "https://www.instagram.com/daji.env"
     ],
     "email": "danielcamacho0416@gmail.com",
     "alumniOf": {

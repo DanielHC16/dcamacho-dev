@@ -1,4 +1,5 @@
 import { aboutPoints, personalInfo } from "@/lib/data";
+import LetterGlitch from "@/components/LetterGlitch";
 
 export default function About() {
   return (
@@ -63,6 +64,42 @@ export default function About() {
             <p className="text-sm sm:text-base text-foreground/80 font-normal leading-relaxed text-justify px-10 sm:px-0" style={{ lineHeight: '1.75', letterSpacing: '0.01em' }}>
               {personalInfo.bio}
             </p>
+
+            {/* LetterGlitch animation block — borderless, blends into bg */}
+            <div
+              className="mt-14 px-10 sm:px-0"
+              style={{ position: 'relative', height: '200px', overflow: 'hidden' }}
+            >
+              <LetterGlitch
+                glitchColors={['#b8a882', '#5a7a76', '#2a2a2a']}
+                glitchSpeed={60}
+                centerVignette={false}
+                outerVignette={false}
+                smooth={true}
+                backgroundColor="transparent"
+              />
+              {/* Edge fade — all four sides dissolve into the page background */}
+              {/* Top */}
+              <div style={{
+                position: 'absolute', inset: 0, pointerEvents: 'none',
+                background: 'linear-gradient(to bottom, var(--background) 0%, transparent 35%)',
+              }} />
+              {/* Bottom */}
+              <div style={{
+                position: 'absolute', inset: 0, pointerEvents: 'none',
+                background: 'linear-gradient(to top, var(--background) 0%, transparent 35%)',
+              }} />
+              {/* Left */}
+              <div style={{
+                position: 'absolute', inset: 0, pointerEvents: 'none',
+                background: 'linear-gradient(to right, var(--background) 0%, transparent 40%)',
+              }} />
+              {/* Right */}
+              <div style={{
+                position: 'absolute', inset: 0, pointerEvents: 'none',
+                background: 'linear-gradient(to left, var(--background) 0%, transparent 40%)',
+              }} />
+            </div>
           </div>
 
           {/* Right Column - Key Points */}

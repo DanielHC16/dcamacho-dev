@@ -2,23 +2,20 @@
 
 import { useState, useEffect } from 'react';
 
-function getPreferredTheme() {
-  if (typeof window === 'undefined') {
-    return false;
-  }
-
-  const savedTheme = localStorage.getItem('theme');
-  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-  return savedTheme === 'dark' || (!savedTheme && prefersDark);
-}
-
 export default function ThemeToggle() {
-  const [isDark, setIsDark] = useState(getPreferredTheme);
+  // Always start with false on the server so SSR and client initial render match.
+  // The real preference is read in useEffect (client-only) after hydration.
+  const [isDark, setIsDark] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    document.documentElement.classList.toggle('dark', isDark);
-  }, [isDark]);
+    const savedTheme = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const initial = savedTheme === 'dark' || (!savedTheme && prefersDark);
+    setIsDark(initial);
+    document.documentElement.classList.toggle('dark', initial);
+    setMounted(true);
+  }, []);
 
   const toggleTheme = () => {
     const newTheme = !isDark;

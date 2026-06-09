@@ -151,14 +151,17 @@ export default function Experiences() {
         }}
       />
 
-      <div className="relative z-10 max-w-[1320px] w-full mx-auto">
-        <div className="flex items-center justify-center gap-4 mb-8 sm:justify-start xl:mx-auto xl:w-[1292px]">
+      {/* Single shared container — header text and grid share the same left edge */}
+      <div className="relative z-10 max-w-[1260px] w-full mx-auto">
+        {/* Section number marker */}
+        <div className="flex items-center justify-center sm:justify-start gap-4 mb-8">
           <div className="w-20 h-px bg-border" />
           <span className="text-xs text-muted font-mono">03</span>
           <div className="w-20 h-px bg-border" />
         </div>
 
-        <div className="mb-6 max-w-xl xl:mx-auto xl:w-[1292px] xl:max-w-none">
+        {/* Header text — same container as the grid below, so left edges align */}
+        <div className="mb-6">
           <span className="text-xs font-mono uppercase tracking-widest font-semibold text-foreground">
             Experience_Network
           </span>
@@ -170,13 +173,11 @@ export default function Experiences() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 gap-8 xl:grid-cols-[500px_760px] xl:justify-center">
-          
+        {/* Grid — shares parent container, so left edge aligns with header text above */}
+        <div className="grid grid-cols-1 gap-8 xl:grid-cols-[500px_1fr]">
+
           {/* LEFT CARD - GRAPH */}
-          <div
-            className="relative flex h-[620px] flex-col overflow-hidden border border-border/80 bg-surface/78 shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--border)_60%,transparent)] backdrop-blur-sm"
-            style={{ width: '100%' }}
-          >
+          <div className="relative flex h-[340px] sm:h-[480px] xl:h-[620px] flex-col overflow-hidden border border-border/80 bg-surface/78 shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--border)_60%,transparent)] backdrop-blur-sm">
             {/* Top Header */}
             <div className="flex items-center justify-between border-b border-border/40 px-8 py-6 lg:px-10">
               <div className="flex items-center gap-3">
@@ -216,7 +217,6 @@ export default function Experiences() {
                   {graphPoints.map((point, index) => {
                     const nextPoint = graphPoints[index + 1];
                     if (!nextPoint) return null;
-
                     return (
                       <path
                         key={`path-${index}`}
@@ -265,7 +265,6 @@ export default function Experiences() {
                         {isSelected && (
                           <span className="pointer-events-none absolute inset-1 rounded-full bg-accent/20 blur-2xl" />
                         )}
-
                         {isSelectable && (
                           <>
                             <span className="pointer-events-none absolute inset-1 rounded-full border border-accent/28 animate-node-available-ring" />
@@ -275,11 +274,9 @@ export default function Experiences() {
                             />
                           </>
                         )}
-
                         {isSelected && (
                           <span className="pointer-events-none absolute inset-0 rounded-full border border-accent/32 animate-node-selected-ring" />
                         )}
-
                         <span
                           className={`relative flex h-12 w-12 items-center justify-center rounded-full border transition-all duration-300 ${
                             isSelected
@@ -344,16 +341,70 @@ export default function Experiences() {
             </div>
           </div>
 
+          {/* RIGHT CARD - DETAIL PANEL */}
           <div
             key={activeExperience.id}
-            className="h-[620px] overflow-hidden border border-border/80 bg-surface shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--border)_60%,transparent)] backdrop-blur-sm"
-            style={{
-              width: '100%',
-              padding: '2rem',
-            }}
+            className="overflow-y-auto xl:overflow-hidden xl:h-[620px] border border-border/80 bg-surface shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--border)_60%,transparent)] backdrop-blur-sm"
+            style={{ width: '100%', padding: '1.5rem' }}
           >
+            {/* Mobile layout: natural flow */}
+            <div className="xl:hidden flex flex-col gap-6">
+              <header>
+                <div className="flex items-center gap-4 mb-4">
+                  <span className="font-mono text-xs text-muted">
+                    {String(activeNodeNumber).padStart(2, '0')}
+                  </span>
+                  <div className="h-px flex-1 bg-border" />
+                  <span className={DETAIL_LABEL_CLASSNAME}>{activeExperience.type}</span>
+                </div>
+                <h3 className="text-2xl font-light leading-tight text-foreground">
+                  {activeExperience.title}
+                </h3>
+                <p className="text-sm font-normal text-foreground/80 mt-2" style={{ lineHeight: '1.7' }}>
+                  {activeExperience.company}
+                </p>
+              </header>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <span className={`block ${DETAIL_LABEL_CLASSNAME}`}>Location</span>
+                  <p className="text-sm font-normal text-foreground/90 mt-2">{activeExperience.location}</p>
+                </div>
+                <div>
+                  <span className={`block ${DETAIL_LABEL_CLASSNAME}`}>Period</span>
+                  <p className="text-sm font-normal text-foreground/90 mt-2">{activeExperience.period}</p>
+                </div>
+              </div>
+
+              <div>
+                <span className={DETAIL_LABEL_CLASSNAME}>Summary</span>
+                <p className="text-sm font-normal text-foreground/90 mt-2" style={{ lineHeight: '1.7' }}>{activeExperience.summary}</p>
+              </div>
+
+              <div>
+                <span className={DETAIL_LABEL_CLASSNAME}>Highlights</span>
+                <ul className="list-outside list-disc space-y-2 pl-5 marker:text-accent mt-2">
+                  {activeExperience.highlights.map((h) => (
+                    <li key={h} className="pl-1 text-sm font-normal text-foreground/90" style={{ lineHeight: '1.65' }}>{h}</li>
+                  ))}
+                </ul>
+              </div>
+
+              <div>
+                <span className={DETAIL_LABEL_CLASSNAME}>Stack</span>
+                <div className="grid grid-cols-3 gap-2 mt-2">
+                  {activeExperience.stack.map((item) => (
+                    <span key={item} className="flex h-8 items-center justify-center border border-border bg-surface px-2 font-mono text-xs text-muted transition-colors duration-300 hover:border-accent hover:text-accent">
+                      {item}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Desktop layout: original rigid grid */}
             <div
-              className="grid h-full grid-rows-[7.75rem_4.75rem_5.75rem_minmax(0,1fr)] gap-7"
+              className="hidden xl:grid h-full grid-rows-[7.75rem_4.75rem_5.75rem_minmax(0,1fr)] gap-7"
               style={{ paddingLeft: '1.25rem', paddingRight: '1.25rem' }}
             >
               <header>
@@ -362,103 +413,58 @@ export default function Experiences() {
                     {String(activeNodeNumber).padStart(2, '0')}
                   </span>
                   <div className="h-px flex-1 bg-border" />
-                  <span className={DETAIL_LABEL_CLASSNAME}>
-                    {activeExperience.type}
-                  </span>
+                  <span className={DETAIL_LABEL_CLASSNAME}>{activeExperience.type}</span>
                 </div>
-
                 <h3 className="text-[2rem] font-light leading-tight text-foreground sm:text-[2.25rem] lg:text-[2.45rem]">
                   {activeExperience.title}
                 </h3>
-                <p
-                  className="max-w-[34rem] text-sm font-normal text-foreground/80"
-                  style={{ marginTop: '0.75rem', lineHeight: '1.7' }}
-                >
+                <p className="max-w-[34rem] text-sm font-normal text-foreground/80" style={{ marginTop: '0.75rem', lineHeight: '1.7' }}>
                   {activeExperience.company}
                 </p>
               </header>
 
               <section className="grid grid-cols-1 gap-7 sm:grid-cols-3">
                 <div>
-                  <span className={`block ${DETAIL_LABEL_CLASSNAME}`}>
-                    Location
-                  </span>
-                  <p
-                    className="text-sm font-normal text-foreground/90"
-                    style={{ marginTop: '0.85rem', lineHeight: '1.6' }}
-                  >
+                  <span className={`block ${DETAIL_LABEL_CLASSNAME}`}>Location</span>
+                  <p className="text-sm font-normal text-foreground/90" style={{ marginTop: '0.85rem', lineHeight: '1.6' }}>
                     {activeExperience.location}
                   </p>
                 </div>
-
                 <div>
-                  <span className={`block ${DETAIL_LABEL_CLASSNAME}`}>
-                    Period
-                  </span>
-                  <p
-                    className="text-sm font-normal text-foreground/90"
-                    style={{ marginTop: '0.85rem', lineHeight: '1.6' }}
-                  >
+                  <span className={`block ${DETAIL_LABEL_CLASSNAME}`}>Period</span>
+                  <p className="text-sm font-normal text-foreground/90" style={{ marginTop: '0.85rem', lineHeight: '1.6' }}>
                     {activeExperience.period}
                   </p>
                 </div>
-
                 <div>
-                  <span className={`block ${DETAIL_LABEL_CLASSNAME}`}>
-                    Company
-                  </span>
-                  <p
-                    className="text-sm font-normal text-foreground/90"
-                    style={{ marginTop: '0.85rem', lineHeight: '1.6' }}
-                  >
+                  <span className={`block ${DETAIL_LABEL_CLASSNAME}`}>Company</span>
+                  <p className="text-sm font-normal text-foreground/90" style={{ marginTop: '0.85rem', lineHeight: '1.6' }}>
                     {activeExperience.company}
                   </p>
                 </div>
               </section>
 
               <section>
-                <span className={DETAIL_LABEL_CLASSNAME}>
-                  Summary
-                </span>
-                <p
-                  className="max-w-[42rem] text-sm font-normal text-foreground/90"
-                  style={{ marginTop: '0.85rem', lineHeight: '1.7' }}
-                >
+                <span className={DETAIL_LABEL_CLASSNAME}>Summary</span>
+                <p className="max-w-[42rem] text-sm font-normal text-foreground/90" style={{ marginTop: '0.85rem', lineHeight: '1.7' }}>
                   {activeExperience.summary}
                 </p>
               </section>
 
               <section className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1fr)_16rem]">
                 <div>
-                  <span className={DETAIL_LABEL_CLASSNAME}>
-                    Highlights
-                  </span>
-
-                  <ul
-                    className="list-outside list-disc space-y-2.5 pl-5 marker:text-accent"
-                    style={{ marginTop: '0.85rem' }}
-                  >
+                  <span className={DETAIL_LABEL_CLASSNAME}>Highlights</span>
+                  <ul className="list-outside list-disc space-y-2.5 pl-5 marker:text-accent" style={{ marginTop: '0.85rem' }}>
                     {activeExperience.highlights.map((highlight) => (
-                      <li
-                        key={highlight}
-                        className="pl-2 text-sm font-normal text-foreground/90"
-                        style={{ lineHeight: '1.65' }}
-                      >
+                      <li key={highlight} className="pl-2 text-sm font-normal text-foreground/90" style={{ lineHeight: '1.65' }}>
                         {highlight}
                       </li>
                     ))}
                   </ul>
                 </div>
-
                 <div>
-                  <span className={DETAIL_LABEL_CLASSNAME}>
-                    Stack
-                  </span>
-
-                  <div
-                    className="grid grid-cols-2 gap-2.5"
-                    style={{ marginTop: '0.85rem' }}
-                  >
+                  <span className={DETAIL_LABEL_CLASSNAME}>Stack</span>
+                  <div className="grid grid-cols-2 gap-2.5" style={{ marginTop: '0.85rem' }}>
                     {activeExperience.stack.map((item) => (
                       <span
                         key={item}

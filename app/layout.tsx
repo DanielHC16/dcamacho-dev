@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: "Daniel Camacho | Software Engineer",
+  title: "Daniel Camacho | Personal Webfolio",
   description: "Software engineer portfolio - Building elegant solutions through clean code and thoughtful design.",
   keywords: ["Daniel Camacho", "Software Engineer", "Web Developer", "Portfolio", "React", "Next.js", "TypeScript", "Full Stack Developer"],
   authors: [{ name: "Daniel Camacho" }],
@@ -28,12 +28,19 @@ export const metadata: Metadata = {
     title: "Daniel Camacho | Software Engineer",
     description: "Software engineer portfolio - Building elegant solutions through clean code and thoughtful design.",
     siteName: "Daniel Camacho Portfolio",
+    images: [
+      {
+        url: `${siteUrl}/META.png`,
+        alt: "Daniel Camacho Portfolio",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Daniel Camacho | Software Engineer",
     description: "Software engineer portfolio - Building elegant solutions through clean code and thoughtful design.",
     creator: "@danielcamacho",
+    images: [`${siteUrl}/META.png`],
   },
   robots: {
     index: true,

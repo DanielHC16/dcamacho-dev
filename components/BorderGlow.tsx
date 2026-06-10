@@ -81,7 +81,7 @@ export default function BorderGlow({
 }: BorderGlowProps) {
   const cardRef = useRef<HTMLDivElement>(null);
 
-  /* ── JS animation loop — bypasses @property CSS Module limitation ── */
+  /* ── JS animation loop — run only while hovered (bypasses @property CSS Module limitation) ── */
   useEffect(() => {
     if (!animated) return;
     const card = cardRef.current;
@@ -92,7 +92,7 @@ export default function BorderGlow({
     if (mq.matches) return;
 
     let angle = 0;
-    let rafId: number;
+    let rafId: number | null = null;
 
     const tick = () => {
       angle = (angle + speed) % 360;
@@ -101,8 +101,26 @@ export default function BorderGlow({
       rafId = requestAnimationFrame(tick);
     };
 
-    rafId = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(rafId);
+    const start = () => {
+      if (rafId != null) return;
+      rafId = requestAnimationFrame(tick);
+    };
+
+    const stop = () => {
+      if (rafId != null) {
+        cancelAnimationFrame(rafId);
+        rafId = null;
+      }
+    };
+
+    card.addEventListener('pointerenter', start);
+    card.addEventListener('pointerleave', stop);
+
+    return () => {
+      stop();
+      card.removeEventListener('pointerenter', start);
+      card.removeEventListener('pointerleave', stop);
+    };
   }, [animated, speed]);
 
   const style: GlowStyle = {

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
-const siteUrl = "https://danielcamacho.vercel.app";
+const siteUrl = "https://dcamacho-dev.vercel.app/";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   title: "Daniel Camacho | Personal Webfolio",
   description: "Software engineer portfolio - Building elegant solutions through clean code and thoughtful design.",
   keywords: ["Daniel Camacho", "Software Engineer", "Web Developer", "Portfolio", "React", "Next.js", "TypeScript", "Full Stack Developer"],
-  authors: [{ name: "Daniel Camacho" }],
+  authors: [{ name: "Daniel Hardy Camacho" }],
   creator: "Daniel Camacho",
   openGraph: {
     type: "website",

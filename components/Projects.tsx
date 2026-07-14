@@ -110,7 +110,7 @@ export default function Projects() {
   return (
     <section
       id="projects"
-      className="min-h-screen flex items-start justify-center px-10 sm:px-8 md:px-12 lg:px-16 py-16 relative"
+      className="min-h-screen flex items-start justify-center py-16 relative"
       style={{ overflow: 'clip', scrollMarginTop: '5rem' }}
     >
       {/* Background grid */}
@@ -125,7 +125,7 @@ export default function Projects() {
         </div>
       </div>
 
-      <div className="relative z-10 max-w-6xl w-full mx-auto">
+      <div className="relative z-10 max-w-6xl w-full min-w-0 mx-auto px-5 sm:px-8 md:px-12 lg:px-16">
 
         {/* Section header */}
         <div className="flex items-center justify-center sm:justify-start gap-4 mb-8">
@@ -167,7 +167,7 @@ export default function Projects() {
             transition: 'opacity 0.28s ease',
           }}
         >
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-3 gap-6 min-w-0">
             {currentProjects.map((project) => {
               const projectImages = getProjectImages(project);
               return (
@@ -175,8 +175,8 @@ export default function Projects() {
                   key={project.id}
                   className="h-[560px] transition-all duration-300 hover:-translate-y-1"
                 >
-                  <BorderGlow className="h-full">
-                    <div className="group flex h-full flex-col">
+                  <BorderGlow className="h-full min-w-0">
+                    <div className="group flex h-full flex-col min-w-0">
 
                       {/* Thumbnail — CSS sliding strip, fixed height for pixel-perfect consistency */}
                       <button
@@ -223,9 +223,9 @@ export default function Projects() {
                       </button>
 
                       {/* Card body */}
-                      <div className="flex flex-1 flex-col" style={{ padding: '1.5rem', gap: '1rem' }}>
+                      <div className="flex flex-1 flex-col min-w-0" style={{ padding: '1.25rem', gap: '0.85rem' }}>
                         <h3
-                          className="text-[1.2rem] sm:text-[1.3rem] font-medium tracking-tight leading-snug text-foreground group-hover:text-accent transition-colors duration-300"
+                          className="text-[1.1rem] sm:text-[1.3rem] font-medium tracking-tight leading-snug text-foreground group-hover:text-accent transition-colors duration-300"
                           style={{ minHeight: '2.5rem' }}
                         >
                           {project.title}
@@ -254,7 +254,7 @@ export default function Projects() {
                         {/* Actions — each button only renders when its link exists;
                             solo button stretches full width automatically via flex-1 */}
                         <div
-                          className="flex gap-3 border-t border-border/60"
+                          className="flex gap-3 border-t border-border/60 min-w-0"
                           style={{ marginTop: 'auto', paddingTop: '1.25rem' }}
                         >
                           {project.links.demo && (
@@ -262,7 +262,7 @@ export default function Projects() {
                               href={project.links.demo}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="inline-flex flex-1 min-h-11 items-center justify-center gap-2 border border-border px-5 text-[0.65rem] uppercase tracking-widest font-light text-muted hover:border-accent hover:text-accent transition-colors duration-300"
+                              className="inline-flex flex-1 min-w-0 min-h-11 items-center justify-center gap-1.5 border border-border px-2 sm:px-4 text-[0.55rem] sm:text-[0.65rem] uppercase tracking-widest font-light text-muted hover:border-accent hover:text-accent transition-colors duration-300"
                             >
                               <FiExternalLink className="w-3.5 h-3.5" aria-hidden="true" />
                               View Project
@@ -274,10 +274,10 @@ export default function Projects() {
                               target="_blank"
                               rel="noopener noreferrer"
                               aria-label={`${project.title} GitHub repository`}
-                              className={`inline-flex flex-1 min-h-11 items-center justify-center gap-2 border border-border text-muted hover:border-accent hover:text-accent transition-colors duration-300 ${
+                              className={`inline-flex flex-1 min-w-0 min-h-11 items-center justify-center gap-1.5 border border-border text-muted hover:border-accent hover:text-accent transition-colors duration-300 ${
                                 project.links.demo
                                   ? '' // side-by-side: icon only
-                                  : 'px-5 text-[0.65rem] uppercase tracking-widest font-light' // solo: full label
+                                  : 'px-3 sm:px-5 text-[0.6rem] sm:text-[0.65rem] uppercase tracking-widest font-light' // solo: full label
                               }`}
                             >
                               <FaGithub className="w-4 h-4" aria-hidden="true" />

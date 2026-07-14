@@ -86,7 +86,7 @@ export default function Experiences() {
     return (
       <section
         id="experiences"
-        className="min-h-screen flex items-center justify-center px-10 sm:px-8 md:px-12 lg:px-16 py-24 relative overflow-hidden"
+        className="min-h-screen flex items-center justify-center py-24 relative overflow-hidden"
       >
         <div className="absolute inset-0 opacity-20">
           <div className="absolute inset-0">
@@ -99,7 +99,7 @@ export default function Experiences() {
           </div>
         </div>
 
-        <div className="relative z-10 max-w-4xl w-full mx-auto">
+        <div className="relative z-10 max-w-4xl w-full mx-auto px-6 sm:px-8 md:px-12 lg:px-16">
           <div className="flex items-center justify-center sm:justify-start gap-4 mb-8">
             <div className="w-20 h-px bg-border" />
             <span className="text-xs text-muted font-mono">03</span>
@@ -130,7 +130,7 @@ export default function Experiences() {
   return (
     <section
       id="experiences"
-      className="min-h-screen flex items-center justify-center px-6 sm:px-8 md:px-12 lg:px-16 py-24 relative overflow-hidden"
+      className="min-h-screen flex items-center justify-center py-24 relative overflow-hidden"
     >
       <div className="absolute inset-0 opacity-20">
         <div className="absolute inset-0">
@@ -152,7 +152,7 @@ export default function Experiences() {
       />
 
       {/* Single shared container — header text and grid share the same left edge */}
-      <div className="relative z-10 max-w-[1260px] w-full mx-auto">
+      <div className="relative z-10 max-w-[1260px] w-full min-w-0 mx-auto px-5 sm:px-8 md:px-12 lg:px-16">
         {/* Section number marker */}
         <div className="flex items-center justify-center sm:justify-start gap-4 mb-8">
           <div className="w-20 h-px bg-border" />
@@ -174,19 +174,19 @@ export default function Experiences() {
         </div>
 
         {/* Grid — shares parent container, so left edge aligns with header text above */}
-        <div className="grid grid-cols-1 gap-8 xl:grid-cols-[500px_1fr]">
+        <div className="grid grid-cols-1 gap-8 xl:grid-cols-[500px_1fr] min-w-0">
 
           {/* LEFT CARD - GRAPH */}
-          <div className="relative flex h-[340px] sm:h-[480px] xl:h-[620px] flex-col overflow-hidden border border-border/80 bg-surface/78 shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--border)_60%,transparent)] backdrop-blur-sm">
+          <div className="relative flex h-[340px] sm:h-[480px] xl:h-[620px] flex-col overflow-hidden border border-border/80 bg-surface/78 shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--border)_60%,transparent)] backdrop-blur-sm min-w-0">
             {/* Top Header */}
-            <div className="flex items-center justify-between border-b border-border/40 px-8 py-6 lg:px-10">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-px bg-accent" />
-                <span className="text-[10px] font-mono uppercase tracking-[0.32em] text-muted">
+            <div className="flex items-center justify-between border-b border-border/40 px-4 sm:px-8 lg:px-10 py-4 sm:py-6">
+              <div className="flex items-center gap-2 sm:gap-3">
+                <div className="w-6 sm:w-10 h-px bg-accent" />
+                <span className="text-[9px] sm:text-[10px] font-mono uppercase tracking-[0.2em] sm:tracking-[0.32em] text-muted">
                   Interactive Graph
                 </span>
               </div>
-              <span className="text-[10px] font-mono uppercase tracking-[0.32em] text-muted">
+              <span className="text-[9px] sm:text-[10px] font-mono uppercase tracking-[0.2em] sm:tracking-[0.32em] text-muted whitespace-nowrap pl-2">
                 {String(experiences.length).padStart(2, '0')} Nodes
               </span>
             </div>
@@ -344,11 +344,11 @@ export default function Experiences() {
           {/* RIGHT CARD - DETAIL PANEL */}
           <div
             key={activeExperience.id}
-            className="overflow-y-auto xl:overflow-hidden xl:h-[620px] border border-border/80 bg-surface shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--border)_60%,transparent)] backdrop-blur-sm"
-            style={{ width: '100%', padding: '1.5rem' }}
+            className="overflow-y-auto xl:overflow-hidden xl:h-[620px] border border-border/80 bg-surface shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--border)_60%,transparent)] backdrop-blur-sm min-w-0"
+            style={{ width: '100%', padding: '1.25rem' }}
           >
             {/* Mobile layout: natural flow */}
-            <div className="xl:hidden flex flex-col gap-6">
+            <div className="xl:hidden flex flex-col gap-6 min-w-0">
               <header>
                 <div className="flex items-center gap-4 mb-4">
                   <span className="font-mono text-xs text-muted">

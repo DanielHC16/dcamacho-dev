@@ -3,7 +3,7 @@ import { personalInfo } from '@/lib/data';
 
 export default function Contact() {
   return (
-    <section id="contact" className="min-h-screen flex items-center justify-center px-10 sm:px-8 md:px-12 lg:px-16 py-24 relative overflow-hidden">
+    <section id="contact" className="min-h-screen flex items-center justify-center py-24 relative overflow-hidden">
       {/* Background Grid */}
       <div className="absolute inset-0 opacity-20">
         <div className="absolute inset-0">
@@ -30,7 +30,7 @@ export default function Contact() {
         </div>
       </div>
 
-      <div className="relative z-10 w-full max-w-6xl mx-auto flex flex-col items-center md:items-start text-center md:text-left px-10 sm:px-0">
+      <div className="relative z-10 w-full max-w-6xl min-w-0 mx-auto flex flex-col items-center md:items-start text-center md:text-left px-8 sm:px-12 md:px-16 lg:px-20">
         {/* Section header */}
         <div className="w-full flex flex-col items-center md:items-start">
           <div className="flex items-center justify-center md:justify-start gap-4 mb-4">
@@ -48,17 +48,17 @@ export default function Contact() {
         </div>
 
         {/* Description */}
-        <p className="text-sm sm:text-base text-muted font-light leading-relaxed max-w-2xl px-10 sm:px-0 text-center md:text-left" style={{ marginBottom: '3.5rem' }}>
+        <p className="text-sm sm:text-base text-muted font-light leading-relaxed max-w-2xl text-center md:text-left" style={{ marginBottom: '3.5rem' }}>
           Open to new opportunities and collaborations. Reach out through any of these channels.
         </p>
 
         {/* Social Links - Clean List */}
-        <div className="max-w-xl w-full px-10 sm:px-0 flex flex-col items-center md:items-start" style={{ gap: '2rem' }}>
+        <div className="max-w-xl w-full min-w-0 flex flex-col items-center md:items-start" style={{ gap: '2rem' }}>
           <a
             href={personalInfo.github}
             target="_blank"
             rel="noopener noreferrer"
-            className="group flex items-center gap-6 border-b border-border hover:border-accent transition-all duration-300 w-full"
+            className="group flex items-center gap-6 border-b border-border hover:border-accent transition-all duration-300 w-full min-w-0"
             style={{ paddingBottom: '1.5rem' }}
           >
             <div className="w-5 h-5 flex items-center justify-center flex-shrink-0">
@@ -78,7 +78,7 @@ export default function Contact() {
             href={personalInfo.linkedin}
             target="_blank"
             rel="noopener noreferrer"
-            className="group flex items-center gap-6 border-b border-border hover:border-accent transition-all duration-300 w-full"
+            className="group flex items-center gap-6 border-b border-border hover:border-accent transition-all duration-300 w-full min-w-0"
             style={{ paddingBottom: '1.5rem' }}
           >
             <div className="w-5 h-5 flex items-center justify-center flex-shrink-0">
@@ -98,7 +98,7 @@ export default function Contact() {
             href={personalInfo.instagram}
             target="_blank"
             rel="noopener noreferrer"
-            className="group flex items-center gap-6 border-b border-border hover:border-accent transition-all duration-300 w-full"
+            className="group flex items-center gap-6 border-b border-border hover:border-accent transition-all duration-300 w-full min-w-0"
             style={{ paddingBottom: '1.5rem' }}
           >
             <div className="w-5 h-5 flex items-center justify-center flex-shrink-0">
@@ -116,7 +116,7 @@ export default function Contact() {
 
           <a
             href={`mailto:${personalInfo.email}`}
-            className="group flex items-center gap-6 border-b border-border hover:border-accent transition-all duration-300 w-full"
+            className="group flex items-center gap-6 border-b border-border hover:border-accent transition-all duration-300 w-full min-w-0"
             style={{ paddingBottom: '1.5rem' }}
           >
             <div className="w-5 h-5 flex items-center justify-center flex-shrink-0">
@@ -126,7 +126,7 @@ export default function Contact() {
               <span className="text-xs font-mono uppercase tracking-widest text-muted group-hover:text-foreground transition-colors duration-300">
                 Email
               </span>
-              <span className="text-sm text-foreground font-light group-hover:text-accent transition-colors duration-300">
+              <span className="text-sm text-foreground font-light group-hover:text-accent transition-colors duration-300 truncate w-full">
                 {personalInfo.email}
               </span>
             </div>

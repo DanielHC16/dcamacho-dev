@@ -5,7 +5,7 @@ export default function About() {
   return (
     <section
       id="about"
-      className="min-h-screen flex items-center justify-center px-10 sm:px-8 md:px-12 lg:px-24 py-20 sm:py-28 bg-background relative overflow-hidden"
+      className="min-h-screen flex items-center justify-center py-20 sm:py-28 bg-background relative overflow-hidden"
     >
       {/* Background Grid */}
       <div className="absolute inset-0 opacity-20">
@@ -32,7 +32,7 @@ export default function About() {
           ))}
         </div>
       </div>
-      <div className="relative z-10 w-full max-w-6xl mx-auto flex flex-col items-center md:items-start text-center md:text-left px-10 sm:px-0">
+      <div className="relative z-10 w-full max-w-6xl min-w-0 mx-auto flex flex-col items-center md:items-start text-center md:text-left px-8 sm:px-12 md:px-16 lg:px-24">
         {/* Section header */}
         <div className="w-full flex flex-col items-center md:items-start">
           <div className="flex items-center justify-center md:justify-start gap-4 mb-4">
@@ -54,20 +54,20 @@ export default function About() {
             md:grid-cols-2 
             gap-12 sm:gap-16 lg:gap-24 
             w-full 
+            min-w-0
             justify-items-center 
             md:justify-items-start
-            px-10 sm:px-0
           "
         >
           {/* Left Column - Description */}
-          <div className="w-full max-w-md">
-            <p className="text-sm sm:text-base text-foreground/80 font-normal leading-relaxed text-justify px-10 sm:px-0" style={{ lineHeight: '1.75', letterSpacing: '0.01em' }}>
+          <div className="w-full max-w-md min-w-0">
+            <p className="text-sm sm:text-base text-foreground/80 font-normal leading-relaxed text-justify" style={{ lineHeight: '1.75', letterSpacing: '0.01em' }}>
               {personalInfo.bio}
             </p>
 
             {/* LetterGlitch animation block — borderless, blends into bg */}
             <div
-              className="mt-14 px-10 sm:px-0"
+              className="mt-14"
               style={{ position: 'relative', height: '200px', overflow: 'hidden' }}
             >
               <LetterGlitch
@@ -103,7 +103,7 @@ export default function About() {
           </div>
 
           {/* Right Column - Key Points */}
-          <div className="w-full max-w-md space-y-8 px-10 sm:px-0">
+          <div className="w-full max-w-md space-y-8 min-w-0">
             {aboutPoints.map((point, index) => (
               <div key={index} className="group relative">
                 {/* Mobile: Left decorative elements - absolutely positioned on side */}
@@ -125,7 +125,7 @@ export default function About() {
                   </h3>
                 </div>
                 {/* Mobile: Title centered with padding to avoid overlap */}
-                <h3 className="text-base font-normal text-foreground text-center mb-3 px-12 sm:hidden" style={{ letterSpacing: '0.01em' }}>
+                <h3 className="text-base font-normal text-foreground text-center mb-3 sm:hidden" style={{ letterSpacing: '0.01em' }}>
                   {point.title}
                 </h3>
                 <p className="text-base text-foreground/80 font-normal leading-relaxed text-justify ml-0 sm:ml-5" style={{ lineHeight: '1.75', letterSpacing: '0.01em' }}>

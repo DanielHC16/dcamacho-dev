@@ -66,7 +66,7 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="min-h-screen flex items-center justify-center relative overflow-hidden px-10 sm:px-8 md:px-16 lg:px-24 xl:px-32"
+      className="min-h-screen flex items-center justify-center relative overflow-hidden"
       aria-label="Hero section"
     >
 
@@ -170,7 +170,7 @@ export default function Hero() {
         All children in this stack are block-level with no left offset,
         so every text element shares the exact same left edge.
       */}
-      <div className={`relative z-10 w-full max-w-md sm:max-w-xl md:max-w-3xl lg:max-w-5xl mx-auto transition-all duration-700 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
+      <div className={`relative z-10 w-full max-w-md sm:max-w-xl md:max-w-3xl lg:max-w-5xl mx-auto px-6 sm:px-8 md:px-16 lg:px-24 xl:px-32 transition-all duration-700 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
         }`}>
 
         {/* 1. Pre-title ─────────────────────────────────── */}
@@ -194,7 +194,7 @@ export default function Hero() {
           <div className="absolute -bottom-5 -right-3 w-5 h-5 border-r border-b border-border/60" aria-hidden="true" />
 
           {/* Name */}
-          <h1 className="text-5xl sm:text-6xl md:text-8xl lg:text-[6rem] font-extralight tracking-tight text-foreground leading-[1.0] mb-4 sm:mb-5">
+          <h1 className="text-4xl sm:text-6xl md:text-8xl lg:text-[6rem] font-extralight tracking-tight text-foreground leading-[1.0] mb-4 sm:mb-5">
             Daniel Camacho
           </h1>
 

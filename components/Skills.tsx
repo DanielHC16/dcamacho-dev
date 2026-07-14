@@ -61,7 +61,7 @@ export default function Skills() {
   return (
     <section
       id="skills"
-      className="min-h-screen flex items-center justify-center px-10 sm:px-8 md:px-12 lg:px-16 py-24 relative overflow-hidden"
+      className="min-h-screen flex items-center justify-center py-24 relative overflow-hidden"
     >
       {/* ── Background Grid ─────────────────────────────────────── */}
       <div className="absolute inset-0 opacity-20">
@@ -76,7 +76,7 @@ export default function Skills() {
       </div>
 
       {/* ── Main content ────────────────────────────────────────── */}
-      <div className="relative z-10 max-w-6xl w-full mx-auto">
+      <div className="relative z-10 max-w-6xl w-full mx-auto px-6 sm:px-8 md:px-12 lg:px-16">
 
         {/* Section number divider */}
         <div className="flex items-center justify-center sm:justify-start gap-4 mb-8">

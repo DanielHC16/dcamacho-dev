@@ -109,7 +109,7 @@ export default function Contact() {
                 Instagram
               </span>
               <span className="text-sm text-foreground font-light group-hover:text-accent transition-colors duration-300">
-                @daji.env
+                @hardi.cc
               </span>
             </div>
           </a>

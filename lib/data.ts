@@ -7,7 +7,7 @@ export const personalInfo = {
   email: "danielcamacho0416@gmail.com",
   github: "https://github.com/DanielHC16",
   linkedin: "https://linkedin.com/in/danielcamacho777",
-  instagram: "https://www.instagram.com/daji.env",
+  instagram: "https://www.instagram.com/hardi.cc",
   portia: "https://portia-compiler.vercel.app/"
 };
 

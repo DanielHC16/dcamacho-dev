@@ -40,6 +40,7 @@ export interface ProjectImage {
 export interface Project {
   id: number;
   title: string;
+  role?: string;
   description: string;
   tags: string[];
   image: ProjectImage;
@@ -55,8 +56,9 @@ export const projects: Project[] = [
   {
     id: 1,
     title: "PORTIA Language and Compiler",
+    role: "Language Designer & Core Developer",
     description: "A high-level, statically typed procedural language and compiler designed around strict clarity, readable syntax, and precise execution.",
-    tags: ["Python", "TypeScript", "FastAPI", "Compiler", "Automata", "Language Design"],
+    tags: ["Python", "TypeScript", "FastAPI", "Compiler Design", "Automata"],
     image: {
       src: "/projects/portia1.png",
       alt: "PORTIA compiler preview"
@@ -84,6 +86,7 @@ export const projects: Project[] = [
   {
     id: 2,
     title: "Sta. Mesa 587 Connect",
+    role: "Project Lead & Backend Developer",
     description: "Sta. Mesa 587 Connect is a PWA for Barangay 587, with over 1000 users. It streamlines document requests, issue reporting, and updates, backed by a dedicated admin system to manage it all.",
     tags: ["Next.js", "TypeScript", "PWA", "Tailwind CSS", "Real-Time", "NeonDB"],
     image: {
@@ -110,8 +113,29 @@ export const projects: Project[] = [
     featured: true
   },
   {
+    id: 5,
+    title: "Enhanced GCN Vulnerability Prediction System",
+    role: "ML Researcher and Core Developer",
+    description: "A graph-based system that uses an enhanced Graph Convolutional Network (GCN) to predict vulnerabilities in the rice supply chain under climate and demand shocks.",
+    tags: ["GCN", "Machine Learning", "Supply Chain", "Thesis", "Ongoing"],
+    image: {
+      src: "/projects/GCN-system.png",
+      alt: "Enhanced GCN system preview"
+    },
+    images: [
+      {
+        src: "/projects/GCN-system.png",
+        alt: "Enhanced GCN system preview"
+      }
+    ],
+    links: {
+      github: "https://github.com/DanielHC16/gcn-enhanced-vulnerability-system"
+    }
+  },
+  {
     id: 3,
     title: "MEDIC: Monitoring For Elderly Daily Intervention & Care",
+    role: "Full-Stack Developer & AI Systems Engineer",
     description: "A care support and monitoring app for elderly patients, caregivers, and family members, built around daily care and medication coordination.",
     tags: ["NextJS", "TypeScript", "React", "Gemini AI", "PWA", "NeonDB"],
     image: {
@@ -149,6 +173,7 @@ export const projects: Project[] = [
   {
     id: 7,
     title: "AIvin: Smart Multi-Institute Queuing System",
+    role: "Lead Backend Developer",
     description: "AIvin modernizes institutional queuing using an AI agent that guides users through requirements and forms before issuing a ticket.",
     tags: ["Next.js", "TypeScript", "Gemini AI"],
     image: {
@@ -170,12 +195,13 @@ export const projects: Project[] = [
       }
     ],
     links: {
-      github: "https://https://github.com/DanielHC16/Smart-Multi-Institute-Queuing-System.com/DanielHC16/dcamacho-dev"
+      github: "https://github.com/DanielHC16/Smart-Multi-Institute-Queuing-System"
     }
   },
   {
     id: 6,
     title: "PayFlow",
+    role: "Full-Stack Developer & AI Integration Engineer",
     description: "A B2B2C payroll platform concept with AI-assisted migration and employee wage access flows for modern payroll management.",
     tags: ["NextJS", "Python", "OpenAI GPT-4", "MVP", "Hackathon Finalist"],
     image: {
@@ -200,39 +226,40 @@ export const projects: Project[] = [
   {
     id: 4,
     title: "TALLY: Think and Learn Life Yields",
+    role: "Mobile Developer",
     description: "TALLY is a gamified platform that bridges the financial literacy gap in the Philippines by making money management fun and engaging for the youth.",
     tags: ["FlutterFlow", "Hackathon Winner", "Fintech", "MVP"],
     image: {
       src: "/projects/TALLY.png",
       alt: "TALLY financial literacy project preview"
     },
+    images: [
+      {
+        src: "/projects/TALLY.png",
+        alt: "TALLY financial literacy project preview"
+      }
+    ],
     links: {
       github: "https://github.com/timtulang/Tally",
       demo: "https://devpost.com/software/tally-teach-and-learn-life-yields#/"
     }
   },
   {
-    id: 5,
-    title: "Enhanced GCN Vulnerability Prediction System",
-    description: "A graph-based system that uses an enhanced Graph Convolutional Network (GCN) to predict vulnerabilities in the rice supply chain under climate and demand shocks.",
-    tags: ["GCN", "Machine Learning", "Supply Chain", "Thesis", "Ongoing"],
-    image: {
-      src: "/projects/GCN-system.png",
-      alt: "Placeholder project preview 7"
-    },
-    links: {
-      github: "https://github.com/DanielHC16/gcn-enhanced-vulnerability-system"
-    }
-  },
-  {
     id: 9,
     title: "SaaSified and Amplified: PHSW x PLM Event Website",
+    role: "Frontend Developer",
     description: "SaaSified and Amplified: Ascending Software to the Sky is a GDGoC PLM and Philippine Startup Week 2025 keynote focused on scaling Filipino software innovation globally.",
     tags: ["React", "Tailwind CSS", "Vercel"],
     image: {
       src: "/projects/PHSW.png",
-      alt: "Placeholder project preview 9"
+      alt: "SaaSified and Amplified event website preview"
     },
+    images: [
+      {
+        src: "/projects/PHSW.png",
+        alt: "SaaSified and Amplified event website preview"
+      }
+    ],
     links: {
       demo: "https://phsw2025-b56f9.web.app/"
     }
@@ -294,19 +321,19 @@ export const experiences: Experience[] = [
     id: 2,
     nodeNumber: 3,
     defaultActive: true,
-    period: "Present",
-    title: "Software Engineer Intern",
-    company: "Aboitiz Foods Company - Pilmico Foods Corporation",
-    location: "Makati, Philippines",
-    type: "Traineeship",
+    period: "June 2026 - Present",
+    title: "Fullstack Software Engineer Intern",
+    company: "Aboitiz Foods",
+    location: "Makati, Metro Manila",
+    type: "Internship",
     summary:
-      "Develop and test responsive frontend web pages for internal applications, actively engaging in the full Agile software development lifecycle.",
+      "Develop full-stack enterprise applications and AI-driven internal tools, delivering production-ready features across multiple business units.",
     highlights: [
-      "Engineer dynamic front-end web pages by building out UI designs, implementing core application logic, and consuming RESTful APIs.",
-      "Execute unit and User Acceptance Testing (UAT) to ensure robust application performance.",
-      "Drive project momentum through active participation in core Agile ceremonies."
+      "Engineered full-stack enterprise web applications using NestJS across 4 manufacturing sites.",
+      "Integrated Gemini AI solutions into enterprise workflows to automate internal operations.",
+      "Delivered and integrated feature updates across existing company projects and workflows."
     ],
-    stack: ["JavaScript", "Jquery", "React", "APIs", "Git", "Agile", "Collaboration"]
+    stack: ["React", "Gemini AI API", "Node.js", "NestJS", "TypeScript", "Agile / Scrum"]
   }
 ];
 
@@ -314,7 +341,7 @@ export const experiences: Experience[] = [
 export const skills = {
   languages: ["Python", "JavaScript", "TypeScript", "Java", "C"],
   frontend: ["React", "Next.js", "Tailwind CSS", "Jquery"],
-  backend: ["Node.js", "Express", "FastAPI", "PostgreSQL", "SQLite", "NeonDB"],
+  backend: ["Node.js", "NestJS", "Express", "FastAPI", "PostgreSQL", "SQLite", "NeonDB"],
   tools: ["Git", "Figma", "Vercel", "AWS", "GCP"]
 };
 

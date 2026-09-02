@@ -1,7 +1,7 @@
 export default function Footer() {
   return (
     <footer className="border-t border-border py-12 w-full">
-      <div className="flex flex-col md:flex-row items-center justify-between text-center md:text-left gap-6 px-12 sm:px-24 lg:px-48 xl:px-64 2xl:px-80">
+      <div className="max-w-6xl w-full mx-auto flex flex-col md:flex-row items-center justify-between text-center md:text-left gap-6 px-6 sm:px-10 md:px-16">
         
         {/* LEFT */}
         <div className="flex items-center justify-start">
@@ -25,7 +25,7 @@ export default function Footer() {
           <span className="text-xs text-foreground font-mono uppercase tracking-widest ml-1">
              ACTIVE
           </span>
-          <div className="w-2 h-2 bg-accent rounded-full animate-pulse-blink ml-2"></div>
+          <div className="w-2 h-2 bg-accent rounded-full ml-2"></div>
         </div>
 
       </div>

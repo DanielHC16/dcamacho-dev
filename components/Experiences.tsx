@@ -13,7 +13,7 @@ type GraphLayout = {
   rows: number;
 };
 
-const SELECTABLE_NODE_LIMIT = 3;
+// Experiences Component
 const DETAIL_LABEL_CLASSNAME = 'text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-foreground/55';
 
 const ambientNodes = [
@@ -25,51 +25,54 @@ const ambientNodes = [
 ];
 
 function getGraphLayout(count: number): GraphLayout {
-  if (count <= 3) {
+  if (count <= 1) {
+    return { points: [{ x: 50, y: 50 }], rows: 1 };
+  }
+
+  if (count === 3) {
     return {
       rows: 1,
       points: [
         { x: 20, y: 58 },
         { x: 48, y: 46 },
         { x: 78, y: 56 },
-      ].slice(0, count),
+      ],
     };
   }
 
-  const columns = Math.min(count, 4);
-  const rows = Math.ceil(count / columns);
-  const xStart = 18;
-  const xEnd = 82;
-  const yStart = 22;
-  const yEnd = 78;
-  const rowGap = rows === 1 ? 0 : (yEnd - yStart) / (rows - 1);
-
-  const points = Array.from({ length: count }, (_, index) => {
-    const row = Math.floor(index / columns);
-    const indexInRow = index % columns;
-    const itemsInRow = row === rows - 1 && count % columns !== 0 ? count % columns : columns;
-    const directionIndex = row % 2 === 0 ? indexInRow : itemsInRow - 1 - indexInRow;
-    const x = itemsInRow === 1
-      ? 50
-      : xStart + (directionIndex * (xEnd - xStart)) / (itemsInRow - 1);
-    const yOffset = directionIndex % 2 === 0 ? -3.5 : 3.5;
-
+  if (count === 5) {
     return {
-      x,
-      y: yStart + row * rowGap + yOffset,
+      rows: 1,
+      points: [
+        { x: 14, y: 58 },
+        { x: 32, y: 46 },
+        { x: 50, y: 56 },
+        { x: 68, y: 44 },
+        { x: 86, y: 54 },
+      ],
     };
+  }
+
+  const xStart = 14;
+  const xEnd = 86;
+  const points = Array.from({ length: count }, (_, index) => {
+    const t = index / (count - 1);
+    const x = xStart + t * (xEnd - xStart);
+    const y = index % 2 === 0 ? 56 : 46;
+    return { x, y };
   });
 
-  return { points, rows };
+  return { points, rows: 1 };
 }
 
-function getCurvePath(start: GraphPoint, end: GraphPoint, index: number) {
-  const controlX = (start.x + end.x) / 2;
-  const controlY = index % 2 === 0
-    ? Math.min(start.y, end.y) - 12
-    : Math.max(start.y, end.y) + 12;
+function getCurveSegment(start: GraphPoint, end: GraphPoint) {
+  const dx = end.x - start.x;
+  const cx1 = start.x + dx * 0.5;
+  const cy1 = start.y;
+  const cx2 = start.x + dx * 0.5;
+  const cy2 = end.y;
 
-  return `M ${start.x} ${start.y} Q ${controlX} ${controlY} ${end.x} ${end.y}`;
+  return `M ${start.x} ${start.y} C ${cx1} ${cy1}, ${cx2} ${cy2}, ${end.x} ${end.y}`;
 }
 
 function getNodeNumber(experience: Experience, index: number) {
@@ -217,15 +220,16 @@ export default function Experiences() {
                   {graphPoints.map((point, index) => {
                     const nextPoint = graphPoints[index + 1];
                     if (!nextPoint) return null;
+                    const isSegmentActive = index === activeIndex || index + 1 === activeIndex;
                     return (
                       <path
                         key={`path-${index}`}
-                        d={getCurvePath(point, nextPoint, index)}
+                        d={getCurveSegment(point, nextPoint)}
                         fill="none"
                         stroke="url(#experience-line)"
-                        strokeOpacity={index === activeIndex || index + 1 === activeIndex ? '0.92' : '0.48'}
+                        strokeOpacity={isSegmentActive ? '0.92' : '0.48'}
                         strokeWidth="0.38"
-                        strokeDasharray={index === activeIndex || index + 1 === activeIndex ? '0' : '1.2 2'}
+                        strokeDasharray={isSegmentActive ? '0' : '1.2 2'}
                       />
                     );
                   })}
@@ -249,7 +253,7 @@ export default function Experiences() {
                 {experiences.map((experience, index) => {
                   const point = graphPoints[index];
                   const isSelected = index === activeIndex;
-                  const isSelectable = getNodeNumber(experience, index) <= SELECTABLE_NODE_LIMIT;
+                  const isSelectable = true;
 
                   return (
                     <button
@@ -270,7 +274,7 @@ export default function Experiences() {
                             <span className="pointer-events-none absolute inset-1 rounded-full border border-accent/28 animate-node-available-ring" />
                             <span
                               className="pointer-events-none absolute inset-1 rounded-full border border-accent/16 animate-node-available-ring"
-                              style={{ animationDelay: `${index * 0.45}s` }}
+                              style={{ animationDelay: `${index * 0.35}s` }}
                             />
                           </>
                         )}
@@ -281,27 +285,21 @@ export default function Experiences() {
                           className={`relative flex h-12 w-12 items-center justify-center rounded-full border transition-all duration-300 ${
                             isSelected
                               ? 'border-accent bg-background shadow-[0_0_0_12px_color-mix(in_srgb,var(--accent)_10%,transparent)]'
-                              : isSelectable
-                                ? 'border-accent/60 bg-background/96 hover:border-accent'
-                                : 'border-border bg-background/92 hover:border-accent'
+                              : 'border-accent/60 bg-background/96 hover:border-accent'
                           }`}
                         >
                           <span
                             className={`absolute rounded-full border transition-all duration-300 ${
                               isSelected
                                 ? 'inset-[-0.55rem] border-accent/28'
-                                : isSelectable
-                                  ? '-inset-2 border-accent/24 group-hover:border-accent/34'
-                                  : 'inset-[-0.45rem] border-border/58 group-hover:border-accent/26'
+                                : '-inset-2 border-accent/24 group-hover:border-accent/34'
                             }`}
                           />
                           <span
                             className={`h-3 w-3 rounded-full transition-colors duration-300 ${
                               isSelected
                                 ? 'bg-accent animate-node-core-pulse'
-                                : isSelectable
-                                  ? 'bg-accent/78 animate-node-idle-pulse group-hover:bg-accent'
-                                  : 'bg-muted/60 group-hover:bg-accent'
+                                : 'bg-accent/78 animate-node-idle-pulse group-hover:bg-accent'
                             }`}
                           />
                         </span>
@@ -309,7 +307,7 @@ export default function Experiences() {
 
                       <span
                         className={`text-[10px] font-mono uppercase tracking-[0.32em] transition-colors duration-300 ${
-                          isSelected ? 'text-accent' : isSelectable ? 'text-foreground/72' : 'text-muted'
+                          isSelected ? 'text-accent font-semibold' : 'text-foreground/72 group-hover:text-accent'
                         }`}
                       >
                         {String(getNodeNumber(experience, index)).padStart(2, '0')}
@@ -328,8 +326,8 @@ export default function Experiences() {
                         key={experience.id}
                         type="button"
                         onClick={() => setActiveIndex(index)}
-                        className={`h-2.5 w-8 transition-colors duration-300 ${
-                          isSelected ? 'bg-accent' : 'bg-border hover:bg-accent/70'
+                        className={`h-2.5 transition-all duration-300 ${
+                          isSelected ? 'w-8 bg-accent' : 'w-6 bg-border hover:bg-accent/70'
                         }`}
                         aria-label={`Focus experience ${getNodeNumber(experience, index)}: ${experience.title}`}
                         aria-pressed={isSelected}
@@ -350,12 +348,20 @@ export default function Experiences() {
             {/* Mobile layout: natural flow */}
             <div className="xl:hidden flex flex-col gap-6 min-w-0">
               <header>
-                <div className="flex items-center gap-4 mb-4">
+                <div className="flex items-center gap-3 mb-4">
                   <span className="font-mono text-xs text-muted">
                     {String(activeNodeNumber).padStart(2, '0')}
                   </span>
                   <div className="h-px flex-1 bg-border" />
                   <span className={DETAIL_LABEL_CLASSNAME}>{activeExperience.type}</span>
+                  {activeExperience.period.toLowerCase().includes('present') && (
+                    <>
+                      <span className="text-muted/40 font-mono text-xs">/</span>
+                      <span className="text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-accent">
+                        Active
+                      </span>
+                    </>
+                  )}
                 </div>
                 <h3 className="text-2xl font-light leading-tight text-foreground">
                   {activeExperience.title}
@@ -402,23 +408,31 @@ export default function Experiences() {
               </div>
             </div>
 
-            {/* Desktop layout: original rigid grid */}
+            {/* Desktop layout: clean auto-spaced grid without row collisions */}
             <div
-              className="hidden xl:grid h-full grid-rows-[7.75rem_4.75rem_5.75rem_minmax(0,1fr)] gap-7"
+              className="hidden xl:grid h-full grid-rows-[auto_auto_auto_1fr] gap-6"
               style={{ paddingLeft: '1.25rem', paddingRight: '1.25rem' }}
             >
               <header>
-                <div className="flex items-center gap-4" style={{ marginBottom: '1.25rem' }}>
+                <div className="flex items-center gap-4" style={{ marginBottom: '1rem' }}>
                   <span className="font-mono text-xs text-muted">
                     {String(activeNodeNumber).padStart(2, '0')}
                   </span>
                   <div className="h-px flex-1 bg-border" />
                   <span className={DETAIL_LABEL_CLASSNAME}>{activeExperience.type}</span>
+                  {activeExperience.period.toLowerCase().includes('present') && (
+                    <>
+                      <span className="text-muted/40 font-mono text-xs">/</span>
+                      <span className="text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-accent">
+                        Active
+                      </span>
+                    </>
+                  )}
                 </div>
-                <h3 className="text-[2rem] font-light leading-tight text-foreground sm:text-[2.25rem] lg:text-[2.45rem]">
+                <h3 className="text-[1.85rem] font-light leading-snug text-foreground sm:text-[2.05rem] lg:text-[2.25rem]">
                   {activeExperience.title}
                 </h3>
-                <p className="max-w-[34rem] text-sm font-normal text-foreground/80" style={{ marginTop: '0.75rem', lineHeight: '1.7' }}>
+                <p className="max-w-[34rem] text-sm font-normal text-foreground/80 mt-2" style={{ lineHeight: '1.6' }}>
                   {activeExperience.company}
                 </p>
               </header>
@@ -426,19 +440,19 @@ export default function Experiences() {
               <section className="grid grid-cols-1 gap-7 sm:grid-cols-3">
                 <div>
                   <span className={`block ${DETAIL_LABEL_CLASSNAME}`}>Location</span>
-                  <p className="text-sm font-normal text-foreground/90" style={{ marginTop: '0.85rem', lineHeight: '1.6' }}>
+                  <p className="text-sm font-normal text-foreground/90 mt-2" style={{ lineHeight: '1.6' }}>
                     {activeExperience.location}
                   </p>
                 </div>
                 <div>
                   <span className={`block ${DETAIL_LABEL_CLASSNAME}`}>Period</span>
-                  <p className="text-sm font-normal text-foreground/90" style={{ marginTop: '0.85rem', lineHeight: '1.6' }}>
+                  <p className="text-sm font-normal text-foreground/90 mt-2" style={{ lineHeight: '1.6' }}>
                     {activeExperience.period}
                   </p>
                 </div>
                 <div>
                   <span className={`block ${DETAIL_LABEL_CLASSNAME}`}>Company</span>
-                  <p className="text-sm font-normal text-foreground/90" style={{ marginTop: '0.85rem', lineHeight: '1.6' }}>
+                  <p className="text-sm font-normal text-foreground/90 mt-2" style={{ lineHeight: '1.6' }}>
                     {activeExperience.company}
                   </p>
                 </div>
@@ -446,7 +460,7 @@ export default function Experiences() {
 
               <section>
                 <span className={DETAIL_LABEL_CLASSNAME}>Summary</span>
-                <p className="max-w-[42rem] text-sm font-normal text-foreground/90" style={{ marginTop: '0.85rem', lineHeight: '1.7' }}>
+                <p className="max-w-[42rem] text-sm font-normal text-foreground/90 mt-2" style={{ lineHeight: '1.7' }}>
                   {activeExperience.summary}
                 </p>
               </section>
@@ -454,7 +468,7 @@ export default function Experiences() {
               <section className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1fr)_16rem]">
                 <div>
                   <span className={DETAIL_LABEL_CLASSNAME}>Highlights</span>
-                  <ul className="list-outside list-disc space-y-2.5 pl-5 marker:text-accent" style={{ marginTop: '0.85rem' }}>
+                  <ul className="list-outside list-disc space-y-2.5 pl-5 marker:text-accent mt-2">
                     {activeExperience.highlights.map((highlight) => (
                       <li key={highlight} className="pl-2 text-sm font-normal text-foreground/90" style={{ lineHeight: '1.65' }}>
                         {highlight}
@@ -464,11 +478,11 @@ export default function Experiences() {
                 </div>
                 <div>
                   <span className={DETAIL_LABEL_CLASSNAME}>Stack</span>
-                  <div className="grid grid-cols-2 gap-2.5" style={{ marginTop: '0.85rem' }}>
+                  <div className="grid grid-cols-2 gap-2 mt-2">
                     {activeExperience.stack.map((item) => (
                       <span
                         key={item}
-                        className="flex h-8 items-center justify-center border border-border bg-surface px-3 font-mono text-xs text-muted transition-colors duration-300 hover:border-accent hover:text-accent"
+                        className="flex h-8 items-center justify-center border border-border/80 bg-surface/90 px-2.5 font-mono text-[0.72rem] text-muted transition-colors duration-300 hover:border-accent hover:text-accent text-center truncate"
                       >
                         {item}
                       </span>

@@ -286,7 +286,7 @@ export const experiences: Experience[] = [
   {
     id: 0,
     nodeNumber: 1,
-    period: "2017-2023",
+    period: "2017 - 2023",
     title: "Academic Commissioned Work",
     company: "Freelance",
     location: "Manila, Philippines",
@@ -298,12 +298,46 @@ export const experiences: Experience[] = [
       "Conducted research and produced well-structured, properly formatted academic outputs",
       "Managed multiple deadlines while ensuring timely and quality delivery"
     ],
-    stack: ["Microsoft Office", "Canva", "Photoshop", "Research", "Time Management", "Self Direction"]
+    stack: ["MS Office", "Canva", "Photoshop", "Research", "Time Management", "Writing"]
   },
   {
     id: 1,
     nodeNumber: 2,
-    period: "2025-2026",
+    period: "Jul 2024 - Jul 2026",
+    title: "Cloud & Technical Projects Contributor",
+    company: "AWS Student Builder Group - Haribon",
+    location: "Manila, Philippines (Hybrid)",
+    type: "Academic Organization",
+    summary:
+      "Contributed to community technical projects, workshops, and cloud initiatives, bridging foundational academic concepts with hands-on AWS workflows and SDLC practices.",
+    highlights: [
+      "Delivered a technical workshop to 200+ attendees, speaking on Amazon S3 and practical workflows within the AWS ecosystem.",
+      "Applied Software Development Life Cycle (SDLC) methodologies across collaborative engineering workflows.",
+      "Engaged in technical leadership and peer mentoring to foster cloud adoption within the student community."
+    ],
+    stack: ["AWS", "Amazon S3", "Cloud", "SDLC", "Frontend", "Backend"]
+  },
+  {
+    id: 2,
+    nodeNumber: 3,
+    period: "Jul 2025 - Jul 2026",
+    title: "Inner Source Developer",
+    company: "DEVCON Philippines",
+    location: "Manila, Philippines (Hybrid)",
+    type: "Seasonal Community",
+    summary:
+      "Contributed to seasonal community tasks and internal tooling, exploring inner source workflows and web development tools in a hybrid setup.",
+    highlights: [
+      "Practiced inner source collaboration and shared coding workflows across hybrid team members.",
+      "Explored and utilized frontend and backend tools to support internal community tasks and projects.",
+      "Participated in community discussions and knowledge sharing with fellow developers."
+    ],
+    stack: ["InnerSource", "Open Source", "Frontend", "Backend", "Git", "Community"]
+  },
+  {
+    id: 3,
+    nodeNumber: 4,
+    period: "2025 - 2026",
     title: "Web Development Lead",
     company: "Google Developer Groups on Campus - PLM",
     location: "Manila, Philippines",
@@ -311,15 +345,15 @@ export const experiences: Experience[] = [
     summary:
       "Led web development projects and seminars, guiding team execution, technical direction, and delivery of responsive, scalable web applications.",
     highlights: [
-      "Led a 10 person developer team, managing communication, task distribution, and technical alignment across projects",
+      "Led a 10 person developer team, managing communication, task distribution, and technical alignment across projects.",
       "Ensured strict deadline adherence through structured planning, sprint coordination, and progress tracking.",
       "Facilitated technical seminars to improve team skills and development practices."
     ],
-    stack: ["React", "Next.js", "Leadership", "Communication"]
+    stack: ["React", "Next.js", "Leadership", "Git", "Agile", "TypeScript"]
   },
   {
-    id: 2,
-    nodeNumber: 3,
+    id: 4,
+    nodeNumber: 5,
     defaultActive: true,
     period: "June 2026 - Present",
     title: "Fullstack Software Engineer Intern",
@@ -331,9 +365,10 @@ export const experiences: Experience[] = [
     highlights: [
       "Engineered full-stack enterprise web applications using NestJS across 4 manufacturing sites.",
       "Integrated Gemini AI solutions into enterprise workflows to automate internal operations.",
-      "Delivered and integrated feature updates across existing company projects and workflows."
+      "Collaborated directly with business stakeholders to gather requirements, deliver tailored solutions, and present project outcomes.",
+      "Applied end-to-end SDLC best practices in a fast-paced Agile environment, utilizing Scrum ceremonies to align technical execution with stakeholder requirements."
     ],
-    stack: ["React", "Gemini AI API", "Node.js", "NestJS", "TypeScript", "Agile / Scrum"]
+    stack: ["React", "Gemini AI", "NestJS", "Node.js", "TypeScript", "SDLC"]
   }
 ];
 

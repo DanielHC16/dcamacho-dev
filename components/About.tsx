@@ -35,13 +35,13 @@ export default function About() {
       <div className="relative z-10 w-full max-w-6xl min-w-0 mx-auto flex flex-col items-center md:items-start text-center md:text-left px-8 sm:px-12 md:px-16 lg:px-24">
         {/* Section header */}
         <div className="w-full flex flex-col items-center md:items-start">
-          <div className="flex items-center justify-center md:justify-start gap-4 mb-4">
+          <div className="flex items-center justify-center md:justify-start gap-4 mb-3">
             <div className="w-16 sm:w-20 h-px bg-border" />
             <span className="text-xs text-muted font-mono">01</span>
             <div className="w-16 sm:w-20 h-px bg-border" />
           </div>
 
-          <h2 className="text-sm sm:text-base font-mono uppercase tracking-widest font-semibold text-foreground mb-12 sm:mb-16">
+          <h2 className="text-sm sm:text-base font-mono uppercase tracking-widest font-semibold text-foreground mb-6 sm:mb-8">
             About_Me
           </h2>
         </div>
@@ -67,7 +67,7 @@ export default function About() {
 
             {/* LetterGlitch animation block — borderless, blends into bg */}
             <div
-              className="mt-14"
+              className="mt-8"
               style={{ position: 'relative', height: '200px', overflow: 'hidden' }}
             >
               <LetterGlitch
@@ -103,7 +103,7 @@ export default function About() {
           </div>
 
           {/* Right Column - Key Points */}
-          <div className="w-full max-w-md space-y-8 min-w-0">
+          <div className="w-full max-w-md space-y-5 min-w-0">
             {aboutPoints.map((point, index) => (
               <div key={index} className="group relative">
                 {/* Mobile: Left decorative elements - absolutely positioned on side */}
@@ -117,7 +117,7 @@ export default function About() {
                   <div className="w-2 h-2 border border-accent rotate-45 shrink-0 group-hover:bg-accent transition-colors duration-300"></div>
                 </div>
                 {/* Desktop: Flex layout with decorative elements */}
-                <div className="hidden sm:flex items-center gap-3 mb-3">
+                <div className="hidden sm:flex items-center gap-3 mb-1.5">
                   <div className="w-2 h-2 border border-accent rotate-45 shrink-0 group-hover:bg-accent transition-colors duration-300"></div>
                   <div className="w-8 sm:w-12 md:w-12 h-px bg-border"></div>
                   <h3 className="text-base sm:text-lg font-normal text-foreground text-left" style={{ letterSpacing: '0.01em' }}>
@@ -125,7 +125,7 @@ export default function About() {
                   </h3>
                 </div>
                 {/* Mobile: Title centered with padding to avoid overlap */}
-                <h3 className="text-base font-normal text-foreground text-center mb-3 sm:hidden" style={{ letterSpacing: '0.01em' }}>
+                <h3 className="text-base font-normal text-foreground text-center mb-1.5 sm:hidden" style={{ letterSpacing: '0.01em' }}>
                   {point.title}
                 </h3>
                 <p className="text-base text-foreground/80 font-normal leading-relaxed text-justify ml-0 sm:ml-5" style={{ lineHeight: '1.75', letterSpacing: '0.01em' }}>
@@ -137,7 +137,7 @@ export default function About() {
         </div>
 
         {/* Divider - now placed closer to the end of section */}
-        <div className="flex items-center justify-center gap-4 w-full self-center" style={{ marginTop: '10rem' }}>
+        <div className="flex items-center justify-center gap-4 w-full self-center" style={{ marginTop: '6rem' }}>
           <div className="w-16 h-px bg-border"></div>
           <div className="w-2 h-2 bg-accent rotate-45 animate-pulse hover:animate-spin transition-all duration-700"></div>
           <div className="w-16 h-px bg-border"></div>

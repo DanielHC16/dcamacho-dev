@@ -36,10 +36,14 @@
   --font-mono: var(--font-geist-mono);
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+/* Must live in @layer base: an unlayered reset beats every Tailwind utility
+   (px-*, py-*, mb-*, mx-auto...) because unlayered CSS outranks layered CSS. */
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 }
 
 html {

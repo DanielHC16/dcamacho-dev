@@ -13,7 +13,7 @@ export default function Footer() {
         {/* CENTER */}
         <div className="flex items-center justify-center">
           <span className="text-xs text-muted font-mono uppercase tracking-widest">
-            Portfolio_v2.02
+            Portfolio_v2.03
           </span>
         </div>
 
@@ -25,7 +25,7 @@ export default function Footer() {
           <span className="text-xs text-foreground font-mono uppercase tracking-widest ml-1">
              ACTIVE
           </span>
-          <div className="w-2 h-2 bg-accent rounded-full ml-2"></div>
+          
         </div>
 
       </div>

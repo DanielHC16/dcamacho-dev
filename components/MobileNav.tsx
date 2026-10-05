@@ -122,7 +122,7 @@ export default function MobileNav() {
         {/* Top label */}
         <div style={{ position: 'absolute', top: '1.25rem', left: '50%', transform: 'translateX(-50%)', whiteSpace: 'nowrap' }}>
           <span style={{ fontSize: '9px', fontFamily: 'var(--font-mono)', letterSpacing: '0.25em', textTransform: 'uppercase', color: 'var(--muted)' }}>
-            Portfolio_v2.02&ensp;//&ensp;Navigation
+            Portfolio_v2.03&ensp;//&ensp;Navigation
           </span>
         </div>
 

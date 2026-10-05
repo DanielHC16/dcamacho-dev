@@ -180,7 +180,7 @@ export default function Hero() {
         */}
         <div className="flex items-center gap-3 mb-8 sm:mb-10 md:mb-12">
           <span className="text-[10px] sm:text-xs text-muted font-mono uppercase tracking-[0.22em] select-none">
-            Portfolio_v2.02&ensp;&#x2F;&#x2F;&ensp;
+            Portfolio_v2.03&ensp;&#x2F;&#x2F;&ensp;
           </span>
           <div className="flex-1 h-px bg-border max-w-[4rem]" />
         </div>

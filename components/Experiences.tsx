@@ -26,16 +26,16 @@ const ambientNodes = [
 
 function getGraphLayout(count: number): GraphLayout {
   if (count <= 1) {
-    return { points: [{ x: 50, y: 50 }], rows: 1 };
+    return { points: [{ x: 50, y: 42 }], rows: 1 };
   }
 
   if (count === 3) {
     return {
       rows: 1,
       points: [
-        { x: 20, y: 58 },
-        { x: 48, y: 46 },
-        { x: 78, y: 56 },
+        { x: 20, y: 48 },
+        { x: 48, y: 36 },
+        { x: 78, y: 46 },
       ],
     };
   }
@@ -44,11 +44,11 @@ function getGraphLayout(count: number): GraphLayout {
     return {
       rows: 1,
       points: [
-        { x: 14, y: 58 },
-        { x: 32, y: 46 },
-        { x: 50, y: 56 },
-        { x: 68, y: 44 },
-        { x: 86, y: 54 },
+        { x: 14, y: 48 },
+        { x: 32, y: 36 },
+        { x: 50, y: 46 },
+        { x: 68, y: 34 },
+        { x: 86, y: 44 },
       ],
     };
   }
@@ -58,7 +58,7 @@ function getGraphLayout(count: number): GraphLayout {
   const points = Array.from({ length: count }, (_, index) => {
     const t = index / (count - 1);
     const x = xStart + t * (xEnd - xStart);
-    const y = index % 2 === 0 ? 56 : 46;
+    const y = index % 2 === 0 ? 46 : 36;
     return { x, y };
   });
 
@@ -133,7 +133,7 @@ export default function Experiences() {
   return (
     <section
       id="experiences"
-      className="min-h-screen flex items-center justify-center py-24 relative overflow-hidden"
+      className="min-h-screen flex items-center justify-center py-24 xl:py-6 relative overflow-hidden"
     >
       <div className="absolute inset-0 opacity-20">
         <div className="absolute inset-0">
@@ -157,21 +157,21 @@ export default function Experiences() {
       {/* Single shared container — header text and grid share the same left edge */}
       <div className="relative z-10 max-w-[1260px] w-full min-w-0 mx-auto px-5 sm:px-8 md:px-12 lg:px-16">
         {/* Section number marker */}
-        <div className="flex items-center justify-center sm:justify-start gap-4 mb-8">
+        <div className="flex items-center justify-center sm:justify-start gap-4 mb-8 xl:mb-3">
           <div className="w-20 h-px bg-border" />
           <span className="text-xs text-muted font-mono">03</span>
           <div className="w-20 h-px bg-border" />
         </div>
 
         {/* Header text — same container as the grid below, so left edges align */}
-        <div className="mb-6">
+        <div className="mb-6 xl:mb-3">
           <span className="text-xs font-mono uppercase tracking-widest font-semibold text-foreground">
             Experience_Network
           </span>
-          <h2 className="text-2xl sm:text-3xl lg:text-[2.25rem] font-extralight tracking-tight text-foreground leading-[1.05] mt-3 uppercase">
+          <h2 className="text-2xl sm:text-3xl lg:text-[2.25rem] xl:text-[1.75rem] font-extralight tracking-tight text-foreground leading-[1.05] mt-3 xl:mt-2 uppercase">
             Experience
           </h2>
-          <p className="text-sm text-muted font-light mt-3 max-w-md leading-relaxed">
+          <p className="text-sm text-muted font-light mt-3 xl:mt-1.5 max-w-md leading-relaxed">
             Select a node to inspect the corresponding role and details.
           </p>
         </div>
@@ -410,11 +410,11 @@ export default function Experiences() {
 
             {/* Desktop layout: clean auto-spaced grid without row collisions */}
             <div
-              className="hidden xl:grid h-full grid-rows-[auto_auto_auto_1fr] gap-6"
+              className="hidden xl:grid h-full grid-rows-[auto_auto_auto_1fr] gap-4"
               style={{ paddingLeft: '1.25rem', paddingRight: '1.25rem' }}
             >
               <header>
-                <div className="flex items-center gap-4" style={{ marginBottom: '1rem' }}>
+                <div className="flex items-center gap-4" style={{ marginBottom: '0.75rem' }}>
                   <span className="font-mono text-xs text-muted">
                     {String(activeNodeNumber).padStart(2, '0')}
                   </span>
@@ -429,30 +429,30 @@ export default function Experiences() {
                     </>
                   )}
                 </div>
-                <h3 className="text-[1.85rem] font-light leading-snug text-foreground sm:text-[2.05rem] lg:text-[2.25rem]">
+                <h3 className="text-[1.5rem] font-light leading-tight text-foreground lg:text-[1.65rem]">
                   {activeExperience.title}
                 </h3>
-                <p className="max-w-[34rem] text-sm font-normal text-foreground/80 mt-2" style={{ lineHeight: '1.6' }}>
+                <p className="max-w-[34rem] text-sm font-normal text-foreground/80 mt-1" style={{ lineHeight: '1.6' }}>
                   {activeExperience.company}
                 </p>
               </header>
 
-              <section className="grid grid-cols-1 gap-7 sm:grid-cols-3">
+              <section className="grid grid-cols-1 gap-6 sm:grid-cols-3">
                 <div>
                   <span className={`block ${DETAIL_LABEL_CLASSNAME}`}>Location</span>
-                  <p className="text-sm font-normal text-foreground/90 mt-2" style={{ lineHeight: '1.6' }}>
+                  <p className="text-sm font-normal text-foreground/90 mt-1" style={{ lineHeight: '1.6' }}>
                     {activeExperience.location}
                   </p>
                 </div>
                 <div>
                   <span className={`block ${DETAIL_LABEL_CLASSNAME}`}>Period</span>
-                  <p className="text-sm font-normal text-foreground/90 mt-2" style={{ lineHeight: '1.6' }}>
+                  <p className="text-sm font-normal text-foreground/90 mt-1" style={{ lineHeight: '1.6' }}>
                     {activeExperience.period}
                   </p>
                 </div>
                 <div>
                   <span className={`block ${DETAIL_LABEL_CLASSNAME}`}>Company</span>
-                  <p className="text-sm font-normal text-foreground/90 mt-2" style={{ lineHeight: '1.6' }}>
+                  <p className="text-sm font-normal text-foreground/90 mt-1" style={{ lineHeight: '1.6' }}>
                     {activeExperience.company}
                   </p>
                 </div>
@@ -460,29 +460,29 @@ export default function Experiences() {
 
               <section>
                 <span className={DETAIL_LABEL_CLASSNAME}>Summary</span>
-                <p className="max-w-[42rem] text-sm font-normal text-foreground/90 mt-2" style={{ lineHeight: '1.7' }}>
+                <p className="max-w-[42rem] text-[0.8125rem] font-normal text-foreground/90 mt-1" style={{ lineHeight: '1.6' }}>
                   {activeExperience.summary}
                 </p>
               </section>
 
-              <section className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1fr)_16rem]">
+              <section className="flex min-h-0 flex-col gap-4">
                 <div>
                   <span className={DETAIL_LABEL_CLASSNAME}>Highlights</span>
-                  <ul className="list-outside list-disc space-y-2.5 pl-5 marker:text-accent mt-2">
+                  <ul className="list-outside list-disc space-y-2 pl-4 marker:text-accent mt-1.5">
                     {activeExperience.highlights.map((highlight) => (
-                      <li key={highlight} className="pl-2 text-sm font-normal text-foreground/90" style={{ lineHeight: '1.65' }}>
+                      <li key={highlight} className="pl-1.5 text-[0.8125rem] font-normal text-foreground/90" style={{ lineHeight: '1.55' }}>
                         {highlight}
                       </li>
                     ))}
                   </ul>
                 </div>
-                <div>
+                <div className="mt-auto">
                   <span className={DETAIL_LABEL_CLASSNAME}>Stack</span>
-                  <div className="grid grid-cols-2 gap-2 mt-2">
+                  <div className="grid grid-cols-3 gap-2 mt-1.5">
                     {activeExperience.stack.map((item) => (
                       <span
                         key={item}
-                        className="flex h-8 items-center justify-center border border-border/80 bg-surface/90 px-2.5 font-mono text-[0.72rem] text-muted transition-colors duration-300 hover:border-accent hover:text-accent text-center truncate"
+                        className="flex h-7 items-center justify-center border border-border/80 bg-surface/90 px-2 font-mono text-[0.68rem] text-muted transition-colors duration-300 hover:border-accent hover:text-accent text-center truncate"
                       >
                         {item}
                       </span>

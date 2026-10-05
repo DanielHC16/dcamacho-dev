@@ -21,6 +21,8 @@ import {
 } from 'react-icons/fi';
 import { projects, type Project, type ProjectImage } from '@/lib/data';
 
+const PROJECTS_PER_PAGE = 4;
+
 const DETAIL_LABEL_CLASSNAME =
   'text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-foreground/55 font-mono';
 
@@ -57,6 +59,7 @@ function getProjectIcon(project: Project) {
 
 export default function Projects() {
   const [activeProjectId, setActiveProjectId] = useState<number>(() => projects[0]?.id ?? 1);
+  const [directoryPage, setDirectoryPage] = useState<number>(0);
   const [currentImgIdx, setCurrentImgIdx] = useState<number>(0);
   const [previewDir, setPreviewDir] = useState<'next' | 'prev'>('next');
   const [isAutoPlayPaused, setIsAutoPlayPaused] = useState(false);
@@ -75,6 +78,11 @@ export default function Projects() {
   const activeProjectIndex = useMemo(() => {
     return projects.findIndex((p) => p.id === activeProject.id);
   }, [activeProject]);
+
+  const totalPages = Math.max(1, Math.ceil(projects.length / PROJECTS_PER_PAGE));
+  const pageStart = directoryPage * PROJECTS_PER_PAGE;
+  const pageProjects = projects.slice(pageStart, pageStart + PROJECTS_PER_PAGE);
+  const emptySlots = PROJECTS_PER_PAGE - pageProjects.length;
 
   const activeImages = useMemo(() => {
     if (activeProject.images?.length) return activeProject.images;
@@ -149,7 +157,7 @@ export default function Projects() {
   return (
     <section
       id="projects"
-      className="min-h-screen flex items-center justify-center pt-6 sm:pt-8 pb-10 sm:pb-12 relative overflow-hidden"
+      className="min-h-screen flex items-center justify-center pt-20 sm:pt-8 xl:pt-6 pb-10 sm:pb-12 xl:pb-6 relative overflow-hidden"
     >
       {/* Background grid */}
       <div className="absolute inset-0 opacity-20 pointer-events-none">
@@ -175,29 +183,29 @@ export default function Projects() {
       <div className="relative z-10 max-w-[1260px] w-full min-w-0 mx-auto px-5 sm:px-8 md:px-12 lg:px-16">
         
         {/* 1. Global Section Header */}
-        <div className="flex items-center justify-center sm:justify-start gap-4 mb-4">
+        <div className="flex items-center justify-center sm:justify-start gap-4 mb-4 xl:mb-2">
           <div className="w-20 h-px bg-border" />
           <span className="text-xs text-muted font-mono">02</span>
           <div className="w-20 h-px bg-border" />
         </div>
 
-        <div className="mb-4">
+        <div className="mb-4 xl:mb-3">
           <span className="text-xs font-mono uppercase tracking-widest font-semibold text-foreground">
             Project_Showcase
           </span>
-          <h2 className="text-2xl sm:text-3xl lg:text-[2.25rem] font-extralight tracking-tight text-foreground leading-[1.05] mt-2 uppercase">
+          <h2 className="text-2xl sm:text-3xl lg:text-[2.25rem] xl:text-[1.75rem] font-extralight tracking-tight text-foreground leading-[1.05] mt-2 xl:mt-1 uppercase">
             Projects
           </h2>
-          <p className="text-sm text-muted font-light mt-2 max-w-md leading-relaxed">
+          <p className="text-sm text-muted font-light mt-2 xl:mt-1 max-w-md xl:max-w-none leading-relaxed">
             Select a project unit to inspect its architectural specifications and live preview.
           </p>
         </div>
 
         {/* 2. Symmetrical Two-Panel Grid (Natural hug height per column) */}
-        <div className="grid grid-cols-1 gap-8 xl:grid-cols-[480px_1fr] items-start min-w-0">
+        <div className="grid grid-cols-1 gap-8 xl:grid-cols-[480px_1fr] min-w-0">
 
           {/* ─────────────────────────────────────────────────────────
-              LEFT CARD: Project Directory (Hugs Content Naturally)
+              LEFT CARD: Project Directory (Paginated, matches preview height)
           ───────────────────────────────────────────────────────── */}
           <div className="relative flex flex-col overflow-hidden border border-border/80 bg-surface/78 shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--border)_60%,transparent)] backdrop-blur-sm min-w-0">
             {/* Card Header Bar */}
@@ -213,9 +221,10 @@ export default function Projects() {
               </span>
             </div>
 
-            {/* Unit Directory List — Hugs all items with no empty bottom void */}
-            <div className="p-3 sm:p-4 space-y-2 focus:outline-none">
-              {projects.map((project, idx) => {
+            {/* Unit Directory List — one page of units, evenly spaced to fill the card */}
+            <div className="flex flex-1 flex-col gap-2 p-3 sm:p-4 focus:outline-none">
+              {pageProjects.map((project, pageIdx) => {
+                const idx = pageStart + pageIdx;
                 const isSelected = project.id === activeProject.id;
                 return (
                   <button
@@ -226,7 +235,7 @@ export default function Projects() {
                       setCurrentImgIdx(0);
                     }}
                     aria-pressed={isSelected}
-                    className={`group relative flex w-full items-center justify-between border p-3 sm:p-3.5 text-left transition-all duration-300 cursor-pointer ${
+                    className={`group relative flex w-full flex-1 items-center justify-between border p-3 sm:p-3.5 text-left transition-all duration-300 cursor-pointer ${
                       isSelected
                         ? 'border-accent bg-background/95 shadow-[0_0_20px_color-mix(in_srgb,var(--accent)_14%,transparent)]'
                         : 'border-border/50 bg-surface/40 hover:border-accent/60 hover:bg-surface/80'
@@ -251,14 +260,14 @@ export default function Projects() {
 
                       <div className="min-w-0 flex-1">
                         <h3
-                          className={`text-sm font-medium tracking-tight truncate transition-colors duration-300 ${
+                          className={`text-sm font-medium tracking-tight leading-snug transition-colors duration-300 ${
                             isSelected ? 'text-foreground font-semibold' : 'text-foreground/80 group-hover:text-foreground'
                           }`}
                         >
                           {project.title}
                         </h3>
                         <p
-                          className={`font-mono text-[0.68rem] uppercase tracking-wider truncate mt-0.5 transition-colors duration-300 ${
+                          className={`font-mono text-[0.68rem] uppercase tracking-wider mt-0.5 transition-colors duration-300 ${
                             isSelected ? 'text-accent font-medium' : 'text-muted group-hover:text-foreground/75'
                           }`}
                         >
@@ -278,7 +287,40 @@ export default function Projects() {
                   </button>
                 );
               })}
+              {/* Keep row height identical on a partially filled last page (desktop side-by-side only) */}
+              {Array.from({ length: emptySlots }, (_, i) => (
+                <div key={`empty-${i}`} aria-hidden="true" className="hidden xl:block flex-1" />
+              ))}
             </div>
+
+            {/* Pagination */}
+            {totalPages > 1 && (
+              <div className="flex items-center justify-between border-t border-border/40 px-4 sm:px-8 lg:px-10 py-3 shrink-0">
+                <span className="text-[9px] sm:text-[10px] font-mono uppercase tracking-[0.2em] sm:tracking-[0.32em] text-muted whitespace-nowrap">
+                  Page {String(directoryPage + 1).padStart(2, '0')} / {String(totalPages).padStart(2, '0')}
+                </span>
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setDirectoryPage((p) => Math.max(0, p - 1))}
+                    disabled={directoryPage === 0}
+                    className="group flex h-7 w-7 items-center justify-center border border-border transition-all duration-300 hover:border-accent disabled:cursor-not-allowed disabled:opacity-35 disabled:hover:border-border cursor-pointer"
+                    aria-label="Previous page"
+                  >
+                    <FiChevronLeft className="h-3.5 w-3.5 text-muted transition-colors duration-300 group-hover:text-accent group-disabled:group-hover:text-muted" aria-hidden="true" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setDirectoryPage((p) => Math.min(totalPages - 1, p + 1))}
+                    disabled={directoryPage === totalPages - 1}
+                    className="group flex h-7 w-7 items-center justify-center border border-border transition-all duration-300 hover:border-accent disabled:cursor-not-allowed disabled:opacity-35 disabled:hover:border-border cursor-pointer"
+                    aria-label="Next page"
+                  >
+                    <FiChevronRight className="h-3.5 w-3.5 text-muted transition-colors duration-300 group-hover:text-accent group-disabled:group-hover:text-muted" aria-hidden="true" />
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* ─────────────────────────────────────────────────────────
@@ -301,7 +343,7 @@ export default function Projects() {
                   <div className="h-px flex-1 bg-border" />
                   <span className={DETAIL_LABEL_CLASSNAME}>{activeProject.role ?? 'Software Project'}</span>
                 </div>
-                <h3 className="text-xl sm:text-2xl font-light leading-tight text-foreground sm:text-[1.75rem] truncate">
+                <h3 className="text-xl sm:text-2xl font-light leading-tight text-foreground sm:text-[1.75rem] xl:text-[1.25rem]">
                   {activeProject.title}
                 </h3>
               </header>
@@ -331,7 +373,7 @@ export default function Projects() {
                 <div
                   onMouseEnter={() => setIsAutoPlayPaused(true)}
                   onMouseLeave={() => setIsAutoPlayPaused(false)}
-                  className="relative aspect-[16/9] w-full flex items-center justify-center p-2.5 bg-gradient-to-b from-black/20 to-black/60 overflow-hidden"
+                  className="relative aspect-[16/9] xl:aspect-[2/1] w-full flex items-center justify-center p-2.5 bg-gradient-to-b from-black/20 to-black/60 overflow-hidden"
                 >
                   {/* Clickable Image Button with Hover Inspect Overlay */}
                   <button

@@ -1,11 +1,21 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, type CSSProperties } from 'react';
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import { skills, softSkills } from '@/lib/data';
+import { getSkillIcon } from '@/components/skillIcons';
 
 const VIEWS = ['TECHNICAL_SKILLS', 'SOFT_SKILLS'] as const;
 type ViewType = typeof VIEWS[number];
+
+// Technical skills render as chrome icon tiles; soft skills stay as text.
+const ICON_VIEW: ViewType = 'TECHNICAL_SKILLS';
+
+const MOBILE_ICON_GRID_STYLE = {
+  gridTemplateColumns: 'repeat(3, minmax(0, 1fr))',
+  maxWidth: '20rem',
+  margin: '0 auto',
+} as const;
 
 const skillsData: Record<ViewType, Record<string, string[]>> = {
   TECHNICAL_SKILLS: skills as Record<string, string[]>,
@@ -19,6 +29,7 @@ const ALL_MOBILE_LISTS = VIEWS.flatMap((view) =>
   Object.entries(skillsData[view]).map(([category, items]) => ({
     key: `${view}-${category}`,
     items,
+    icons: view === ICON_VIEW,
   }))
 );
 
@@ -31,6 +42,7 @@ export default function Skills() {
   const [prevIndex, setPrevIndex]                   = useState(0);
 
   const currentView = VIEWS[currentIndex];
+  const showIcons   = currentView === ICON_VIEW;
   const data        = skillsData[currentView];
   const categories  = Object.keys(data);
 
@@ -66,6 +78,28 @@ export default function Skills() {
   };
 
   const activeCategorySkills = data[categories[activeMobileCategory]] ?? [];
+
+  // Chrome icon tiles (icon view)
+  const renderIconGrid = (items: string[], animate = false, style?: CSSProperties) => (
+    <div className="skill-icons-grid" style={style}>
+      {items.map((skill, i) => {
+        const Icon = getSkillIcon(skill);
+        return (
+          <div
+            key={skill}
+            className="skill-tile"
+            title={skill}
+            style={{
+              animation: animate ? `skillItemIn 0.3s cubic-bezier(0.22,1,0.36,1) ${i * 40}ms both` : undefined,
+            }}
+          >
+            <Icon className="skill-tile-icon" aria-hidden="true" focusable="false" />
+            <span className="skill-tile-label">{skill}</span>
+          </div>
+        );
+      })}
+    </div>
+  );
 
   // Diamond + rule / skill / rule + diamond rows (mobile)
   const renderMobileList = (items: string[], animate: boolean) => (
@@ -144,6 +178,21 @@ export default function Skills() {
 
       {/* ── Main content ────────────────────────────────────────── */}
       <div className="relative z-10 max-w-6xl w-full mx-auto px-6 sm:px-8 md:px-12 lg:px-16">
+
+        {/* Shared chrome gradient for icon fills (follows the --chrome-* tokens).
+            Zero-size rather than display:none so the url() reference stays valid. */}
+        <svg width="0" height="0" aria-hidden="true" focusable="false" style={{ position: 'absolute' }}>
+          <defs>
+            <linearGradient id="skills-chrome-gradient" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" style={{ stopColor: 'var(--chrome-1)' }} />
+              <stop offset="35%" style={{ stopColor: 'var(--chrome-2)' }} />
+              <stop offset="49%" style={{ stopColor: 'var(--chrome-3)' }} />
+              <stop offset="51%" style={{ stopColor: 'var(--chrome-4)' }} />
+              <stop offset="70%" style={{ stopColor: 'var(--chrome-5)' }} />
+              <stop offset="100%" style={{ stopColor: 'var(--chrome-6)' }} />
+            </linearGradient>
+          </defs>
+        </svg>
 
         {/* Section number divider */}
         <div className="flex items-center justify-center sm:justify-start gap-4 mb-8">
@@ -232,11 +281,15 @@ export default function Skills() {
                 aria-hidden="true"
                 style={{ gridArea: '1 / 1', visibility: 'hidden', pointerEvents: 'none' }}
               >
-                {renderMobileList(list.items, false)}
+                {list.icons
+                  ? renderIconGrid(list.items, false, MOBILE_ICON_GRID_STYLE)
+                  : renderMobileList(list.items, false)}
               </div>
             ))}
             <div key={`${currentView}-${activeMobileCategory}`} style={{ gridArea: '1 / 1', alignSelf: 'start' }}>
-              {renderMobileList(activeCategorySkills, true)}
+              {showIcons
+                ? renderIconGrid(activeCategorySkills, true, MOBILE_ICON_GRID_STYLE)
+                : renderMobileList(activeCategorySkills, true)}
             </div>
           </div>
         </div>
@@ -286,6 +339,9 @@ export default function Skills() {
                 </div>
 
                 {/* Skill items */}
+                {view === ICON_VIEW ? (
+                  <div className="w-full">{renderIconGrid(items)}</div>
+                ) : (
                 <div className="flex flex-col items-start" style={{ gap: '0.875rem' }}>
                   {items.map((skill, skillIndex) => (
                     <div key={skillIndex} className="group/item">
@@ -295,6 +351,7 @@ export default function Skills() {
                     </div>
                   ))}
                 </div>
+                )}
               </div>
             ))}
           </div>
@@ -304,7 +361,7 @@ export default function Skills() {
         </div>
 
         {/* ── Bottom controls: arrows + dots (shared) ──────────── */}
-        <div className="flex flex-col items-center gap-3" style={{ marginTop: '3rem' }}>
+        <div className="flex flex-col items-center gap-4 mt-16 sm:mt-24">
 
           {/* Row 1: < > arrows */}
           <div className="flex items-center gap-3">

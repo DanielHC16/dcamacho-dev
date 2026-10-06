@@ -376,8 +376,8 @@ export const experiences: Experience[] = [
 export const skills = {
   languages: ["Python", "JavaScript", "TypeScript", "Java", "C"],
   frontend: ["React", "Next.js", "Tailwind CSS", "Jquery"],
-  backend: ["Node.js", "NestJS", "Express", "FastAPI", "PostgreSQL", "SQLite", "NeonDB"],
-  tools: ["Git", "Figma", "Vercel", "AWS", "GCP"]
+  backend: ["Node.js", "NestJS", "Express", "FastAPI", "SQL", "PostgreSQL", "SQLite", "NeonDB"],
+  tools: ["Git", "Figma", "Vercel", "AWS", "GCP", "Codex", "Claude", "Gemini"]
 };
 
 // Soft Skills

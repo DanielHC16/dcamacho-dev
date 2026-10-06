@@ -265,7 +265,7 @@ export default function Experiences() {
                       className="group absolute -translate-x-1/2 -translate-y-10 flex flex-col items-center gap-2"
                       style={{ left: `${point.x}%`, top: `${point.y}%` }}
                     >
-                      <span className="relative grid place-items-center h-20 w-20">
+                      <span className="relative grid place-items-center h-14 w-14 sm:h-20 sm:w-20">
                         {isSelected && (
                           <span className="pointer-events-none absolute inset-1 rounded-full bg-accent/20 blur-2xl" />
                         )}
@@ -282,7 +282,7 @@ export default function Experiences() {
                           <span className="pointer-events-none absolute inset-0 rounded-full border border-accent/32 animate-node-selected-ring" />
                         )}
                         <span
-                          className={`relative flex h-12 w-12 items-center justify-center rounded-full border transition-all duration-300 ${
+                          className={`relative flex h-9 w-9 sm:h-12 sm:w-12 items-center justify-center rounded-full border transition-all duration-300 ${
                             isSelected
                               ? 'border-accent bg-background shadow-[0_0_0_12px_color-mix(in_srgb,var(--accent)_10%,transparent)]'
                               : 'border-accent/60 bg-background/96 hover:border-accent'
@@ -341,71 +341,86 @@ export default function Experiences() {
 
           {/* RIGHT CARD - DETAIL PANEL */}
           <div
-            key={activeExperience.id}
             className="overflow-y-auto xl:overflow-hidden xl:h-[620px] border border-border/80 bg-surface shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--border)_60%,transparent)] backdrop-blur-sm min-w-0"
             style={{ width: '100%', padding: '1.25rem' }}
           >
-            {/* Mobile layout: natural flow */}
-            <div className="xl:hidden flex flex-col gap-6 min-w-0">
-              <header>
-                <div className="flex items-center gap-3 mb-4">
-                  <span className="font-mono text-xs text-muted">
-                    {String(activeNodeNumber).padStart(2, '0')}
-                  </span>
-                  <div className="h-px flex-1 bg-border" />
-                  <span className={DETAIL_LABEL_CLASSNAME}>{activeExperience.type}</span>
-                  {activeExperience.period.toLowerCase().includes('present') && (
-                    <>
-                      <span className="text-muted/40 font-mono text-xs">/</span>
-                      <span className="text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-accent">
-                        Active
-                      </span>
-                    </>
-                  )}
-                </div>
-                <h3 className="text-2xl font-light leading-tight text-foreground">
-                  {activeExperience.title}
-                </h3>
-                <p className="text-sm font-normal text-foreground/80 mt-2" style={{ lineHeight: '1.7' }}>
-                  {activeExperience.company}
-                </p>
-              </header>
+            {/* Mobile layout: every experience is rendered in the SAME grid cell.
+                The cell takes the height of the tallest entry, so the card keeps
+                one consistent size no matter which node is selected. Inactive
+                entries stay in layout (invisible) and are hidden from assistive tech. */}
+            <div className="xl:hidden grid min-w-0">
+              {experiences.map((experience, index) => {
+                const isActive = index === activeIndex;
+                return (
+                  <div
+                    key={experience.id}
+                    aria-hidden={!isActive}
+                    className={`[grid-area:1/1] flex flex-col justify-between gap-5 min-w-0 transition-opacity duration-300 ${
+                      isActive ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'
+                    }`}
+                  >
+                    <header>
+                      <div className="flex items-center gap-3 mb-3">
+                        <span className="font-mono text-xs text-muted">
+                          {String(getNodeNumber(experience, index)).padStart(2, '0')}
+                        </span>
+                        <div className="h-px flex-1 bg-border" />
+                        <span className={DETAIL_LABEL_CLASSNAME}>{experience.type}</span>
+                        {experience.period.toLowerCase().includes('present') && (
+                          <>
+                            <span className="text-muted/40 font-mono text-xs">/</span>
+                            <span className="text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-accent">
+                              Active
+                            </span>
+                          </>
+                        )}
+                      </div>
+                      <h3 className="text-2xl font-light leading-tight text-foreground">
+                        {experience.title}
+                      </h3>
+                      <p className="text-sm font-normal text-foreground/80 mt-1.5" style={{ lineHeight: '1.6' }}>
+                        {experience.company}
+                      </p>
+                    </header>
 
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <span className={`block ${DETAIL_LABEL_CLASSNAME}`}>Location</span>
-                  <p className="text-sm font-normal text-foreground/90 mt-2">{activeExperience.location}</p>
-                </div>
-                <div>
-                  <span className={`block ${DETAIL_LABEL_CLASSNAME}`}>Period</span>
-                  <p className="text-sm font-normal text-foreground/90 mt-2">{activeExperience.period}</p>
-                </div>
-              </div>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="min-w-0">
+                        <span className={`block ${DETAIL_LABEL_CLASSNAME}`}>Location</span>
+                        <p className="text-sm font-normal text-foreground/90 mt-1.5 leading-snug">{experience.location}</p>
+                      </div>
+                      <div className="min-w-0">
+                        <span className={`block ${DETAIL_LABEL_CLASSNAME}`}>Period</span>
+                        <p className="text-sm font-normal text-foreground/90 mt-1.5 leading-snug">{experience.period}</p>
+                      </div>
+                    </div>
 
-              <div>
-                <span className={DETAIL_LABEL_CLASSNAME}>Summary</span>
-                <p className="text-sm font-normal text-foreground/90 mt-2" style={{ lineHeight: '1.7' }}>{activeExperience.summary}</p>
-              </div>
+                    <div>
+                      <span className={DETAIL_LABEL_CLASSNAME}>Summary</span>
+                      <p className="text-[0.8125rem] font-normal text-foreground/90 mt-1.5" style={{ lineHeight: '1.6' }}>{experience.summary}</p>
+                    </div>
 
-              <div>
-                <span className={DETAIL_LABEL_CLASSNAME}>Highlights</span>
-                <ul className="list-outside list-disc space-y-2 pl-5 marker:text-accent mt-2">
-                  {activeExperience.highlights.map((h) => (
-                    <li key={h} className="pl-1 text-sm font-normal text-foreground/90" style={{ lineHeight: '1.65' }}>{h}</li>
-                  ))}
-                </ul>
-              </div>
+                    <div>
+                      <span className={DETAIL_LABEL_CLASSNAME}>Highlights</span>
+                      <ul className="list-outside list-disc space-y-1.5 pl-5 marker:text-accent mt-1.5">
+                        {experience.highlights.map((h) => (
+                          <li key={h} className="pl-1 text-[0.8125rem] font-normal text-foreground/90" style={{ lineHeight: '1.55' }}>{h}</li>
+                        ))}
+                      </ul>
+                    </div>
 
-              <div>
-                <span className={DETAIL_LABEL_CLASSNAME}>Stack</span>
-                <div className="grid grid-cols-3 gap-2 mt-2">
-                  {activeExperience.stack.map((item) => (
-                    <span key={item} className="flex h-8 items-center justify-center border border-border bg-surface px-2 font-mono text-xs text-muted transition-colors duration-300 hover:border-accent hover:text-accent">
-                      {item}
-                    </span>
-                  ))}
-                </div>
-              </div>
+                    <div>
+                      <span className={DETAIL_LABEL_CLASSNAME}>Stack</span>
+                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mt-1.5">
+                        {experience.stack.map((item) => (
+                          <span key={item} className="flex h-8 min-w-0 items-center justify-center border border-border bg-surface px-2 font-mono text-xs text-muted transition-colors duration-300 hover:border-accent hover:text-accent text-center truncate">
+                            {item}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
 
             {/* Desktop layout: clean auto-spaced grid without row collisions */}

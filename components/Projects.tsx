@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { FaGithub } from 'react-icons/fa';
 import {
   FiChevronLeft,
@@ -22,6 +22,7 @@ import {
 import { projects, type Project, type ProjectImage } from '@/lib/data';
 
 const PROJECTS_PER_PAGE = 4;
+const PANEL_FADE_OUT_MS = 200;
 
 const DETAIL_LABEL_CLASSNAME =
   'text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-foreground/55 font-mono';
@@ -61,7 +62,11 @@ export default function Projects() {
   const [activeProjectId, setActiveProjectId] = useState<number>(() => projects[0]?.id ?? 1);
   const [directoryPage, setDirectoryPage] = useState<number>(0);
   const [currentImgIdx, setCurrentImgIdx] = useState<number>(0);
-  const [previewDir, setPreviewDir] = useState<'next' | 'prev'>('next');
+  // The panel shows `displayedProjectId`; it follows `activeProjectId` after a short fade-out,
+  // so the content (and any height change) swaps while the panel is invisible.
+  const [displayedProjectId, setDisplayedProjectId] = useState<number>(() => projects[0]?.id ?? 1);
+  const [isPanelVisible, setIsPanelVisible] = useState(true);
+  const panelSwapTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [isAutoPlayPaused, setIsAutoPlayPaused] = useState(false);
   const [activeGallery, setActiveGallery] = useState<{
     title: string;
@@ -72,37 +77,57 @@ export default function Projects() {
   const isTransitioningRef = useRef(false);
 
   const activeProject = useMemo(() => {
-    return projects.find((p) => p.id === activeProjectId) ?? projects[0];
-  }, [activeProjectId]);
+    return projects.find((p) => p.id === displayedProjectId) ?? projects[0];
+  }, [displayedProjectId]);
 
   const activeProjectIndex = useMemo(() => {
     return projects.findIndex((p) => p.id === activeProject.id);
   }, [activeProject]);
 
   const totalPages = Math.max(1, Math.ceil(projects.length / PROJECTS_PER_PAGE));
-  const pageStart = directoryPage * PROJECTS_PER_PAGE;
-  const pageProjects = projects.slice(pageStart, pageStart + PROJECTS_PER_PAGE);
-  const emptySlots = PROJECTS_PER_PAGE - pageProjects.length;
+  const directoryPages = Array.from({ length: totalPages }, (_, page) => {
+    const start = page * PROJECTS_PER_PAGE;
+    return { start, items: projects.slice(start, start + PROJECTS_PER_PAGE) };
+  });
 
   const activeImages = useMemo(() => {
     if (activeProject.images?.length) return activeProject.images;
     return [activeProject.image];
   }, [activeProject]);
 
-  const changePreviewImage = useCallback(
-    (newIdx: number, dir?: 'next' | 'prev') => {
-      setPreviewDir(dir ?? (newIdx >= currentImgIdx ? 'next' : 'prev'));
-      setCurrentImgIdx(newIdx);
+  const changePreviewImage = useCallback((newIdx: number) => {
+    setCurrentImgIdx(newIdx);
+  }, []);
+
+  // Fade-through project switch: fade the panel out, swap content, fade it back in.
+  // Rapid clicks just retarget the pending swap, so the panel never flickers.
+  const selectProject = useCallback(
+    (id: number) => {
+      if (id === activeProjectId) return;
+      setActiveProjectId(id);
+      setIsPanelVisible(false);
+      if (panelSwapTimerRef.current) clearTimeout(panelSwapTimerRef.current);
+      panelSwapTimerRef.current = setTimeout(() => {
+        setDisplayedProjectId(id);
+        setCurrentImgIdx(0);
+        setIsPanelVisible(true);
+        panelSwapTimerRef.current = null;
+      }, PANEL_FADE_OUT_MS);
     },
-    [currentImgIdx]
+    [activeProjectId]
   );
+
+  useEffect(() => {
+    return () => {
+      if (panelSwapTimerRef.current) clearTimeout(panelSwapTimerRef.current);
+    };
+  }, []);
 
   // Auto-play slider for projects with multiple images
   useEffect(() => {
     if (activeImages.length <= 1 || isAutoPlayPaused || activeGallery !== null) return;
 
     const timer = setInterval(() => {
-      setPreviewDir('next');
       setCurrentImgIdx((prev) => (prev + 1) % activeImages.length);
     }, 4000);
 
@@ -138,7 +163,7 @@ export default function Projects() {
     });
     setTimeout(() => {
       isTransitioningRef.current = false;
-    }, 440);
+    }, 600);
   }, []);
 
   useEffect(() => {
@@ -153,6 +178,17 @@ export default function Projects() {
   }, [activeGallery, closeGallery, moveGallery]);
 
   const activeModalImage = activeGallery?.images[activeGallery.index];
+
+  const renderStableSlot = (render: (project: Project, index: number) => ReactNode) => (
+    <div className="grid min-w-0">
+      {projects.map((project, index) => (
+        <div key={project.id} aria-hidden="true" className="[grid-area:1/1] min-w-0 invisible pointer-events-none select-none">
+          {render(project, index)}
+        </div>
+      ))}
+      <div className="[grid-area:1/1] min-w-0">{render(activeProject, activeProjectIndex)}</div>
+    </div>
+  );
 
   return (
     <section
@@ -222,18 +258,29 @@ export default function Projects() {
             </div>
 
             {/* Unit Directory List — one page of units, evenly spaced to fill the card */}
-            <div className="flex flex-1 flex-col gap-2 p-3 sm:p-4 focus:outline-none">
-              {pageProjects.map((project, pageIdx) => {
-                const idx = pageStart + pageIdx;
-                const isSelected = project.id === activeProject.id;
+            {/* Every page is stacked in the same grid cell; only the current one is visible.
+                The cell is as tall as the tallest page, so paging never resizes the card. */}
+            <div className="grid flex-1 p-3 sm:p-4">
+              {directoryPages.map((page, pageNumber) => {
+                const isCurrentPage = pageNumber === directoryPage;
+                return (
+            <div
+              key={`page-${pageNumber}`}
+              aria-hidden={!isCurrentPage}
+              className={`[grid-area:1/1] flex flex-col gap-2 min-w-0 transition-[opacity,transform,visibility] motion-reduce:transition-none ${
+                isCurrentPage
+                  ? 'visible opacity-100 translate-y-0 duration-[420ms] delay-[160ms] ease-[cubic-bezier(0.22,1,0.36,1)]'
+                  : `invisible pointer-events-none opacity-0 duration-[160ms] delay-0 ease-[cubic-bezier(0.4,0,1,1)] translate-y-1`
+              }`}
+            >
+              {page.items.map((project, pageIdx) => {
+                const idx = page.start + pageIdx;
+                const isSelected = project.id === activeProjectId;
                 return (
                   <button
                     key={project.id}
                     type="button"
-                    onClick={() => {
-                      setActiveProjectId(project.id);
-                      setCurrentImgIdx(0);
-                    }}
+                    onClick={() => selectProject(project.id)}
                     aria-pressed={isSelected}
                     className={`group relative flex w-full flex-1 items-center justify-between border p-3 sm:p-3.5 text-left transition-all duration-300 cursor-pointer ${
                       isSelected
@@ -287,10 +334,13 @@ export default function Projects() {
                   </button>
                 );
               })}
-              {/* Keep row height identical on a partially filled last page (desktop side-by-side only) */}
-              {Array.from({ length: emptySlots }, (_, i) => (
-                <div key={`empty-${i}`} aria-hidden="true" className="hidden xl:block flex-1" />
+              {/* Keep row height identical on a partially filled last page */}
+              {Array.from({ length: PROJECTS_PER_PAGE - page.items.length }, (_, i) => (
+                <div key={`empty-${i}`} aria-hidden="true" className="flex-1" />
               ))}
+            </div>
+                );
+              })}
             </div>
 
             {/* Pagination */}
@@ -302,21 +352,19 @@ export default function Projects() {
                 <div className="flex items-center gap-2">
                   <button
                     type="button"
-                    onClick={() => setDirectoryPage((p) => Math.max(0, p - 1))}
-                    disabled={directoryPage === 0}
-                    className="group flex h-7 w-7 items-center justify-center border border-border transition-all duration-300 hover:border-accent disabled:cursor-not-allowed disabled:opacity-35 disabled:hover:border-border cursor-pointer"
+                    onClick={() => setDirectoryPage((p) => (p - 1 + totalPages) % totalPages)}
+                    className="group flex h-7 w-7 items-center justify-center border border-border transition-all duration-300 hover:border-accent cursor-pointer"
                     aria-label="Previous page"
                   >
-                    <FiChevronLeft className="h-3.5 w-3.5 text-muted transition-colors duration-300 group-hover:text-accent group-disabled:group-hover:text-muted" aria-hidden="true" />
+                    <FiChevronLeft className="h-3.5 w-3.5 text-muted transition-colors duration-300 group-hover:text-accent" aria-hidden="true" />
                   </button>
                   <button
                     type="button"
-                    onClick={() => setDirectoryPage((p) => Math.min(totalPages - 1, p + 1))}
-                    disabled={directoryPage === totalPages - 1}
-                    className="group flex h-7 w-7 items-center justify-center border border-border transition-all duration-300 hover:border-accent disabled:cursor-not-allowed disabled:opacity-35 disabled:hover:border-border cursor-pointer"
+                    onClick={() => setDirectoryPage((p) => (p + 1) % totalPages)}
+                    className="group flex h-7 w-7 items-center justify-center border border-border transition-all duration-300 hover:border-accent cursor-pointer"
                     aria-label="Next page"
                   >
-                    <FiChevronRight className="h-3.5 w-3.5 text-muted transition-colors duration-300 group-hover:text-accent group-disabled:group-hover:text-muted" aria-hidden="true" />
+                    <FiChevronRight className="h-3.5 w-3.5 text-muted transition-colors duration-300 group-hover:text-accent" aria-hidden="true" />
                   </button>
                 </div>
               </div>
@@ -331,39 +379,46 @@ export default function Projects() {
             style={{ width: '100%', padding: '1rem 1.25rem' }}
           >
             <div
-              key={activeProject.id}
-              className="project-panel-enter flex flex-col justify-between h-full w-full"
+              className={`flex flex-col justify-between h-full w-full transition-[opacity,transform] motion-reduce:transition-none ${
+                isPanelVisible
+                  ? 'opacity-100 translate-y-0 duration-[450ms] ease-[cubic-bezier(0.22,1,0.36,1)]'
+                  : 'opacity-0 translate-y-1 duration-200 ease-[cubic-bezier(0.4,0,1,1)]'
+              }`}
             >
               {/* Header Block */}
               <header className="shrink-0">
-                <div className="flex items-center gap-4 mb-1.5">
-                  <span className="font-mono text-xs text-muted">
-                    {String(activeProjectIndex + 1).padStart(2, '0')}
-                  </span>
-                  <div className="h-px flex-1 bg-border" />
-                  <span className={DETAIL_LABEL_CLASSNAME}>{activeProject.role ?? 'Software Project'}</span>
-                </div>
-                <h3 className="text-xl sm:text-2xl font-light leading-tight text-foreground sm:text-[1.75rem] xl:text-[1.25rem]">
-                  {activeProject.title}
-                </h3>
+                {renderStableSlot((project, index) => (
+                  <>
+                    <div className="flex items-center gap-3 sm:gap-4 mb-2 sm:mb-1.5">
+                      <span className="font-mono text-xs text-muted">
+                        {String(index + 1).padStart(2, '0')}
+                      </span>
+                      <div className="h-px flex-1 bg-border" />
+                      <span className={`hidden sm:inline ${DETAIL_LABEL_CLASSNAME}`}>{project.role ?? 'Software Project'}</span>
+                    </div>
+                    <h3 className="text-xl sm:text-2xl font-light leading-tight text-foreground sm:text-[1.75rem] xl:text-[1.25rem]">
+                      {project.title}
+                    </h3>
+                  </>
+                ))}
               </header>
 
               {/* Constrained Image Mockup Screen — Proportional Aspect Ratio with Object Contain */}
-              <div className="relative border border-border/70 bg-black/40 overflow-hidden shadow-md my-2 shrink-0">
+              <div className="relative border border-border/70 bg-black/40 overflow-hidden shadow-md my-3 sm:my-2 shrink-0">
                 {/* Window Header */}
-                <div className="flex items-center justify-between border-b border-border/40 bg-surface/90 px-3 py-1 shrink-0">
-                  <div className="flex items-center gap-1.5">
-                    <span className="h-2 w-2 rounded-full bg-border" />
-                    <span className="h-2 w-2 rounded-full bg-border" />
-                    <span className="h-2 w-2 rounded-full bg-border" />
-                    <span className="font-mono text-[10px] text-muted tracking-wider ml-2 truncate max-w-xs">
+                <div className="flex items-center justify-between gap-2 border-b border-border/40 bg-surface/90 px-3 py-1.5 sm:py-1 shrink-0">
+                  <div className="flex min-w-0 flex-1 items-center gap-1.5">
+                    <span className="h-2 w-2 shrink-0 rounded-full bg-border" />
+                    <span className="h-2 w-2 shrink-0 rounded-full bg-border" />
+                    <span className="h-2 w-2 shrink-0 rounded-full bg-border" />
+                    <span className="min-w-0 font-mono text-[10px] text-muted tracking-wider ml-2 truncate sm:max-w-xs">
                       {activeProject.links.demo
                         ? activeProject.links.demo.replace(/^https?:\/\//, '')
                         : `${activeProject.title.toLowerCase().replace(/[^a-z0-9]/g, '-')}.local`}
                     </span>
                   </div>
                   {activeImages.length > 1 && (
-                    <span className="font-mono text-[10px] text-muted tracking-widest">
+                    <span className="shrink-0 font-mono text-[10px] text-muted tracking-widest">
                       {currentImgIdx + 1} / {activeImages.length}
                     </span>
                   )}
@@ -373,33 +428,37 @@ export default function Projects() {
                 <div
                   onMouseEnter={() => setIsAutoPlayPaused(true)}
                   onMouseLeave={() => setIsAutoPlayPaused(false)}
-                  className="relative aspect-[16/9] xl:aspect-[2/1] w-full flex items-center justify-center p-2.5 bg-gradient-to-b from-black/20 to-black/60 overflow-hidden"
+                  className="relative aspect-[16/9] xl:aspect-[2/1] w-full flex items-center justify-center p-0 sm:p-2.5 bg-gradient-to-b from-black/20 to-black/60 overflow-hidden"
                 >
                   {/* Clickable Image Button with Hover Inspect Overlay */}
                   <button
                     type="button"
                     onClick={() => openProjectGallery(activeProject, currentImgIdx)}
-                    className="group/preview absolute inset-0 w-full h-full flex items-center justify-center p-2.5 cursor-pointer focus:outline-none focus-visible:ring-1 focus-visible:ring-accent"
+                    className="group/preview absolute inset-0 w-full h-full flex items-center justify-center p-0 sm:p-2.5 cursor-pointer focus:outline-none focus-visible:ring-1 focus-visible:ring-accent"
                     aria-label={`Inspect ${activeProject.title} image gallery`}
                   >
-                    <div
-                      key={`${activeProject.id}-${currentImgIdx}`}
-                      className="relative h-full w-full flex items-center justify-center transition-transform duration-500 group-hover/preview:scale-[1.025]"
-                      style={{
-                        animation: `${
-                          previewDir === 'next' ? 'galleryEnterFromRight' : 'galleryEnterFromLeft'
-                        } 0.42s cubic-bezier(0.16, 1, 0.3, 1) both`,
-                        willChange: 'transform, opacity, filter',
-                      }}
-                    >
-                      <Image
-                        src={activeImages[currentImgIdx]?.src ?? activeProject.image.src}
-                        alt={activeImages[currentImgIdx]?.alt ?? activeProject.image.alt}
-                        fill
-                        sizes="(min-width: 1280px) 700px, 90vw"
-                        className="object-contain object-center"
-                        priority
-                      />
+                    <div className="relative h-full w-full transition-transform duration-500 group-hover/preview:scale-[1.025]">
+                      {activeImages.map((img, i) => {
+                        const isCurrent = i === currentImgIdx;
+                        return (
+                          <div
+                            key={`${activeProject.id}-${i}`}
+                            aria-hidden={!isCurrent}
+                            className={`absolute inset-0 transition-opacity duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] motion-reduce:transition-none ${
+                              isCurrent ? 'opacity-100' : 'opacity-0'
+                            }`}
+                          >
+                            <Image
+                              src={img.src}
+                              alt={isCurrent ? img.alt : ''}
+                              fill
+                              sizes="(min-width: 1280px) 700px, 90vw"
+                              className="object-contain object-center"
+                              priority={i === 0}
+                            />
+                          </div>
+                        );
+                      })}
                     </div>
 
                     {/* Hover Inspect Overlay — Only triggers when hovering the image itself */}
@@ -418,11 +477,10 @@ export default function Projects() {
                         type="button"
                         onClick={() =>
                           changePreviewImage(
-                            (currentImgIdx - 1 + activeImages.length) % activeImages.length,
-                            'prev'
+                            (currentImgIdx - 1 + activeImages.length) % activeImages.length
                           )
                         }
-                        className="absolute left-2.5 top-1/2 -translate-y-1/2 z-10 flex h-8 w-8 items-center justify-center border border-white/20 bg-black/60 text-white/70 backdrop-blur-sm transition-colors hover:border-accent hover:text-accent cursor-pointer"
+                        className="absolute left-1.5 sm:left-2.5 top-1/2 -translate-y-1/2 z-10 flex h-7 w-7 sm:h-8 sm:w-8 items-center justify-center border border-white/20 bg-black/60 text-white/70 backdrop-blur-sm transition-colors hover:border-accent hover:text-accent cursor-pointer"
                         aria-label="Previous image"
                       >
                         <FiChevronLeft className="h-4 w-4" />
@@ -430,24 +488,21 @@ export default function Projects() {
                       <button
                         type="button"
                         onClick={() =>
-                          changePreviewImage(
-                            (currentImgIdx + 1) % activeImages.length,
-                            'next'
-                          )
+                          changePreviewImage((currentImgIdx + 1) % activeImages.length)
                         }
-                        className="absolute right-2.5 top-1/2 -translate-y-1/2 z-10 flex h-8 w-8 items-center justify-center border border-white/20 bg-black/60 text-white/70 backdrop-blur-sm transition-colors hover:border-accent hover:text-accent cursor-pointer"
+                        className="absolute right-1.5 sm:right-2.5 top-1/2 -translate-y-1/2 z-10 flex h-7 w-7 sm:h-8 sm:w-8 items-center justify-center border border-white/20 bg-black/60 text-white/70 backdrop-blur-sm transition-colors hover:border-accent hover:text-accent cursor-pointer"
                         aria-label="Next image"
                       >
                         <FiChevronRight className="h-4 w-4" />
                       </button>
 
                       {/* Indicator Dots */}
-                      <div className="absolute bottom-2.5 left-1/2 -translate-x-1/2 z-10 flex items-center gap-1.5 bg-black/60 px-2.5 py-1 border border-border/50 backdrop-blur-sm">
+                      <div className="absolute bottom-1.5 sm:bottom-2.5 left-1/2 -translate-x-1/2 z-10 flex items-center gap-1.5 bg-black/60 px-2.5 py-1 border border-border/50 backdrop-blur-sm">
                         {activeImages.map((_, i) => (
                           <button
                             key={i}
                             type="button"
-                            onClick={() => changePreviewImage(i, i >= currentImgIdx ? 'next' : 'prev')}
+                            onClick={() => changePreviewImage(i)}
                             className={`h-[2px] transition-all duration-500 cursor-pointer ${
                               i === currentImgIdx ? 'w-5 bg-accent' : 'w-2 bg-white/30 hover:bg-white/60'
                             }`}
@@ -461,42 +516,48 @@ export default function Projects() {
               </div>
 
               {/* Columnar Structured Grid: Role & Tech Stack */}
-              <section className="grid grid-cols-1 sm:grid-cols-2 gap-3 py-1.5 border-y border-border/40 my-0.5 shrink-0">
-                <div>
+              <section className="py-2.5 sm:py-1.5 border-y border-border/40 my-0.5 shrink-0">
+                {renderStableSlot((project) => (
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3">
+                <div className="min-w-0">
                   <span className={DETAIL_LABEL_CLASSNAME}>Role</span>
-                  <p className="text-xs sm:text-sm font-normal text-foreground/90 mt-0.5 truncate">{activeProject.role ?? 'Software Developer'}</p>
+                  <p className="text-xs sm:text-sm font-normal text-foreground/90 mt-0.5 leading-snug">{project.role ?? 'Software Developer'}</p>
                 </div>
                 <div className="min-w-0">
                   <span className={DETAIL_LABEL_CLASSNAME}>Tags</span>
-                  <div className="flex items-center gap-1.5 mt-0.5 overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden py-0.5 min-h-[26px]">
-                    {activeProject.tags.map((tag) => (
+                  <div className="flex flex-wrap items-center gap-1 sm:gap-1.5 mt-1 sm:mt-0.5 py-0.5 sm:min-h-[26px]">
+                    {project.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="flex h-5.5 sm:h-6 shrink-0 items-center justify-center border border-border bg-surface px-2 font-mono text-[0.68rem] text-muted hover:border-accent hover:text-accent transition-colors duration-300 whitespace-nowrap"
+                        className="flex h-5 sm:h-6 shrink-0 items-center justify-center border border-border bg-surface px-1.5 sm:px-2 font-mono text-[0.625rem] sm:text-[0.68rem] text-muted hover:border-accent hover:text-accent transition-colors duration-300 whitespace-nowrap"
                       >
                         {tag}
                       </span>
                     ))}
                   </div>
                 </div>
+              </div>
+                ))}
               </section>
 
               {/* Structured Summary Section */}
-              <section className="pt-1 pb-0.5 shrink-0">
+              <section className="pt-3 pb-3 sm:pt-1 sm:pb-0.5 shrink-0">
                 <span className={DETAIL_LABEL_CLASSNAME}>Summary</span>
-                <p className="text-xs sm:text-sm font-normal text-foreground/90 mt-0.5 leading-snug line-clamp-2 min-h-[2.4rem]">
-                  {activeProject.description}
-                </p>
+                {renderStableSlot((project) => (
+                  <p className="text-[0.8125rem] sm:text-sm font-normal text-foreground/90 mt-1 sm:mt-0.5 leading-relaxed sm:leading-snug sm:line-clamp-2 sm:min-h-[2.4rem]">
+                    {project.description}
+                  </p>
+                ))}
               </section>
 
               {/* Bottom Section: Centered Action Buttons */}
-              <section className="pt-2 border-t border-border/40 mt-1 flex items-center justify-center gap-4 shrink-0 min-h-[36px]">
+              <section className="pt-3 sm:pt-2 border-t border-border/40 mt-1 flex items-center justify-center gap-2 sm:gap-4 shrink-0 min-h-[36px]">
                 {activeProject.links.demo && (
                   <a
                     href={activeProject.links.demo}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-2 border border-border/80 bg-surface/60 px-5 py-1.5 font-mono text-xs uppercase tracking-wider text-foreground/80 hover:border-accent hover:text-accent hover:bg-surface/90 transition-all duration-300"
+                    className="inline-flex flex-1 sm:flex-none items-center justify-center gap-2 whitespace-nowrap border border-border/80 bg-surface/60 px-3 sm:px-5 py-2.5 sm:py-1.5 font-mono text-xs uppercase tracking-wider text-foreground/80 hover:border-accent hover:text-accent hover:bg-surface/90 transition-all duration-300"
                   >
                     <FiExternalLink className="h-3 w-3" />
                     <span>Live View</span>
@@ -507,7 +568,7 @@ export default function Projects() {
                     href={activeProject.links.github}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-2 border border-border/80 bg-surface/60 px-5 py-1.5 font-mono text-xs uppercase tracking-wider text-foreground/80 hover:border-accent hover:text-accent hover:bg-surface/90 transition-all duration-300"
+                    className="inline-flex flex-1 sm:flex-none items-center justify-center gap-2 whitespace-nowrap border border-border/80 bg-surface/60 px-3 sm:px-5 py-2.5 sm:py-1.5 font-mono text-xs uppercase tracking-wider text-foreground/80 hover:border-accent hover:text-accent hover:bg-surface/90 transition-all duration-300"
                   >
                     <FaGithub className="h-3 w-3" />
                     <span>Source Code</span>
@@ -562,8 +623,8 @@ export default function Projects() {
                 style={{
                   animation: `${
                     galleryDir === 'next' ? 'galleryEnterFromRight' : 'galleryEnterFromLeft'
-                  } 0.42s cubic-bezier(0.16, 1, 0.3, 1) both`,
-                  willChange: 'transform, opacity, filter',
+                  } 0.6s cubic-bezier(0.22, 1, 0.36, 1) both`,
+                  willChange: 'transform, opacity',
                 }}
               >
                 <Image

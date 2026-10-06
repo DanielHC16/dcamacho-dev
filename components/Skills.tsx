@@ -12,6 +12,16 @@ const skillsData: Record<ViewType, Record<string, string[]>> = {
   SOFT_SKILLS: softSkills as Record<string, string[]>,
 };
 
+// Every category list across both views. On mobile these are rendered invisibly
+// in the same grid cell as the visible list, so the list area is always as tall
+// as the longest list and nothing below or above it shifts when switching.
+const ALL_MOBILE_LISTS = VIEWS.flatMap((view) =>
+  Object.entries(skillsData[view]).map(([category, items]) => ({
+    key: `${view}-${category}`,
+    items,
+  }))
+);
+
 export default function Skills() {
   const [currentIndex, setCurrentIndex]             = useState(0);
   const [isAnimating, setIsAnimating]               = useState(false);
@@ -57,6 +67,64 @@ export default function Skills() {
   };
 
   const activeCategorySkills = data[categories[activeMobileCategory]] ?? [];
+
+  // Diamond + rule / skill / rule + diamond rows (mobile)
+  const renderMobileList = (items: string[], animate: boolean) => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+      {items.map((skill, i) => (
+        <div
+          key={skill}
+          className="group/item"
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '0.75rem',
+            maxWidth: '100%',
+            animation: animate ? `skillItemIn 0.3s cubic-bezier(0.22,1,0.36,1) ${i * 40}ms both` : undefined,
+          }}
+        >
+          <div
+            style={{
+              width: '7px', height: '7px',
+              border: '1px solid var(--accent)',
+              transform: 'rotate(45deg)',
+              flexShrink: 0,
+              transition: 'background-color 0.2s',
+            }}
+            className="group-hover/item:bg-accent"
+          />
+          <div style={{ width: '2rem', minWidth: '0.75rem', height: '1px', backgroundColor: 'var(--border)', flexShrink: 1 }} />
+          <span
+            style={{
+              fontSize: '0.875rem',
+              fontWeight: 400,
+              lineHeight: 1.4,
+              color: 'var(--foreground)',
+              letterSpacing: '0.01em',
+              textAlign: 'center',
+              minWidth: 0,
+              overflowWrap: 'anywhere',
+            }}
+            className="group-hover/item:text-accent transition-colors duration-300"
+          >
+            {skill}
+          </span>
+          <div style={{ width: '2rem', minWidth: '0.75rem', height: '1px', backgroundColor: 'var(--border)', flexShrink: 1 }} />
+          <div
+            style={{
+              width: '7px', height: '7px',
+              border: '1px solid var(--accent)',
+              transform: 'rotate(45deg)',
+              flexShrink: 0,
+              transition: 'background-color 0.2s',
+            }}
+            className="group-hover/item:bg-accent"
+          />
+        </div>
+      ))}
+    </div>
+  );
 
   return (
     <section
@@ -109,16 +177,15 @@ export default function Skills() {
             transition: 'opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
           }}
         >
-          {/* Category pill tabs — centered, horizontal scroll */}
+          {/* Category tabs: 2-column grid, so every tab is fully visible (no clipped
+              horizontal scroll) and both views share the same tab layout. */}
           <div
             style={{
-              display: 'flex',
-              justifyContent: 'center',
+              display: 'grid',
+              gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
               gap: '0.5rem',
-              overflowX: 'auto',
-              paddingBottom: '1rem',
-              scrollbarWidth: 'none',
-              WebkitOverflowScrolling: 'touch',
+              maxWidth: '20rem',
+              margin: '0 auto',
             }}
           >
             {categories.map((cat, i) => {
@@ -128,83 +195,50 @@ export default function Skills() {
                   key={cat}
                   onClick={() => setActiveMobileCategory(i)}
                   style={{
-                    flexShrink: 0,
-                    padding: '0.5rem 1rem',
+                    minWidth: 0,
+                    padding: '0.6rem 0.5rem',
                     fontFamily: 'var(--font-mono)',
                     fontSize: '9px',
                     letterSpacing: '0.18em',
                     textTransform: 'uppercase',
+                    textAlign: 'center',
                     border: `1px solid ${isActive ? 'var(--accent)' : 'var(--border)'}`,
                     color: isActive ? 'var(--accent)' : 'var(--muted)',
                     background: isActive ? 'color-mix(in srgb, var(--accent) 8%, transparent)' : 'transparent',
                     cursor: 'pointer',
                     transition: 'all 0.25s',
                     whiteSpace: 'nowrap',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
                   }}
                   aria-pressed={isActive}
-                  aria-label={`Show ${cat} skills`}
+                  aria-label={`Show ${cat.replace(/_/g, ' ')} skills`}
                 >
-                  {cat}
+                  {cat.replace(/_/g, ' ')}
                 </button>
               );
             })}
           </div>
 
           {/* Centered accent rule */}
-          <div style={{ display: 'flex', justifyContent: 'center', margin: '1.5rem 0 1.75rem' }}>
+          <div style={{ display: 'flex', justifyContent: 'center', margin: '1.75rem 0' }}>
             <div style={{ width: '2rem', height: '1px', backgroundColor: 'var(--accent)' }} />
           </div>
 
-          {/* Skill items — About-style diamond bullets, centered */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-            {activeCategorySkills.map((skill, i) => (
+          {/* Skill list area: fixed to the height of the longest list */}
+          <div style={{ display: 'grid' }}>
+            {ALL_MOBILE_LISTS.map((list) => (
               <div
-                key={skill}
-                className="group/item"
-                style={{
-                  animation: `skillItemIn 0.3s cubic-bezier(0.22,1,0.36,1) ${i * 40}ms both`,
-                }}
+                key={`sizer-${list.key}`}
+                aria-hidden="true"
+                style={{ gridArea: '1 / 1', visibility: 'hidden', pointerEvents: 'none' }}
               >
-                {/* Diamond + line — left side / title / line + diamond — right side */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', justifyContent: 'center', marginBottom: '0.4rem' }}>
-                  <div
-                    style={{
-                      width: '7px', height: '7px',
-                      border: '1px solid var(--accent)',
-                      transform: 'rotate(45deg)',
-                      flexShrink: 0,
-                      transition: 'background-color 0.2s',
-                    }}
-                    className="group-hover/item:bg-accent"
-                  />
-                  <div style={{ width: '2rem', height: '1px', backgroundColor: 'var(--border)', flexShrink: 0 }} />
-                  <span
-                    style={{
-                      fontSize: '0.875rem',
-                      fontWeight: 400,
-                      color: 'var(--foreground)',
-                      letterSpacing: '0.01em',
-                      textAlign: 'center',
-                      whiteSpace: 'nowrap',
-                    }}
-                    className="group-hover/item:text-accent transition-colors duration-300"
-                  >
-                    {skill}
-                  </span>
-                  <div style={{ width: '2rem', height: '1px', backgroundColor: 'var(--border)', flexShrink: 0 }} />
-                  <div
-                    style={{
-                      width: '7px', height: '7px',
-                      border: '1px solid var(--accent)',
-                      transform: 'rotate(45deg)',
-                      flexShrink: 0,
-                      transition: 'background-color 0.2s',
-                    }}
-                    className="group-hover/item:bg-accent"
-                  />
-                </div>
+                {renderMobileList(list.items, false)}
               </div>
             ))}
+            <div key={`${currentView}-${activeMobileCategory}`} style={{ gridArea: '1 / 1', alignSelf: 'start' }}>
+              {renderMobileList(activeCategorySkills, true)}
+            </div>
           </div>
         </div>
 
@@ -222,12 +256,26 @@ export default function Skills() {
             minHeight: '320px',
           }}
         >
+          {/* Both views share one grid cell; the hidden one still takes up space, so the
+              area is always as tall as the larger view at every breakpoint and nothing
+              above or below it moves when switching. */}
+          <div style={{ display: 'grid' }}>
+          {VIEWS.map((view) => {
+            const isCurrentView = view === currentView;
+            return (
           <div
+            key={view}
+            aria-hidden={!isCurrentView}
             className="grid sm:grid-cols-2 lg:grid-cols-4 px-0"
-            style={{ gap: '3.5rem' }}
+            style={{
+              gap: '3.5rem',
+              gridArea: '1 / 1',
+              alignContent: 'start',
+              visibility: isCurrentView ? 'visible' : 'hidden',
+            }}
           >
-            {Object.entries(data).map(([category, items], index) => (
-              <div key={`${currentView}-${index}`} className="group flex flex-col items-start">
+            {Object.entries(skillsData[view]).map(([category, items], index) => (
+              <div key={`${view}-${index}`} className="group flex flex-col items-start">
                 {/* Category heading + rule */}
                 <div className="flex flex-col items-start" style={{ marginBottom: '1.75rem' }}>
                   <div className="flex items-center gap-3" style={{ marginBottom: '0.875rem' }}>
@@ -250,6 +298,9 @@ export default function Skills() {
                 </div>
               </div>
             ))}
+          </div>
+            );
+          })}
           </div>
         </div>
 

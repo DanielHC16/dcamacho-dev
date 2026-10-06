@@ -242,16 +242,23 @@ export default function Hero() {
       </div>
 
       {/* ── Scroll Indicator ─────────────────────────────── */}
+      {/* Full-width strip + justify-center: centered by layout, not by transforms */}
       <div
-        className={`scroll-indicator-mobile absolute bottom-10 sm:bottom-8 md:bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 transition-all duration-500 z-20 ${scrolled ? 'opacity-0 translate-y-4 pointer-events-none' : 'opacity-100 translate-y-0'
-          }`}
+        className="absolute inset-x-0 bottom-10 sm:bottom-8 md:bottom-10 z-20 flex justify-center pointer-events-none"
+        style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}
         aria-hidden="true"
       >
-        <span className="text-[10px] text-muted font-mono uppercase tracking-widest rotate-90 select-none">
-          Scroll
-        </span>
-        <div className="w-px h-10 sm:h-12 md:h-16 bg-border relative overflow-hidden">
-          <div className="absolute top-0 left-0 w-full h-full bg-accent animate-scroll-line" />
+        <div
+          className={`flex flex-col items-center gap-3 transition-all duration-500 ${scrolled ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'
+            }`}
+        >
+          {/* Vertical writing mode: layout box matches what you see, so it centers exactly over the line */}
+          <span className="text-[10px] leading-none text-muted font-mono uppercase tracking-widest select-none [writing-mode:vertical-rl]">
+            Scroll
+          </span>
+          <div className="w-px h-10 sm:h-12 md:h-16 bg-border relative overflow-hidden">
+            <div className="absolute top-0 left-0 w-full h-full bg-accent animate-scroll-line" />
+          </div>
         </div>
       </div>
 

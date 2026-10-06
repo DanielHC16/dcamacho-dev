@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Exo_2 } from "next/font/google";
 import "./globals.css";
+import ChromeCursor from "@/components/ChromeCursor";
 
 const siteUrl = "https://dcamacho-dev.vercel.app/";
 
@@ -12,6 +13,14 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+});
+
+// Display face for the hero name: geometric/techno, pairs with Geist.
+const exo2 = Exo_2({
+  variable: "--font-exo-2",
+  subsets: ["latin"],
+  weight: ["300"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -82,13 +91,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${exo2.variable} antialiased`}
       >
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         {children}
+        <ChromeCursor />
       </body>
     </html>
   );

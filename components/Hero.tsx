@@ -194,7 +194,7 @@ export default function Hero() {
           <div className="absolute -bottom-5 -right-3 w-5 h-5 border-r border-b border-border/60" aria-hidden="true" />
 
           {/* Name */}
-          <h1 className="text-4xl sm:text-6xl md:text-8xl lg:text-[6rem] font-extralight tracking-tight text-foreground leading-[1.0] mb-4 sm:mb-5">
+          <h1 className="text-4xl sm:text-6xl md:text-8xl lg:text-[6rem] font-display font-light tracking-tight text-foreground leading-[1.0] mb-4 sm:mb-5 text-chrome">
             Daniel Camacho
           </h1>
 

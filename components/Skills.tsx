@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import { skills, softSkills } from '@/lib/data';
 
@@ -35,12 +35,11 @@ export default function Skills() {
   const categories  = Object.keys(data);
 
   // Reset mobile category tab when the top-level view changes
-  useEffect(() => {
-    if (currentIndex !== prevIndex) {
-      setActiveMobileCategory(0);
-      setPrevIndex(currentIndex);
-    }
-  }, [currentIndex, prevIndex]);
+  // (adjusted during render, per React's "storing information from previous renders" pattern)
+  if (currentIndex !== prevIndex) {
+    setPrevIndex(currentIndex);
+    setActiveMobileCategory(0);
+  }
 
   const navigate = (dir: 'prev' | 'next') => {
     if (isAnimating) return;

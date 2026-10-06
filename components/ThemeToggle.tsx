@@ -1,32 +1,36 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useSyncExternalStore } from 'react';
+
+// The theme lives on <html class="dark">, set before first paint by the inline
+// script in app/layout.tsx. Subscribe to that class instead of mirroring it in state.
+const subscribe = (onChange: () => void) => {
+  const observer = new MutationObserver(onChange);
+  observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+  return () => observer.disconnect();
+};
+const getSnapshot = () => document.documentElement.classList.contains('dark');
+// Server render (and hydration) assumes light; the client re-renders with the real value.
+const getServerSnapshot = () => false;
 
 export default function ThemeToggle() {
-  // Always start with false on the server so SSR and client initial render match.
-  // The real preference is read in useEffect (client-only) after hydration.
-  const [isDark, setIsDark] = useState(false);
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    const savedTheme = localStorage.getItem('theme');
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const initial = savedTheme === 'dark' || (!savedTheme && prefersDark);
-    setIsDark(initial);
-    document.documentElement.classList.toggle('dark', initial);
-    setMounted(true);
-  }, []);
+  const isDark = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 
   const toggleTheme = () => {
     const newTheme = !isDark;
-    setIsDark(newTheme);
-    
-    if (newTheme) {
-      document.documentElement.classList.add('dark');
-      localStorage.setItem('theme', 'dark');
+
+    const apply = () => {
+      document.documentElement.classList.toggle('dark', newTheme);
+      localStorage.setItem('theme', newTheme ? 'dark' : 'light');
+    };
+
+    // Cross-fade the whole page in one composited pass (View Transitions API).
+    // Falls back to an instant switch when unsupported or reduced motion is requested.
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (typeof document.startViewTransition === 'function' && !reduceMotion) {
+      document.startViewTransition(apply);
     } else {
-      document.documentElement.classList.remove('dark');
-      localStorage.setItem('theme', 'light');
+      apply();
     }
   };
 

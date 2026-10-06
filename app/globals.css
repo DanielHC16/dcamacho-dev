@@ -250,6 +250,13 @@ html.chrome-cursor-active :is(input, textarea, [contenteditable="true"]) {
   }
 }
 
+/* Theme switch: smooth cross-fade of the whole page (see ThemeToggle). */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.5s;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 /* Selection */
 ::selection {
   background: var(--accent-soft);

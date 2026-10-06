@@ -1,6 +1,9 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useSyncExternalStore } from 'react';
+
+// Hydration-safe "is client" flag: false during SSR/hydration, true afterwards.
+const noopSubscribe = () => () => {};
 
 const navItems = [
   { id: 'hero',        label: '00', name: 'Home'       },
@@ -14,9 +17,7 @@ const navItems = [
 export default function MobileNav() {
   const [open, setOpen]                   = useState(false);
   const [activeSection, setActiveSection] = useState('hero');
-  const [mounted, setMounted]             = useState(false);
-
-  useEffect(() => { setMounted(true); }, []);
+  const mounted = useSyncExternalStore(noopSubscribe, () => true, () => false);
 
   // Lock body scroll when menu open
   useEffect(() => {

@@ -1,16 +1,15 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { personalInfo } from '@/lib/data';
 
 export default function Hero() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [scrolled, setScrolled] = useState(false);
-  const [activeSection, setActiveSection] = useState('hero');
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
+    // Flip on the next frame so the entrance transition runs from its initial state.
+    const mountRaf = requestAnimationFrame(() => setMounted(true));
     let rafId: number;
 
     const handleMouseMove = (e: MouseEvent) => {
@@ -29,18 +28,6 @@ export default function Hero() {
       scrollTimeout = setTimeout(() => {
         const scrollThreshold = window.innerWidth < 640 ? 50 : 100;
         setScrolled(window.scrollY > scrollThreshold);
-
-        const sections = ['hero', 'about', 'projects', 'experiences', 'skills', 'contact'];
-        const current = sections.find(section => {
-          const element = document.getElementById(section);
-          if (element) {
-            const rect = element.getBoundingClientRect();
-            const threshold = window.innerWidth < 640 ? 50 : 100;
-            return rect.top <= threshold && rect.bottom >= threshold;
-          }
-          return false;
-        });
-        if (current) setActiveSection(current);
       }, 50);
     };
 
@@ -50,6 +37,7 @@ export default function Hero() {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('scroll', handleScroll);
       if (rafId) cancelAnimationFrame(rafId);
+      cancelAnimationFrame(mountRaf);
       clearTimeout(scrollTimeout);
     };
   }, []);

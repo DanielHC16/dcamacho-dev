@@ -71,7 +71,7 @@ export default function About() {
               style={{ position: 'relative', height: '200px', overflow: 'hidden' }}
             >
               <LetterGlitch
-                glitchColors={['#b8a882', '#5a7a76', '#2a2a2a']}
+                glitchColors={['#aeaeb2', '#636366', '#2a2a2a']}
                 glitchSpeed={60}
                 centerVignette={false}
                 outerVignette={false}

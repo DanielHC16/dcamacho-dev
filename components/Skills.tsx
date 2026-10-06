@@ -336,7 +336,7 @@ export default function Skills() {
                   height: '3px',
                   borderRadius: '9999px',
                   width: currentIndex === i ? '2.5rem' : '1.5rem',
-                  backgroundColor: currentIndex === i ? 'var(--accent)' : '#71717a',
+                  backgroundColor: currentIndex === i ? 'var(--accent)' : 'var(--accent-soft)',
                   transition: 'width 0.5s ease, background-color 0.5s ease',
                   flexShrink: 0,
                   border: 'none',

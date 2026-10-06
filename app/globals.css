@@ -4,25 +4,27 @@
 :root {
   --background: #fafafa;
   --foreground: #1a1a1a;
-  --accent: #c9b896;
+  --accent: #636366;
+  --accent-soft: #d1d1d6;
   --muted: #8a8a8a;
   --border: #e0e0e0;
   --surface: #ffffff;
-  --project-glow-one: #c9b896;
-  --project-glow-two: #6f8f8a;
-  --project-glow-three: #9d88b8;
+  --project-glow-one: #636366;
+  --project-glow-two: #8e8e93;
+  --project-glow-three: #aeaeb2;
 }
 
 :root.dark {
   --background: #1a1a1a;
   --foreground: #fafafa;
-  --accent: #c9b896;
+  --accent: #c7c7cc;
+  --accent-soft: #48484a;
   --muted: #8a8a8a;
   --border: #2a2a2a;
   --surface: #252525;
-  --project-glow-one: #d6c49e;
-  --project-glow-two: #78c7bd;
-  --project-glow-three: #b59ada;
+  --project-glow-one: #c7c7cc;
+  --project-glow-two: #aeaeb2;
+  --project-glow-three: #e5e5ea;
 }
 
 @theme inline {
@@ -74,7 +76,7 @@ body {
 
 /* Selection */
 ::selection {
-  background: var(--accent);
+  background: var(--accent-soft);
   color: var(--foreground);
 }
 

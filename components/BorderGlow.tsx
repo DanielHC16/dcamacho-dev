@@ -24,7 +24,7 @@ interface BorderGlowProps {
 
 function parseHSL(hslStr: string) {
   const match = hslStr.match(/([\d.]+)\s*([\d.]+)%?\s*([\d.]+)%?/);
-  if (!match) return { h: 38, s: 40, l: 68 };
+  if (!match) return { h: 240, s: 4, l: 72 };
   return {
     h: Number.parseFloat(match[1]),
     s: Number.parseFloat(match[2]),
@@ -64,17 +64,17 @@ function buildGradientVars(colors: string[]): GlowStyle {
 export default function BorderGlow({
   children,
   className = '',
-  // Warm gold → matches --accent: #c9b896 (HSL ≈ 38° 30% 69%)
-  // Boosted saturation so glow is visible
-  glowColor = '46 62 72',       // yellow-gold — warm, visible on both themes, close to dark-mode aesthetic
+  // Metallic silver → between --accent light #636366 and dark #c7c7cc
+  // Neutral cool tint so glow reads as brushed metal
+  glowColor = '240 4 72',       // silver — neutral, visible on both themes
   backgroundColor = 'var(--surface)',
   borderRadius = 2,
   glowRadius = 44,
   glowIntensity = 1.2,
   coneSpread = 13,
   animated = true,
-  // Use CSS vars → auto-adapts light (#c9b896 gold, #6f8f8a teal, #9d88b8 purple)
-  //              and dark  (#d6c49e gold, #78c7bd teal, #b59ada lavender)
+  // Use CSS vars → auto-adapts light (#636366 graphite, #8e8e93 steel, #aeaeb2 silver)
+  //              and dark  (#c7c7cc silver, #aeaeb2 silver, #e5e5ea platinum)
   colors = ['var(--accent)', 'var(--project-glow-two)', 'var(--project-glow-three)'],
   fillOpacity = 0.06,
   speed = 0.6,

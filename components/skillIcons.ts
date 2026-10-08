@@ -18,6 +18,7 @@ import {
   SiNestjs,
   SiExpress,
   SiFastapi,
+  SiDjango,
   SiPostgresql,
   SiSqlite,
   SiGit,
@@ -28,6 +29,7 @@ import {
   SiOpenai,
   SiClaude,
   SiGooglegemini,
+  SiN8N,
 } from 'react-icons/si';
 import { FaJava, FaDatabase } from 'react-icons/fa';
 import { TbSql } from 'react-icons/tb';
@@ -47,6 +49,7 @@ export const SKILL_ICONS: Record<string, IconType> = {
   NestJS: SiNestjs,
   Express: SiExpress,
   FastAPI: SiFastapi,
+  'Django + DRF': SiDjango, // DRF ships no standalone brand icon; reuse the Django mark
   SQL: TbSql,
   PostgreSQL: SiPostgresql,
   SQLite: SiSqlite,
@@ -59,6 +62,7 @@ export const SKILL_ICONS: Record<string, IconType> = {
   Codex: SiOpenai, // OpenAI mark: Codex has no standalone brand icon
   Claude: SiClaude,
   Gemini: SiGooglegemini,
+  n8n: SiN8N,
 };
 
 export function getSkillIcon(name: string): IconType {

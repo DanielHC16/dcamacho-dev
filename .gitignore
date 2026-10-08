@@ -53,3 +53,6 @@ TODO.txt
 # development agents
 .agents
 .kiro/
+
+# branding / design-system kit (local reference, not shipped)
+/BRANDING/
